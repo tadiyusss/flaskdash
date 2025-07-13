@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}FlaskDash - Login{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto p-4 my-24 space-y-4">
+    <h4 class="text-2xl font-medium text-blue-800">FlaskDash</h4>
+    <div class="border border-t-4 border-t-blue-600 rounded w-full p-4 bg-white shadow">
+        <h4 class="text-2xl text-blue-800">Login</h4>
+        <p class="text-gray-600 text-sm">Log in to access your dashboard and manage your account.</p>
+        <form method="post" class="space-y-4 my-4">
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.email.label(class="text-sm font-medium text-gray-700") }}
+                {{ form.email }}
+                {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                        <p class="text-sm text-red-600">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div>
+                {{ form.password.label(class="text-sm font-medium text-gray-700") }}
+                {{ form.password }}
+                {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                        <p class="text-sm text-red-600">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div>
+                {{ form.submit }}
+            </div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="bg-red-600 text-white py-2 px-4 rounded">
+                            <p>{{message}}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </form>
+    </div>
+    <div class="text-center">
+        <p class="text-gray-600">Don't have an account? <a href="{{ url_for('core.register') }}" class="underline">Register.</a></p>
+    </div>
+</div>
+{% endblock %}
