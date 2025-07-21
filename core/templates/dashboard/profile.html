@@ -1,0 +1,60 @@
+{% extends "dashboard/base.html" %}
+{% block title %}FlaskDash - Home{% endblock %}
+{% block main %}
+    <div class="w-full border rounded-lg p-4 bg-white shadow-sm">
+        <div class="space-y-8">
+            <div>
+                <div class="border-b pb-2">
+                    <h4 class="text-lg">Edit Profile</h4>
+                    <p class="text-gray-600 text-sm">Update your photo, first name, and last name to keep your profile up to date.</p>
+                </div>
+                <div class="mt-4 space-y-4">
+                    <div class="md:flex md:items-center md:justify-between md:space-y-0 space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <img src="https://placehold.co/250x250" class="size-20 rounded-full">
+                            <div class="block">
+                                <p class="text-gray-700 font-medium">John Doe</p>
+                                <p class="text-gray-500 text-sm">johndoe@example.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="text-sm rounded px-4 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Upload New Picture</button>
+                            <button class="text-sm rounded px-2 py-1 rounded border bg-gray-100 text-gray-700 hover:bg-gray-200 ease duration-200">Delete</button>
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4 grid-cols-1">
+                        <div>
+                            <label for="firstname" class="text-gray-600 text-sm">First Name</label>
+                            <input type="text" id="firstname" class="mt-1 w-full px-2 py-2 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner" value="John">
+                        </div>
+                        <div>
+                            <label for="lastname" class="text-gray-600 text-sm">Last Name</label>
+                            <input type="text" id="lastname" class="mt-1 w-full px-2 py-2 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner" value="Doe">
+                        </div>
+                    </div>
+                    <button class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Save Changes</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="border-b pb-2">
+                    <h4 class="text-lg">Password</h4>
+                    <p class="text-gray-600 text-sm">Update your password to keep your account secure.</p>
+                </div>
+                <div class="mt-4 space-y-4">
+                    <div class="grid md:grid-cols-2 gap-4 grid-cols-1">
+                        <div>
+                            <label for="currentpassword" class="text-gray-600 text-sm">Current Password</label>
+                            <input type="password" id="currentpassword" class="mt-1 w-full px-2 py-2 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner">
+                        </div>
+                        <div>
+                            <label for="newpassword" class="text-gray-600 text-sm">New Password</label>
+                            <input type="password" id="newpassword" class="mt-1 w-full px-2 py-2 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner">
+                        </div>
+                    </div>
+                    <button class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
