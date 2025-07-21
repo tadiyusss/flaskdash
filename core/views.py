@@ -51,6 +51,11 @@ def register():
         
     return render_template('auth/register.html', form=form)
 
+@core.route('/profile')
+@login_required
+def profile():
+    return render_template('dashboard/profile.html', user=current_user)
+
 @core.route('/home')
 @login_required
 def dashboard():
