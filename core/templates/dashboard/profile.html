@@ -2,7 +2,7 @@
 {% block title %}FlaskDash - Home{% endblock %}
 {% block main %}
     <div class="w-full border rounded-lg p-4 bg-white shadow-sm max-w-2xl mx-auto">
-        <div class="space-y-8">
+        <div class="space-y-8 text-zinc-800">
             <div>
                 <div class="border-b pb-2">
                     <h4 class="text-lg">Edit Profile</h4>
@@ -44,12 +44,12 @@
                 <div class="mt-4 space-y-4">
                     <div class="grid md:grid-cols-2 gap-4 grid-cols-1">
                         <div>
-                            <label for="currentpassword" class="text-gray-600 text-sm">Current Password</label>
-                            <input type="password" id="currentpassword" class="mt-1 w-full px-2 py-1 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner">
+                            <label for="current_password" class="text-gray-600 text-sm">Current Password</label>
+                            <input type="password" id="current_password" class="mt-1 w-full px-2 py-1 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner">
                         </div>
                         <div>
-                            <label for="newpassword" class="text-gray-600 text-sm">New Password</label>
-                            <input type="password" id="newpassword" class="mt-1 w-full px-2 py-1 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner">
+                            <label for="new_password" class="text-gray-600 text-sm">New Password</label>
+                            <input type="password" id="new_password" class="mt-1 w-full px-2 py-1 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner">
                         </div>
                     </div>
                     <button class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Save Changes</button>
