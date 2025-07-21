@@ -61,6 +61,10 @@ def profile():
 def dashboard():
     return render_template('dashboard/home.html', user=current_user)
 
+@core.route('/settings')
+@login_required
+def settings():
+    return render_template('dashboard/settings.html', user=current_user)
 
 @core.route('/logout')
 @login_required
