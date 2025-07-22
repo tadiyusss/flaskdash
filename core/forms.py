@@ -36,5 +36,18 @@ class LoginForm(FlaskForm):
         render_kw={"class": style.text_input}
     )
     submit = SubmitField('Login',
-        render_kw={"class": style.button_full}
+        render_kw={"class": style.button}
     )
+
+class EditNameForm(FlaskForm):
+    firstname = StringField('First Name', 
+        validators=[DataRequired(), Length(min=2, max=32)],
+        render_kw={"class": style.text_input}
+    )
+    lastname = StringField('Last Name',
+        validators=[DataRequired(), Length(min=2, max=32)],
+        render_kw={"class": style.text_input}
+    )
+
+    submit = SubmitField('Save Changes',
+        render_kw={"class": style.button})

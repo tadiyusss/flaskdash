@@ -1,4 +1,4 @@
 class Style:
-    text_input = "w-full border rounded py-1 px-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-    button = "px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600 ease duration-200 focus:outline-none focus:ring-2 focus:ring-blue-300"
-    button_full = "w-full py-2 rounded bg-blue-500 text-white hover:bg-blue-600 ease duration-200" 
+    text_input = "mt-1 w-full px-2 py-1 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner "
+    button = "text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200 cursor-pointer "
+    button_full = "text-sm rounded py-2 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200 cursor-pointer w-full " 

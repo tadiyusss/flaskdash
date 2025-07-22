@@ -11,10 +11,10 @@
                 <div class="mt-4 space-y-4">
                     <div class="md:flex md:items-center md:justify-between md:space-y-0 space-y-4">
                         <div class="flex items-center space-x-4">
-                            <img src="https://placehold.co/250x250" class="size-20 rounded-full">
+                            <img src="{{ url_for('static', filename='images/profiles/' + current_user.profile_image) }}" class="size-20 rounded-full">
                             <div class="block">
-                                <p class="text-gray-700 font-medium">John Doe</p>
-                                <p class="text-gray-400 text-sm">johndoe@example.com</p>
+                                <p class="text-gray-700 font-medium">{{ current_user.firstname }} {{ current_user.lastname }}</p>
+                                <p class="text-gray-400 text-sm">{{ current_user.email }}</p>
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
@@ -22,17 +22,31 @@
                             <button class="text-sm rounded px-2 py-1 rounded border bg-gray-100 text-gray-700 hover:bg-gray-200 ease duration-200">Delete</button>
                         </div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-4 grid-cols-1">
-                        <div>
-                            <label for="firstname" class="text-gray-600 text-sm">First Name</label>
-                            <input type="text" id="firstname" class="mt-1 w-full px-2 py-1 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner" value="John">
+                    <form class="space-y-4" method="POST">
+                        <div class="grid md:grid-cols-2 gap-4 grid-cols-1">
+                            {{ edit_name_form.hidden_tag() }}
+                            <div>
+                                {{ edit_name_form.firstname.label(class="text-gray-600 text-sm") }}
+                                {{ edit_name_form.firstname(value=current_user.firstname) }}
+                            </div>
+                            <div>
+                                {{ edit_name_form.lastname.label(class="text-gray-600 text-sm") }}
+                                {{ edit_name_form.lastname(value=current_user.lastname) }}
+                            </div>
                         </div>
-                        <div>
-                            <label for="lastname" class="text-gray-600 text-sm">Last Name</label>
-                            <input type="text" id="lastname" class="mt-1 w-full px-2 py-1 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner" value="Doe">
+                        <div class="flex items-center space-x-4">
+                            {{ edit_name_form.submit }}
+                            {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                            
                         </div>
-                    </div>
-                    <button class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Save Changes</button>
+                    </form>
+                    
                 </div>
             </div>
 

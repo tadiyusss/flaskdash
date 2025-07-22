@@ -9,8 +9,11 @@ class User(db.Model, UserMixin):
     )
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False)
+    firstname = db.Column(db.String(100), nullable=False)
+    lastname = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), nullable=False)
     password = db.Column(db.String(128), nullable=False)
+    profile_image = db.Column(db.String(200), default='default-avatar.jpg')
 
     def set_password(self, raw_password):
         self.password = generate_password_hash(raw_password)

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, login_user, logout_user, current_user # type: ignore
 from .models import User
 from .extensions import db
-from .forms import RegisterForm, LoginForm
+from .forms import * 
 
 core = Blueprint('core', __name__, static_folder='static', template_folder='templates')
 
@@ -51,10 +51,19 @@ def register():
         
     return render_template('auth/register.html', form=form)
 
-@core.route('/profile')
+@core.route('/profile', methods = ['GET', 'POST'])
 @login_required
 def profile():
-    return render_template('dashboard/profile.html', user=current_user)
+
+    edit_name_form = EditNameForm()
+
+    if edit_name_form.validate_on_submit():
+        current_user.firstname = edit_name_form.firstname.data
+        current_user.lastname = edit_name_form.lastname.data
+        db.session.commit()
+        flash('Profile updated successfully.', 'success')
+        
+    return render_template('dashboard/profile.html', user=current_user, edit_name_form = edit_name_form)
 
 @core.route('/extensions')
 @login_required
