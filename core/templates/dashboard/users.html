@@ -1,0 +1,47 @@
+{% extends "dashboard/base.html" %}
+{% block title %}FlaskDash - Home{% endblock %}
+{% block main %}
+    <div class="w-full border rounded-lg p-4 bg-white shadow-sm max-w-4xl mx-auto">
+        <div class="space-y-8 text-zinc-800">
+            <div class="space-y-4">
+                <div class="border-b pb-2 flex items-center justify-between">
+                    <div class="block">
+                        <h4 class="text-lg">Manage Users</h4>
+                        <p class="text-gray-400 text-sm">Add, create, and manage user information.</p>
+                    </div>
+                    <button class="text-sm rounded px-4 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Create User</button>
+                </div>
+
+                <div>
+                    <div class="border rounded">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-gray-50 border-b">
+                                    <th class="text-left font-normal text-sm text-gray-400 p-2 rounded-tl">Username</th>
+                                    <th class="text-left font-normal text-sm text-gray-400 p-2">Name</th>
+                                    <th class="text-left font-normal text-sm text-gray-400 p-2">Email</th>
+                                    <th class="text-left font-normal text-sm text-gray-400 p-2">Role</th>
+                                    <th class="text-left font-normal text-sm text-gray-400 p-2 rounded-tr">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-sm">
+                                    <td class="p-2 flex items-center space-x-2">
+                                        <img src="https://placehold.co/250x250" class="size-10 rounded-full" alt="User Avatar">
+                                        <p>Administrator</p>
+                                    </td>
+                                    <td class="p-2">Thaddeus Toledo</td>
+                                    <td class="p-2">toledothaddeusf@gmail.com</td>
+                                    <td class="p-2">admin</td>
+                                    <td class="p-2">
+                                        <button class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Manage</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
