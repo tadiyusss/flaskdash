@@ -56,6 +56,11 @@ def register():
 def profile():
     return render_template('dashboard/profile.html', user=current_user)
 
+@core.route('/extensions')
+@login_required
+def extensions():
+    return render_template('dashboard/extensions.html', user=current_user)
+
 @core.route('/users')
 @login_required
 def users():
