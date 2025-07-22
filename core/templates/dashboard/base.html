@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block title %}FlaskDash - Dashboard{% endblock %}
+{% block head %}
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+{% endblock %}
 {% block content %}
- <div class="flex">
+<div class="flex">
     <!-- Sidebar -->
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-30 w-64 bg-white min-h-dvh shadow pb-10 transform -translate-x-full md:translate-x-0 md:static md:inset-auto transition-transform duration-300 ease-in-out">
         <div class="space-y-1">
@@ -40,7 +43,7 @@
                         </svg>
                         <p class="text-sm text-gray-700">Users</p>
                     </a>
-                    <a href="#" class="flex items-center gap-2 px-2 py-2 hover:bg-gray-100 rounded-md transition-colors">
+                    <a href="{{ url_for('core.extensions') }}" class="flex items-center gap-2 px-2 py-2 hover:bg-gray-100 rounded-md transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-8 text-gray-500 border bg-white rounded-lg p-2 shadow">
                             <path d="M10.362 1.093a.75.75 0 0 0-.724 0L2.523 5.018 10 9.143l7.477-4.125-7.115-3.925ZM18 6.443l-7.25 4v8.25l6.862-3.786A.75.75 0 0 0 18 14.25V6.443ZM9.25 18.693v-8.25l-7.25-4v7.807a.75.75 0 0 0 .388.657l6.862 3.786Z" />
                         </svg>
