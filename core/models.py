@@ -4,6 +4,16 @@ from flask_login import UserMixin
 from sqlalchemy import Enum
 import enum
 
+user_roles = db.Table('user_roles',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('role_id', db.Integer, db.ForeignKey('role.id'))
+)
+
+class Role(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False, unique=True)
+    description = db.Column(db.String(200), nullable=True)
+
 class User(db.Model, UserMixin): 
     __table_args__ = (
         db.UniqueConstraint('username', name='uq_user_username'),
@@ -11,11 +21,12 @@ class User(db.Model, UserMixin):
     )
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False)
-    firstname = db.Column(db.String(100), nullable=False)
-    lastname = db.Column(db.String(100), nullable=False)
+    firstname = db.Column(db.String(100), nullable=True)
+    lastname = db.Column(db.String(100), nullable=True)
     email = db.Column(db.String(120), nullable=False)
     password = db.Column(db.String(128), nullable=False)
     profile_image = db.Column(db.String(200), default='default-avatar.jpg')
+    role = db.Column(db.String(50), default='viewer')
 
     def set_password(self, raw_password):
         self.password = generate_password_hash(raw_password)
