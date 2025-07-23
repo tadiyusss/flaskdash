@@ -80,10 +80,15 @@ def users():
 def dashboard():
     return render_template('dashboard/home.html', user=current_user)
 
-@core.route('/settings')
+@core.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
-    return render_template('dashboard/settings.html', user=current_user)
+    form = create_settings_form()
+
+    if form.validate_on_submit():
+        return "Settings updated successfully."
+
+    return render_template('dashboard/settings.html', user=current_user, form = form)
 
 @core.route('/logout')
 @login_required
