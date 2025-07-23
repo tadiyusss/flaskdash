@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}FlaskDash - Dashboard{% endblock %}
+{% block title %}{{ g.settings['site_title'] }} - Dashboard{% endblock %}
 {% block head %}
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 {% endblock %}
@@ -9,7 +9,7 @@
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-30 w-64 bg-white min-h-dvh shadow pb-10 transform -translate-x-full md:translate-x-0 md:static md:inset-auto transition-transform duration-300 ease-in-out">
         <div class="space-y-1">
             <div class="p-4 flex items-center justify-between">
-                <h2 class="text-xl">FlaskDash</h2>
+                <h2 class="text-xl">{{ g.settings['site_title'] }}</h2>
                 <button id="closeSidebar" class="md:hidden p-2 rounded hover:bg-gray-200 focus:outline-none" aria-label="Close sidebar">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
