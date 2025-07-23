@@ -1,7 +1,8 @@
 from core import create_app
 from getpass import getpass
-from core.models import User
+from core.models import User, Setting
 from core.extensions import db
+from core.defaults import DEFAULT_SETTINGS
 
 app = create_app()
 
@@ -31,4 +32,8 @@ if __name__ == "__main__":
             db.session.commit()
             print(f"Admin user '{username}' created successfully.")
 
-    
+            # Create default settings
+            for setting in DEFAULT_SETTINGS:
+                db.session.add(Setting(**setting))
+            db.session.commit()
+            print("Default settings created successfully.")
