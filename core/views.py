@@ -61,7 +61,7 @@ def profile():
         current_user.firstname = edit_name_form.firstname.data
         current_user.lastname = edit_name_form.lastname.data
         db.session.commit()
-        flash('Profile updated successfully.', 'success')
+        flash('Profile updated successfully.', 'global-success')
         
     return render_template('dashboard/profile.html', user=current_user, edit_name_form = edit_name_form)
 
@@ -86,8 +86,12 @@ def settings():
     form = create_settings_form()
 
     if form.validate_on_submit():
-        return "Settings updated successfully."
-
+        for field in form:
+            setting = Setting.query.filter_by(key=field.name).first()
+            if setting:
+                setting.value = field.data
+                db.session.commit()
+        flash('Settings updated successfully.', 'global-success')
     return render_template('dashboard/settings.html', user=current_user, form = form)
 
 @core.route('/logout')

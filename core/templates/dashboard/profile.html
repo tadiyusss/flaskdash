@@ -36,14 +36,6 @@
                         </div>
                         <div class="flex items-center space-x-4">
                             {{ edit_name_form.submit }}
-                            {% with messages = get_flashed_messages() %}
-                                {% if messages %}
-                                    {% for message in messages %}
-                                        <p>{{ message }}</p>
-                                    {% endfor %}
-                                {% endif %}
-                            {% endwith %}
-                            
                         </div>
                     </form>
                     
