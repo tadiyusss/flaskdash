@@ -1,3 +1,4 @@
 __pycache__
 *.db
 migrations
+.pytest_cache
