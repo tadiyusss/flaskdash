@@ -19,15 +19,15 @@ DEFAULT_SETTINGS = [
 
 DEFAULT_ROLES = [
     {
-        "name": "admin",
+        "name": "Administrator",
         "description": "Administrator with full access to all features."
     },
     {   
-        "name": "editor",
+        "name": "Editor",
         "description": "Editor with access to content management features."
     },
     {
-        "name": "viewer",
+        "name": "Viewer",
         "description": "Viewer with read-only access to content."
     }
 ]
