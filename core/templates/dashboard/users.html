@@ -9,12 +9,12 @@
                         <h4 class="text-lg">Manage Users</h4>
                         <p class="text-gray-400 text-sm">Add, create, and manage user information.</p>
                     </div>
-                    <button class="text-sm rounded px-4 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Create User</button>
+                    <a href="{{ url_for('core.create_user') }}" class="text-sm rounded px-4 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Create User</a>
                 </div>
 
                 <div>
                     <div class="border rounded">
-                        <table class="w-full">
+                        <table class="w-full ">
                             <thead>
                                 <tr class="bg-gray-50 border-b">
                                     <th class="text-left font-normal text-sm text-gray-400 p-2 rounded-tl">Username</th>
@@ -31,9 +31,9 @@
                                         <img src="{{ url_for('static', filename='images/profiles/' + current_user.profile_image) }}" class="size-10 rounded-full" alt="User Avatar">
                                         <p>{{ user.username }}</p>
                                     </td>
-                                    <td class="p-2">{{ user.firstname }} {{ user.lastname }}</td>
+                                    <td class="p-2">{{ user.firstname or "" }} {{ user.lastname or "" }}</td>
                                     <td class="p-2">{{ user.email }}</td>
-                                    <td class="p-2">admin</td>
+                                    <td class="p-2">{{ user.role }}</td>
                                     <td class="p-2">
                                         <button class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Manage</button>
                                     </td>

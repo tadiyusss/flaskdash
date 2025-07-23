@@ -13,7 +13,7 @@
                         <div class="flex items-center space-x-4">
                             <img src="{{ url_for('static', filename='images/profiles/' + current_user.profile_image) }}" class="size-20 rounded-full">
                             <div class="block">
-                                <p class="text-gray-700 font-medium">{{ current_user.firstname }} {{ current_user.lastname }}</p>
+                                <p class="text-gray-700 font-medium">{{ current_user.firstname or '' }} {{ current_user.lastname or '' }}</p>
                                 <p class="text-gray-400 text-sm">{{ current_user.email }}</p>
                             </div>
                         </div>
@@ -27,11 +27,11 @@
                             {{ edit_name_form.hidden_tag() }}
                             <div>
                                 {{ edit_name_form.firstname.label(class="text-gray-600 text-sm") }}
-                                {{ edit_name_form.firstname(value=current_user.firstname) }}
+                                {{ edit_name_form.firstname(value=current_user.firstname or "") }}
                             </div>
                             <div>
                                 {{ edit_name_form.lastname.label(class="text-gray-600 text-sm") }}
-                                {{ edit_name_form.lastname(value=current_user.lastname) }}
+                                {{ edit_name_form.lastname(value=current_user.lastname or "") }}
                             </div>
                         </div>
                         <div class="flex items-center space-x-4">
