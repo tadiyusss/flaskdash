@@ -2,10 +2,12 @@ from flask import Flask
 from .extensions import db, login_manager, migrate
 from .views import core
 from .models import User
+from .context import init_context
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object("config.Config")
+    init_context(app)
 
     db.init_app(app)
     login_manager.init_app(app)
