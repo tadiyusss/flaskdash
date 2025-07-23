@@ -16,3 +16,18 @@ DEFAULT_SETTINGS = [
         "editable": True
     }
 ]
+
+DEFAULT_ROLES = [
+    {
+        "name": "admin",
+        "description": "Administrator with full access to all features."
+    },
+    {   
+        "name": "editor",
+        "description": "Editor with access to content management features."
+    },
+    {
+        "name": "viewer",
+        "description": "Viewer with read-only access to content."
+    }
+]

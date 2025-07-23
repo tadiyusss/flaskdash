@@ -1,8 +1,8 @@
 from core import create_app
 from getpass import getpass
-from core.models import User, Setting
+from core.models import User, Setting, Role
 from core.extensions import db
-from core.defaults import DEFAULT_SETTINGS
+from core.defaults import DEFAULT_SETTINGS, DEFAULT_ROLES
 
 app = create_app()
 
@@ -19,21 +19,31 @@ if __name__ == "__main__":
     if password != retype_password:
         print("Passwords do not match.")
     else:
-        new_user = User(
-            username=username,
-            firstname=firstname,
-            lastname=lastname,
-            email=email
-        )
-        new_user.set_password(password)
 
         with app.app_context():
-            db.session.add(new_user)
-            db.session.commit()
-            print(f"Admin user '{username}' created successfully.")
 
             # Create default settings
             for setting in DEFAULT_SETTINGS:
                 db.session.add(Setting(**setting))
             db.session.commit()
             print("Default settings created successfully.")
+
+            for role in DEFAULT_ROLES:
+                new_role = Role(**role)
+                db.session.add(new_role)
+            db.session.commit()
+            print("Default roles created successfully.")
+
+            new_user = User(
+                username=username,
+                firstname=firstname,
+                lastname=lastname,
+                email=email,
+                role='admin' 
+            )
+            new_user.set_password(password)
+
+            db.session.add(new_user)
+            db.session.commit()
+            print(f"Admin user '{username}' created successfully.")
+
