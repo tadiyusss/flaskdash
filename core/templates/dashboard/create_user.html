@@ -1,0 +1,31 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{{ g.settings['site_title'] }} - User{% endblock %}
+{% block main %}
+    <div class="w-full border rounded-lg p-4 bg-white shadow-sm max-w-2xl mx-auto">
+        <div class="space-y-8 text-zinc-800">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="border-b pb-2">
+                    <h4 class="text-lg">Create User</h4>
+                    <p class="text-gray-400 text-sm">Create a brand new user and add them to this site.</p>
+                </div>
+                <div class="my-4 grid md:grid-cols-2 grid-cols-1 gap-x-2">
+                    {% for field in form %}
+                        {{ form.hidden_tag() }}
+                        {% if field.name != "csrf_token" %}
+                        <div>
+                            <label for="site_name" class="text-sm text-gray-700">{{field.label}}</label>
+                        </div>
+                        <div>
+                            {{ field }}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <button class="sm:w-auto w-full text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Create User</button>
+                
+            </form>
+            
+        </div>
+    </div>
+{% endblock %}
