@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Email, Length
 from .styles import Style
+from .models import Setting
 
 style = Style()
 
@@ -51,3 +52,27 @@ class EditNameForm(FlaskForm):
 
     submit = SubmitField('Save Changes',
         render_kw={"class": style.button})
+    
+def create_settings_form():
+    class DynamicSettingsForm(FlaskForm):
+        pass
+
+    settings = Setting.query.all()
+    for setting in settings:
+        field_type = setting.type.value
+        if field_type == 'text':
+            field = StringField(setting.name,
+                default=setting.value,
+                description=setting.description,
+                render_kw={"class": style.text_input}
+            )
+        elif field_type == 'textarea':
+            field = TextAreaField(setting.name,
+                default=setting.value,
+                description=setting.description,
+                render_kw={"class": style.textarea}
+            )
+        else:
+            continue
+        setattr(DynamicSettingsForm, setting.key, field)
+    return DynamicSettingsForm()
