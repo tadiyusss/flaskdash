@@ -1,10 +1,41 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, IntegerField, EmailField, URLField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, IntegerField, EmailField, URLField, FileField, SelectField
 from wtforms.validators import DataRequired, Email, Length
 from .styles import Style
-from .models import Setting
+from .models import Setting, Role
+from flask import current_app
 
 style = Style()
+
+class CreateUserForm(FlaskForm):
+    username = StringField('Username', 
+        validators=[DataRequired(), Length(min=2, max=20)], 
+        render_kw={"class": style.text_input}
+    )
+    email = StringField('Email', 
+        validators=[DataRequired(), Email()],
+        render_kw={"class": style.text_input}
+    )
+
+    firstname = StringField('First Name', 
+        validators=[DataRequired(), Length(min=2, max=32)],
+        render_kw={"class": style.text_input}
+    )
+
+    lastname = StringField('Last Name',
+        validators=[DataRequired(), Length(min=2, max=32)],
+        render_kw={"class": style.text_input}
+    )
+
+    password = PasswordField('Password', 
+        validators=[DataRequired(), Length(min=6)],
+        render_kw={"class": style.text_input}
+    )
+
+    role = SelectField('Role',
+        validators=[DataRequired()],
+        render_kw={"class": style.text_input}
+    )
 
 class RegisterForm(FlaskForm):
     username = StringField('Username', 

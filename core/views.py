@@ -77,6 +77,29 @@ def users():
         
     return render_template('dashboard/users.html', user=current_user, users = users)
 
+@core.route('/users/create', methods=['GET', 'POST'])
+@login_required
+def create_user():
+    form = CreateUserForm()
+
+    form.role.choices = [(role.name, role.name) for role in Role.query.all()]
+
+    if form.validate_on_submit():
+        new_user = User(
+            username=form.username.data,
+            email=form.email.data,
+            firstname=form.firstname.data,
+            lastname=form.lastname.data,
+            role=form.role.data
+        )
+        new_user.set_password(form.password.data)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('User created successfully.', 'global-success')
+        return redirect(url_for('core.users'))
+
+    return render_template('dashboard/create_user.html', user=current_user, form=form)
+
 @core.route('/home')
 @login_required
 def dashboard():
