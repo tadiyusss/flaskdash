@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, IntegerField, EmailField, URLField
 from wtforms.validators import DataRequired, Email, Length
 from .styles import Style
 from .models import Setting
@@ -71,6 +71,30 @@ def create_settings_form():
                 default=setting.value,
                 description=setting.description,
                 render_kw={"class": style.textarea}
+            )
+        elif field_type =='number':
+            field = IntegerField(setting.name,
+                default=setting.value,
+                description=setting.description,
+                render_kw={"class": style.text_input}
+            )
+        elif field_type == 'email':
+            field = EmailField(setting.name,
+                default=setting.value,
+                description=setting.description,
+                render_kw={"class": style.text_input}
+            )
+        elif field_type == 'url':
+            field = URLField(setting.name,
+                default=setting.value,
+                description=setting.description,
+                render_kw={"class": style.text_input}
+            )
+        elif field_type == 'datetime':
+            field = StringField(setting.name,
+                default=setting.value,
+                description=setting.description,
+                render_kw={"class": style.text_input}
             )
         else:
             continue
