@@ -73,7 +73,9 @@ def extensions():
 @core.route('/users')
 @login_required
 def users():
-    return render_template('dashboard/users.html', user=current_user)
+    users = User.query.all()
+        
+    return render_template('dashboard/users.html', user=current_user, users = users)
 
 @core.route('/home')
 @login_required

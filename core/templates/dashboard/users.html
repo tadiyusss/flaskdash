@@ -25,18 +25,20 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for user in users %}
                                 <tr class="text-sm">
                                     <td class="p-2 flex items-center space-x-2">
-                                        <img src="https://placehold.co/250x250" class="size-10 rounded-full" alt="User Avatar">
-                                        <p>Administrator</p>
+                                        <img src="{{ url_for('static', filename='images/profiles/' + current_user.profile_image) }}" class="size-10 rounded-full" alt="User Avatar">
+                                        <p>{{ user.username }}</p>
                                     </td>
-                                    <td class="p-2">Thaddeus Toledo</td>
-                                    <td class="p-2">toledothaddeusf@gmail.com</td>
+                                    <td class="p-2">{{ user.firstname }} {{ user.lastname }}</td>
+                                    <td class="p-2">{{ user.email }}</td>
                                     <td class="p-2">admin</td>
                                     <td class="p-2">
                                         <button class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Manage</button>
                                     </td>
                                 </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
