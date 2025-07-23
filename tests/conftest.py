@@ -1,30 +1,40 @@
 import pytest
-from core import create_app
-from core.extensions import db
-import os
+from core import create_app, db
+from core.models import User
+from config import TestingConfig
+from faker import Faker
 
-
-
+fake = Faker()
 
 @pytest.fixture
 def app():
-    os.environ['DATABASE_URL'] = 'sqlite:///:memory:'
-    app = create_app()
-    app.config.update({
-        "TESTING": True,
-        "WTF_CSRF_ENABLED": False,
-    })
-
-    with app.app_context():
-        db.create_all()
-        yield app
-        db.session.remove()
-        db.drop_all()
+    app = create_app(TestingConfig)
+    yield app
 
 @pytest.fixture
 def client(app):
     return app.test_client()
 
 @pytest.fixture
-def runner(app):
-    return app.test_cli_runner()
+def db_session(app):
+    with app.app_context():
+        db.create_all()
+        yield db.session
+        db.session.rollback()
+
+@pytest.fixture
+def fake_user(db_session):
+    username = fake.user_name()
+    firstname = fake.first_name()
+    lastname = fake.last_name()
+    email = fake.email()
+    password = fake.password()
+
+    user = User(firstname=firstname, lastname=lastname, email=email, password=password, username=username)
+    db_session.add(user)
+    db_session.commit()
+    return user
+
+@pytest.fixture
+def client(app):
+    return app.test_client()
