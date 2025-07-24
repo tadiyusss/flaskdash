@@ -14,7 +14,7 @@
                         {{ form.hidden_tag() }}
                         {% if field.name != "csrf_token" %}
                         <div>
-                            <label for="site_name" class="text-sm text-gray-700">{{field.label}}</label>
+                            <label for="{{ field.id }}" class="text-sm text-gray-700">{{field.label}}</label>
                         </div>
                         <div>
                             {{ field }}

@@ -1,0 +1,84 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{{ g.settings['site_title'] }} - Profile{% endblock %}
+{% block main %}
+    <div class="w-full border rounded-lg p-4 bg-white shadow-sm max-w-2xl mx-auto">
+        <div class="space-y-8 text-zinc-800">
+            <div>
+                <div class="border-b pb-2">
+                    <h4 class="text-lg">Manage User</h4>
+                    <p class="text-gray-400 text-sm">Manage and update user details, and roles.</p>
+                </div>
+                <div class="mt-4 space-y-4">
+                    <div class="md:flex md:items-center md:justify-between md:space-y-0 space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <img src="{{ url_for('static', filename='images/profiles/' + selected_user.profile_image) }}" class="size-20 rounded-full">
+                            <div class="block">
+                                <p class="text-gray-700 font-medium">{{ selected_user.firstname or '' }} {{ selected_user.lastname or '' }}</p>
+                                <p class="text-gray-400 text-sm">{{ selected_user.email }}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="text-sm rounded px-4 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Upload New Picture</button>
+                            <button class="text-sm rounded px-2 py-1 rounded border bg-gray-100 text-gray-700 hover:bg-gray-200 ease duration-200">Delete</button>
+                        </div>
+                    </div>
+                    <form class="space-y-4" method="POST">
+                        <div class="grid md:grid-cols-2 gap-4 grid-cols-1">
+                            {{ name_form.hidden_tag() }}
+                            <div>
+                                {{ name_form.username.label(class="text-gray-600 text-sm") }}
+                                {{ name_form.username(value=selected_user.username or "") }}
+                            </div>
+                            <div>
+                                {{ name_form.email.label(class="text-gray-600 text-sm") }}
+                                {{ name_form.email(value=selected_user.email or "") }}
+                            </div>
+                            <div>
+                                {{ name_form.firstname.label(class="text-gray-600 text-sm") }}
+                                {{ name_form.firstname(value=selected_user.firstname or "") }}
+                            </div>
+                            <div>
+                                {{ name_form.lastname.label(class="text-gray-600 text-sm") }}
+                                {{ name_form.lastname(value=selected_user.lastname or "") }}
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            {{ name_form.submit }}
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+
+            <div>
+                <div class="border-b pb-2">
+                    <h4 class="text-lg">Password</h4>
+                    <p class="text-gray-400 text-sm">Update the selected user's password securely.</p>
+                </div>
+                <form method="POST" class="mt-4 space-y-4">
+                    {{ password_form.hidden_tag() }}
+                    <div>
+                        {{ password_form.new_password.label(class="text-gray-600 text-sm") }}
+                        {{ password_form.new_password(class="mt-1 w-full px-2 py-1 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner") }}
+                    </div>
+                    {{ password_form.submit }}
+                </form>
+            </div>
+
+            <div>
+                <div class="border-b pb-2">
+                    <h4 class="text-lg">Account Role</h4>
+                    <p class="text-gray-400 text-sm">Update the selected user's role.</p>
+                </div>
+                <form method="POST" class="mt-4 space-y-4">
+                    {{ role_form.hidden_tag() }}
+                    <div>
+                        {{ role_form.role.label(class="text-gray-600 text-sm") }}
+                        {{ role_form.role(class="mt-1 w-full px-2 py-1 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner") }}
+                    </div>
+                    {{ role_form.submit }}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

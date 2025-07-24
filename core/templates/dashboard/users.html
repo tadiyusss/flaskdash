@@ -28,14 +28,18 @@
                                 {% for user in users %}
                                 <tr class="text-sm">
                                     <td class="p-2 flex items-center space-x-2">
-                                        <img src="{{ url_for('static', filename='images/profiles/' + current_user.profile_image) }}" class="size-10 rounded-full" alt="User Avatar">
+                                        <img src="{{ url_for('static', filename='images/profiles/' + user.profile_image) }}" class="size-10 rounded-full" alt="User Avatar">
                                         <p>{{ user.username }}</p>
                                     </td>
                                     <td class="p-2">{{ user.firstname or "" }} {{ user.lastname or "" }}</td>
                                     <td class="p-2">{{ user.email }}</td>
                                     <td class="p-2">{{ user.role }}</td>
                                     <td class="p-2">
-                                        <button class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Manage</button>
+                                        {% if user.uid != current_user.uid %}
+                                            <a href="{{ url_for('core.manage_user', user_uid=user.uid) }}" class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Manage</a>
+                                        {% else %}
+                                            <a href="{{ url_for('core.manage_user', user_uid=user.uid) }}" class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200 pointer-events-none opacity-80">Manage</a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                                 {% endfor %}
