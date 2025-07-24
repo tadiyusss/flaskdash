@@ -28,7 +28,7 @@
                                 {% for user in users %}
                                 <tr class="text-sm">
                                     <td class="p-2 flex items-center space-x-2">
-                                        <img src="{{ url_for('static', filename='images/profiles/' + user.profile_image) }}" class="size-10 rounded-full" alt="User Avatar">
+                                        <img src="{{ url_for('static', filename='images/profiles/' + user.profile_image) }}" class="size-10 rounded-full object-cover" alt="User Avatar">
                                         <p>{{ user.username }}</p>
                                     </td>
                                     <td class="p-2">{{ user.firstname or "" }} {{ user.lastname or "" }}</td>

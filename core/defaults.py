@@ -14,6 +14,14 @@ DEFAULT_SETTINGS = [
         "type": "textarea",
         "description": "A brief description of your site for SEO purposes.",
         "editable": True
+    },
+    {
+        "key": "allow_registration",
+        "name": "Allow User Registration",
+        "value": False,
+        "type": "bool",
+        "description": "Enable or disable user registration on the site.",
+        "editable": True
     }
 ]
 

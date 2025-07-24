@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, TextAreaField, IntegerField, URLField
+from wtforms import StringField, EmailField, TextAreaField, IntegerField, URLField, BooleanField
 from core.styles import Style
 from core.models import Setting
 
@@ -18,11 +18,18 @@ def create_settings_form():
                 description=setting.description,
                 render_kw={"class": style.text_input}
             )
+        elif field_type == 'bool':
+            field = BooleanField(setting.name,
+                description=setting.description,
+                default=True if setting.value.lower() == '1' else False,
+            )
+
         elif field_type == 'textarea':
             field = TextAreaField(setting.name,
                 default=setting.value,
                 description=setting.description,
-                render_kw={"class": style.textarea}
+                render_kw={"class": style.textarea},
+                
             )
         elif field_type =='number':
             field = IntegerField(setting.name,

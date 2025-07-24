@@ -30,9 +30,10 @@ def settings():
         for field in form:
             setting = Setting.query.filter_by(key=field.name).first()
             if setting:
-                setting.value = field.data
+                if field.data != setting.value:
+                    flash(f'Setting {setting.name} updated.', 'global-success')
+                    setting.value = field.data
                 db.session.commit()
-        flash('Settings updated successfully.', 'global-success')
         return redirect(url_for('core.settings'))
     return render_template('dashboard/settings.html', user=current_user, form = form)
 

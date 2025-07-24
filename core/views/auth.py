@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash
 from core.forms.auth import LoginForm, RegisterForm
 from core.extensions import db
 from core.models import User
+from flask import g
 
 
 def generate_blueprint(core):
@@ -24,6 +25,10 @@ def generate_blueprint(core):
 
     @core.route('/register', methods=['GET', 'POST'])
     def register():
+        if g.settings['allow_registration'] == '0':
+            flash('User registration is disabled.', 'error')
+            return redirect(url_for('core.login'))
+
         if current_user.is_authenticated:
             return redirect(url_for('core.dashboard'))
         
