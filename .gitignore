@@ -1,6 +1,11 @@
+.gitignore
 __pycache__
 *.db
 migrations
 .pytest_cache
 env
 instances/
+tests/
+test_dashboard_users.py
+*.jpg
+*.png
