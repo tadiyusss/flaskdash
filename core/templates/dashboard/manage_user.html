@@ -28,18 +28,30 @@
                             <div>
                                 {{ name_form.username.label(class="text-gray-600 text-sm") }}
                                 {{ name_form.username(value=selected_user.username or "") }}
+                                {% if name_form.username.errors %}
+                                    <div class="text-red-500 text-sm">{{ name_form.username.errors[0] }}</div>
+                                {% endif %}
                             </div>
                             <div>
                                 {{ name_form.email.label(class="text-gray-600 text-sm") }}
                                 {{ name_form.email(value=selected_user.email or "") }}
+                                {% if name_form.email.errors %}
+                                    <div class="text-red-500 text-sm">{{ name_form.email.errors[0] }}</div>
+                                {% endif %}
                             </div>
                             <div>
                                 {{ name_form.firstname.label(class="text-gray-600 text-sm") }}
                                 {{ name_form.firstname(value=selected_user.firstname or "") }}
+                                {% if name_form.firstname.errors %}
+                                    <div class="text-red-500 text-sm">{{ name_form.firstname.errors[0] }}</div>
+                                {% endif %}
                             </div>
                             <div>
                                 {{ name_form.lastname.label(class="text-gray-600 text-sm") }}
                                 {{ name_form.lastname(value=selected_user.lastname or "") }}
+                                {% if name_form.lastname.errors %}
+                                    <div class="text-red-500 text-sm">{{ name_form.lastname.errors[0] }}</div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="flex items-center space-x-4">
