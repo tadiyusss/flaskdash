@@ -3,6 +3,8 @@ from flask_login import login_required, login_user, logout_user, current_user # 
 from .models import User
 from .extensions import db
 from .forms import * 
+import uuid, os
+from werkzeug.utils import secure_filename
 
 core = Blueprint('core', __name__, static_folder='static', template_folder='templates')
 
@@ -56,6 +58,7 @@ def register():
 def profile():
 
     edit_name_form = EditNameForm()
+    edit_profile_form = EditProfileForm()
 
     if edit_name_form.validate_on_submit():
         current_user.firstname = edit_name_form.firstname.data
@@ -65,7 +68,25 @@ def profile():
         db.session.commit()
         flash('Profile updated successfully.', 'global-success')
         
-    return render_template('dashboard/profile.html', user=current_user, edit_name_form = edit_name_form)
+    if edit_profile_form.validate_on_submit():
+        if edit_profile_form.profile_image.data:
+            image_file = edit_profile_form.profile_image.data
+
+            ext = os.path.splitext(secure_filename(image_file.filename))[1]
+            unique_filename = f"{uuid.uuid4().hex}{ext}"
+            save_path = os.path.join(core.static_folder, 'images', 'profiles', unique_filename)
+
+            os.makedirs(os.path.dirname(save_path), exist_ok=True)
+
+            image_file.save(save_path)
+
+            current_user.profile_image = unique_filename
+            db.session.commit()
+
+            flash('Profile image updated successfully.', 'global-success')
+        else:
+            flash('No image selected.', 'global-error')
+    return render_template('dashboard/profile.html', user=current_user, edit_name_form = edit_name_form, edit_profile_form = edit_profile_form)
 
 @core.route('/extensions')
 @login_required
@@ -88,11 +109,37 @@ def manage_user(user_uid):
         return redirect(url_for('core.users'))
     
     password_form = ManageUserPasswordForm()
-    name_form = ManageUserNameForm()
+    name_form = EditNameForm()
     role_form = ManageUserRoleForm()
+    edit_profile_form = EditProfileForm()
 
     role_form.role.choices = [(role.name, role.name) for role in Role.query.all()]
     selected_user = User.query.filter_by(uid=user_uid).first_or_404()
+
+    if edit_profile_form.validate_on_submit():
+        if edit_profile_form.profile_image.data:
+
+            if selected_user.profile_image != 'default-avatar.jpg':
+                old_image_path = os.path.join(core.static_folder, 'images', 'profiles', selected_user.profile_image)
+                if os.path.exists(old_image_path):
+                    os.remove(old_image_path)
+
+            image_file = edit_profile_form.profile_image.data
+
+            ext = os.path.splitext(secure_filename(image_file.filename))[1]
+            unique_filename = f"{uuid.uuid4().hex}{ext}"
+            save_path = os.path.join(core.static_folder, 'images', 'profiles', unique_filename)
+
+            os.makedirs(os.path.dirname(save_path), exist_ok=True)
+
+            image_file.save(save_path)
+
+            selected_user.profile_image = unique_filename
+            db.session.commit()
+
+            flash('Profile image updated successfully.', 'global-success')
+        else:
+            flash('No image selected.', 'global-error')
 
     if role_form.validate_on_submit():
         selected_user.role = role_form.role.data
@@ -112,7 +159,7 @@ def manage_user(user_uid):
         db.session.commit()
         flash('User password updated successfully.', 'global-success')
 
-    return render_template('dashboard/manage_user.html', user=current_user, name_form=name_form, selected_user=selected_user, password_form=password_form, role_form=role_form)
+    return render_template('dashboard/manage_user.html', user=current_user, name_form=name_form, selected_user=selected_user, password_form=password_form, role_form=role_form, edit_profile_form=edit_profile_form)
 
 @core.route('/users/create', methods=['GET', 'POST'])
 @login_required

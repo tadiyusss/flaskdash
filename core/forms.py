@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, IntegerField, EmailField, URLField, FileField, SelectField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError, Optional
+from flask_wtf.file import FileAllowed, FileRequired
 from .styles import Style
 from .models import Setting, Role
 from flask import current_app
@@ -35,32 +36,6 @@ class CreateUserForm(FlaskForm):
     role = SelectField('Role',
         validators=[DataRequired()],
         render_kw={"class": style.text_input}
-    )
-
-class ManageUserNameForm(FlaskForm):
-
-    username = StringField('Username',
-        validators=[DataRequired(), Length(min=2, max=20)],
-        render_kw={"class": style.text_input}
-    )
-
-    email = EmailField('Email',
-        validators=[DataRequired(), Email()],
-        render_kw={"class": style.text_input}
-    )
-
-    firstname = StringField('First Name', 
-        validators=[DataRequired(), Length(min=2, max=32)],
-        render_kw={"class": style.text_input}
-    )
-
-    lastname = StringField('Last Name',
-        validators=[DataRequired(), Length(min=2, max=32)],
-        render_kw={"class": style.text_input}
-    )
-
-    submit = SubmitField('Save Changes',
-        render_kw={"class": style.button}
     )
 
 class ManageUserRoleForm(FlaskForm):
@@ -114,6 +89,17 @@ class LoginForm(FlaskForm):
     )
     submit = SubmitField('Login',
         render_kw={"class": style.button}
+    )
+
+
+
+class EditProfileForm(FlaskForm):
+    profile_image = FileField('Profile Image',
+        validators=[FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!'), FileRequired('File was empty!')],
+        render_kw={"class": "hidden", "x-on:change": "imagePreview()", "accept": "image/*"}
+    )
+    submit = SubmitField('Change Image',
+        render_kw={"class": style.button},
     )
 
 class EditNameForm(FlaskForm):

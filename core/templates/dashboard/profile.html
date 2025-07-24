@@ -9,49 +9,56 @@
                     <p class="text-gray-400 text-sm">Update your photo, first name, and last name to keep your profile up to date.</p>
                 </div>
                 <div class="mt-4 space-y-4">
-                    <div class="md:flex md:items-center md:justify-between md:space-y-0 space-y-4">
-                        <div class="flex items-center space-x-4">
-                            <img src="{{ url_for('static', filename='images/profiles/' + current_user.profile_image) }}" class="size-20 rounded-full">
+                    <form method="POST" class="md:flex md:items-center md:justify-between md:space-y-0 space-y-4" enctype="multipart/form-data">
+                        {{ edit_profile_form.hidden_tag() }}
+                        <div class="flex items-center space-x-4" x-data="{
+                            profile_image_preview: '{{ url_for('static', filename='images/profiles/' + current_user.profile_image) }}',
+                            imagePreview() {
+                                const file = document.getElementById('profile_image').files[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onload = (e) => {
+                                        this.profile_image_preview = e.target.result;
+                                    };
+                                    reader.readAsDataURL(file);
+                                } else {
+                                    this.profile_image_preview = '{{ url_for('static', filename='images/profiles/default.png') }}';
+                                }
+                            }
+                            
+                        }">
+
+                            <label for="{{ edit_profile_form.profile_image.id }}" class="cursor-pointer">
+                                <img class="size-20 rounded-full" :src="profile_image_preview" id="profile_image_preview" alt="Profile Image">
+                            </label>
+                            {{ edit_profile_form.profile_image }}
                             <div class="block">
                                 <p class="text-gray-700 font-medium">{{ current_user.firstname or '' }} {{ current_user.lastname or '' }}</p>
                                 <p class="text-gray-400 text-sm">{{ current_user.email }}</p>
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button class="text-sm rounded px-4 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Upload New Picture</button>
-                            <button class="text-sm rounded px-2 py-1 rounded border bg-gray-100 text-gray-700 hover:bg-gray-200 ease duration-200">Delete</button>
+                            {{ edit_profile_form.submit }}
                         </div>
-                    </div>
+                    </form>
                     <form class="space-y-4" method="POST">
                         <div class="grid md:grid-cols-2 gap-4 grid-cols-1">
                             {{ edit_name_form.hidden_tag() }}
                             <div>
                                 {{ edit_name_form.username.label(class="text-gray-600 text-sm") }}
                                 {{ edit_name_form.username(value=current_user.username or "") }}
-                                {% if edit_name_form.username.errors %}
-                                    <div class="text-red-500 text-sm">{{ edit_name_form.username.errors[0] }}</div>
-                                {% endif %}
                             </div>
                             <div>
                                 {{ edit_name_form.email.label(class="text-gray-600 text-sm") }}
                                 {{ edit_name_form.email(value=current_user.email or "") }}
-                                {% if edit_name_form.email.errors %}
-                                    <div class="text-red-500 text-sm">{{ edit_name_form.email.errors[0] }}</div>
-                                {% endif %}
                             </div>
                             <div>
                                 {{ edit_name_form.firstname.label(class="text-gray-600 text-sm") }}
                                 {{ edit_name_form.firstname(value=current_user.firstname or "") }}
-                                {% if edit_name_form.firstname.errors %}
-                                    <div class="text-red-500 text-sm">{{ edit_name_form.firstname.errors[0] }}</div>
-                                {% endif %}
                             </div>
                             <div>
                                 {{ edit_name_form.lastname.label(class="text-gray-600 text-sm") }}
                                 {{ edit_name_form.lastname(value=current_user.lastname or "") }}
-                                {% if edit_name_form.lastname.errors %}
-                                    <div class="text-red-500 text-sm">{{ edit_name_form.lastname.errors[0] }}</div>
-                                {% endif %}
                             </div>
                         </div>
                         <div class="flex items-center space-x-4">
