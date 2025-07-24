@@ -117,17 +117,29 @@ class LoginForm(FlaskForm):
     )
 
 class EditNameForm(FlaskForm):
+    username = StringField('Username',
+        validators=[DataRequired(), Length(min=2, max=20)],
+        render_kw={"class": style.text_input}
+    )
+
+    email = EmailField('Email',
+        validators=[DataRequired(), Email()],
+        render_kw={"class": style.text_input}
+    )
+
     firstname = StringField('First Name', 
         validators=[DataRequired(), Length(min=2, max=32)],
         render_kw={"class": style.text_input}
     )
+
     lastname = StringField('Last Name',
         validators=[DataRequired(), Length(min=2, max=32)],
         render_kw={"class": style.text_input}
     )
 
     submit = SubmitField('Save Changes',
-        render_kw={"class": style.button})
+        render_kw={"class": style.button}
+    )
     
 def create_settings_form():
     class DynamicSettingsForm(FlaskForm):

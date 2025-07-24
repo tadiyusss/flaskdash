@@ -3,3 +3,4 @@ __pycache__
 migrations
 .pytest_cache
 env
+instances/

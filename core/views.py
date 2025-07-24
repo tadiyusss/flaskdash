@@ -60,6 +60,8 @@ def profile():
     if edit_name_form.validate_on_submit():
         current_user.firstname = edit_name_form.firstname.data
         current_user.lastname = edit_name_form.lastname.data
+        current_user.username = edit_name_form.username.data
+        current_user.email = edit_name_form.email.data
         db.session.commit()
         flash('Profile updated successfully.', 'global-success')
         
