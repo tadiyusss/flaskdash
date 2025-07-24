@@ -1,11 +1,10 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
-from flask_login import login_required, login_user, logout_user, current_user
-from .models import User
+from flask_login import login_required, current_user
 from .extensions import db
 from .forms import * 
-import uuid, os
-from werkzeug.utils import secure_filename
 from core.views import auth, users
+from core.forms.settings import create_settings_form
+from core.models import Setting
 
 core = Blueprint('core', __name__, static_folder='static', template_folder='templates')
 

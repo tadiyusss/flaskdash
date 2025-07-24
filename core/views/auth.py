@@ -1,6 +1,6 @@
 from flask_login import login_required, login_user, logout_user, current_user
 from flask import Blueprint, render_template, redirect, url_for, flash
-from core.forms import * 
+from core.forms.auth import LoginForm, RegisterForm
 from core.extensions import db
 from core.models import User
 
