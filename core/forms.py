@@ -37,6 +37,51 @@ class CreateUserForm(FlaskForm):
         render_kw={"class": style.text_input}
     )
 
+class ManageUserNameForm(FlaskForm):
+
+    username = StringField('Username',
+        validators=[DataRequired(), Length(min=2, max=20)],
+        render_kw={"class": style.text_input}
+    )
+
+    email = EmailField('Email',
+        validators=[DataRequired(), Email()],
+        render_kw={"class": style.text_input}
+    )
+
+    firstname = StringField('First Name', 
+        validators=[DataRequired(), Length(min=2, max=32)],
+        render_kw={"class": style.text_input}
+    )
+
+    lastname = StringField('Last Name',
+        validators=[DataRequired(), Length(min=2, max=32)],
+        render_kw={"class": style.text_input}
+    )
+
+    submit = SubmitField('Save Changes',
+        render_kw={"class": style.button}
+    )
+
+class ManageUserRoleForm(FlaskForm):
+    role = SelectField('Role',
+        validators=[DataRequired()],
+        render_kw={"class": style.text_input}
+    )
+
+    submit = SubmitField('Change Role',
+        render_kw={"class": style.button}
+    )
+
+class ManageUserPasswordForm(FlaskForm):
+    new_password = PasswordField('New Password',
+        validators=[DataRequired(), Length(min=6)],
+        render_kw={"class": style.text_input}
+    )
+    submit = SubmitField('Change Password',
+        render_kw={"class": style.button}
+    )   
+
 class RegisterForm(FlaskForm):
     username = StringField('Username', 
         validators=[DataRequired(), Length(min=2, max=20)], 

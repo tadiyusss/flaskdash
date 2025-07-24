@@ -77,6 +77,41 @@ def users():
         
     return render_template('dashboard/users.html', user=current_user, users = users)
 
+@core.route('/users/manage/<string:user_uid>', methods=['GET', 'POST'])
+@login_required
+def manage_user(user_uid):
+    
+    if current_user.uid == user_uid:
+        flash('You cannot manage your own account in this page. Please use the profile page', 'global-error')
+        return redirect(url_for('core.users'))
+    
+    password_form = ManageUserPasswordForm()
+    name_form = ManageUserNameForm()
+    role_form = ManageUserRoleForm()
+
+    role_form.role.choices = [(role.name, role.name) for role in Role.query.all()]
+    selected_user = User.query.filter_by(uid=user_uid).first_or_404()
+
+    if role_form.validate_on_submit():
+        selected_user.role = role_form.role.data
+        db.session.commit()
+        flash('User role updated successfully.', 'global-success')        
+
+    if name_form.validate_on_submit():
+        selected_user.firstname = name_form.firstname.data
+        selected_user.lastname = name_form.lastname.data
+        selected_user.username = name_form.username.data
+        selected_user.email = name_form.email.data
+        db.session.commit()
+        flash('User details updated successfully.', 'global-success')
+
+    if password_form.validate_on_submit():
+        selected_user.set_password(password_form.new_password.data)
+        db.session.commit()
+        flash('User password updated successfully.', 'global-success')
+
+    return render_template('dashboard/manage_user.html', user=current_user, name_form=name_form, selected_user=selected_user, password_form=password_form, role_form=role_form)
+
 @core.route('/users/create', methods=['GET', 'POST'])
 @login_required
 def create_user():
