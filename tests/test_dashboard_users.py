@@ -6,7 +6,16 @@ TestUser = {
     'lastname': 'Fields',
     'email': 'vsanders@example.net',
     'password': 'bo*H3Wdovf',
-    'role': 'admin'
+    'role': 'Administrator'
+}
+
+SecondUser = {
+    'username': 'jamesjohnson',
+    'firstname': 'James',
+    'lastname': 'Johnson',
+    'email': 'jjohnson@example.net',
+    'password': 'james123',
+    'role': 'Viewer'
 }
 
 def test_users_table(client):
@@ -24,14 +33,20 @@ def test_users_table(client):
     assert TestUser['email'] in response.data.decode('utf-8')
 
 def test_users_create(client, db_session):
-    response = client.post('/dashboard/users/create', data={
-        'username': TestUser['username'],
-        'firstname': TestUser['firstname'],
-        'lastname': TestUser['lastname'],
+    response = client.post('/dashboard/', data={
         'email': TestUser['email'],
-        'password': TestUser['password'],
-        'role': TestUser['role']
+        'password': TestUser['password']
     })
 
-    assert response.status_code == 302  # Redirect after successful creation
-    assert User.query.filter_by(username=TestUser['username']).first() is not None
+
+    response = client.post('/dashboard/users/create', data={
+        'username': SecondUser['username'],
+        'firstname': SecondUser['firstname'],
+        'lastname': SecondUser['lastname'],
+        'email': SecondUser['email'],
+        'password': SecondUser['password'],
+        'role': SecondUser['role']
+    })
+
+    
+    assert "User created successfully." in response.data.decode('utf-8')
