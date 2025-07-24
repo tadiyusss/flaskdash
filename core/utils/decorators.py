@@ -11,6 +11,7 @@ def role_required(role):
     def wrapper(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
+            
             if not current_user.is_authenticated:
                 abort(403)
             if getattr(current_user, 'roles', None) is None or role != current_user.role:

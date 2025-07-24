@@ -7,11 +7,12 @@ from core.extensions import db
 import os
 import uuid
 from werkzeug.utils import secure_filename
-
+from core.utils.decorators import role_required
 
 def generate_blueprint(core):
-        
+    
     @core.route('/users/create', methods=['GET', 'POST'])
+    @role_required('Administrator')
     @login_required
     def create_user():
         form = CreateUserForm()
@@ -35,12 +36,14 @@ def generate_blueprint(core):
         return render_template('dashboard/create_user.html', user=current_user, form=form)
 
     @core.route('/users')
+    @role_required('Administrator')
     @login_required
     def users():
         users = User.query.all()
         return render_template('dashboard/users.html', user=current_user, users = users)
     
     @core.route('/users/manage/<string:user_uid>', methods=['GET', 'POST'])
+    @role_required('Administrator')
     @login_required
     def manage_user(user_uid):
         

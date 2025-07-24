@@ -5,13 +5,16 @@ from .forms import *
 from core.views import auth, users
 from core.forms.settings import create_settings_form
 from core.models import Setting
+from core.utils.decorators import role_required
 
 core = Blueprint('core', __name__, static_folder='static', template_folder='templates')
 
 auth.generate_blueprint(core)
 users.generate_blueprint(core)
 
+
 @core.route('/extensions')
+@role_required('Administrator')
 @login_required
 def extensions():
     return render_template('dashboard/extensions.html', user=current_user)
@@ -22,6 +25,7 @@ def dashboard():
     return render_template('dashboard/home.html', user=current_user)
 
 @core.route('/settings', methods=['GET', 'POST'])
+@role_required('Administrator')
 @login_required
 def settings():
     form = create_settings_form()
