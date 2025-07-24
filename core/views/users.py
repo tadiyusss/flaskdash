@@ -120,10 +120,6 @@ def generate_blueprint(core):
             current_user.email = edit_name_form.email.data
             db.session.commit()
             flash('Profile updated successfully.', 'global-success')
-        else:
-            for field, errors in edit_name_form.errors.items():
-                for error in errors:
-                    flash(error, 'global-error')
             
         if edit_profile_form.validate_on_submit():
             if edit_profile_form.profile_image.data:
@@ -143,8 +139,4 @@ def generate_blueprint(core):
                 flash('Profile image updated successfully.', 'global-success')
             else:
                 flash('No image selected.', 'global-error')
-        else:
-            for field, errors in edit_profile_form.errors.items():
-                for error in errors:
-                    flash(error, 'global-error')
         return render_template('dashboard/profile.html', user=current_user, edit_name_form = edit_name_form, edit_profile_form = edit_profile_form)
