@@ -39,7 +39,7 @@ if __name__ == "__main__":
                 firstname=firstname,
                 lastname=lastname,
                 email=email,
-                role='admin' 
+                role='Administrator' 
             )
             new_user.set_password(password)
 
