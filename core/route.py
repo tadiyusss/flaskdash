@@ -6,6 +6,7 @@ from core.views import auth, users
 from core.forms.settings import create_settings_form
 from core.models import Setting
 from core.utils.decorators import role_required
+from core.utils.side_navigation import register_sidebar_item
 
 core = Blueprint('core', __name__, static_folder='static', template_folder='templates')
 
@@ -17,6 +18,7 @@ users.generate_blueprint(core)
 @role_required('Administrator')
 @login_required
 def extensions():
+
     return render_template('dashboard/extensions.html', user=current_user)
 
 @core.route('/home')
