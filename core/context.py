@@ -1,6 +1,6 @@
 from flask import g, current_app
 from core.models import Setting
-from core.utils.side_navigation import get_sidebar_items_for_user
+from core.utils.registry.side_navigation import get_sidebar_items_for_user
 from flask_login import current_user
 
 def init_context(app):
