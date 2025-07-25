@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import DataRequired, Email, Length, Regexp
 from core.styles import Style
 
 style = Style()
@@ -16,12 +16,12 @@ class CreateUserForm(FlaskForm):
     )
 
     firstname = StringField('First Name', 
-        validators=[DataRequired(), Length(min=2, max=32)],
+        validators=[DataRequired(), Length(min=2, max=32), Regexp(r'^[a-zA-Z]+$', message="First name must contain only letters.")],
         render_kw={"class": style.text_input}
     )
 
     lastname = StringField('Last Name',
-        validators=[DataRequired(), Length(min=2, max=32)],
+        validators=[DataRequired(), Length(min=2, max=32), Regexp(r'^[a-zA-Z]+$', message="Last name must contain only letters.")],
         render_kw={"class": style.text_input}
     )
 

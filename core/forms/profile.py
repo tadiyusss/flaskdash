@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, EmailField
+from wtforms import StringField, SubmitField, EmailField, HiddenField
 from wtforms.validators import DataRequired, Email, Length
 from core.styles import Style
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from . import ALLOWED_IMAGE_EXTENSIONS
+from wtforms.validators import Regexp
 
 style = Style()
 
@@ -19,22 +20,17 @@ class EditNameForm(FlaskForm):
     )
 
     firstname = StringField('First Name', 
-        validators=[],
+        validators=[Regexp(r'^[a-zA-Z]+$', message="First name must contain only letters.")],
         render_kw={"class": style.text_input}
     )
 
     lastname = StringField('Last Name',
-        validators=[],
+        validators=[Regexp(r'^[a-zA-Z]+$', message="Last name must contain only letters.")],
         render_kw={"class": style.text_input}
     )
 
-class EditProfileForm(FlaskForm):
-    profile_image = FileField('Profile Image',
-        validators=[FileAllowed(ALLOWED_IMAGE_EXTENSIONS, 'Invalid file extension.'), FileRequired('File was empty!')],
-        render_kw={"class": "hidden", "x-on:change": "imagePreview()", "accept": "image/*"}
-    )
-    submit = SubmitField('Change Image',
-        render_kw={"class": style.button},
+    submit = SubmitField('Save Changes',
+        render_kw={"class": style.button}
     )
 
 class EditProfileForm(FlaskForm):

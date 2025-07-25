@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from .extensions import db
 from .forms import * 
-from core.views import auth, users
+from core.views import auth, users, profile
 from core.forms.settings import create_settings_form
 from core.models import Setting
 from core.utils.decorators import role_required
@@ -11,7 +11,7 @@ core = Blueprint('core', __name__, static_folder='static', template_folder='temp
 
 auth.generate_blueprint(core)
 users.generate_blueprint(core)
-
+profile.generate_blueprint(core)
 
 @core.route('/extensions')
 @role_required('Administrator')
