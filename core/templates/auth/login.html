@@ -42,8 +42,10 @@
             {% endwith %}
         </form>
     </div>
+    {% if g.settings['allow_registration'] == "1" %}
     <div class="text-center">
         <p class="text-gray-600">Don't have an account? <a href="{{ url_for('core.register') }}" class="underline">Register.</a></p>
     </div>
+    {% endif %}
 </div>
 {% endblock %}
