@@ -6,6 +6,11 @@ from flask import abort
 def role_required(role):
     """
     Decorator to check if the current user has the required role.
+    
+    :usage: @role_required(role_name)
+    :param role: The role required to access the decorated view.
+    :raises: 403 Forbidden if the user does not have the required role or is not authenticated.
+    
     """
 
     def wrapper(f):
