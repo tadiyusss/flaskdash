@@ -6,13 +6,14 @@ def register_sidebar_item(item: dict):
     _registered_sidebar_items.append(item)
 
 def get_sidebar_items_for_user(user):
-    def user_has_role(item):
-        if not item.get('roles'):
-            return True
-        if '*' in item['roles']:
-            return True
-        if user.is_authenticated and user.role in item['roles']:
-            return True
-        return False
-    return [item for item in _registered_sidebar_items if user_has_role(item)]
+    def has_role(roles):
+        return user.role in roles or '*' in roles
 
+    return [
+        {
+            "name": category['name'],
+            "items": [item for item in category['items'] if has_role(item['roles'])]
+        }
+        for category in _registered_sidebar_items
+        if has_role(category['roles']) and any(has_role(item['roles']) for item in category['items'])
+    ]

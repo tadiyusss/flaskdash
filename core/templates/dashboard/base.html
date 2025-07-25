@@ -14,16 +14,18 @@
                 </button>
             </div>
             <div class="px-4 py-1">
-                <h6 class="text-sm text-gray-400">Dashboard</h6>
+                {% for category in get_sidebar() %}
+                <h6 class="text-sm text-gray-400">{{category['name']}}</h6>
                 
                 <div class="my-1">
-                    {% for item in get_sidebar() %}
+                    {% for item in category['items'] %}
                         <a href="{{ url_for(item['route']) }}" class="flex items-center gap-2 px-2 py-2 hover:bg-gray-100 rounded-md transition-colors">
                             {{ item['icon']|safe }}
                             <p class="text-sm text-gray-700">{{ item['name'] }}</p>
                         </a>
                     {% endfor %}
                 </div>
+                {% endfor %}
             </div>
         </div>
     </aside>
