@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, EmailField, HiddenField
 from wtforms.validators import DataRequired, Email, Length, ValidationError
-from .validators import validate_username_unique, validate_email_unique
+from .validators import validate_my_email_unique, validate_my_username_unique
 from core.styles import Style
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from . import ALLOWED_IMAGE_EXTENSIONS
@@ -11,12 +11,12 @@ style = Style()
 
 class EditNameForm(FlaskForm):
     username = StringField('Username',
-        validators=[DataRequired("Username is required."), Length(min=2, max=20), validate_username_unique],
+        validators=[DataRequired("Username is required."), Length(min=2, max=20), validate_my_username_unique],
         render_kw={"class": style.text_input}
     )
 
     email = EmailField('Email',
-        validators=[DataRequired("Email is required."), Email(), validate_email_unique],
+        validators=[DataRequired("Email is required."), Email(), validate_my_email_unique],
         render_kw={"class": style.text_input}
     )
 

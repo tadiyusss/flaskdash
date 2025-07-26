@@ -32,6 +32,9 @@ def generate_blueprint(core):
             db.session.commit()
             flash('User created successfully.', 'global-success')
             return redirect(url_for('core.users'))
+        else:
+            for error in form.errors.values():
+                flash(error[0], 'global-error')
 
         return render_template('dashboard/create_user.html', user=current_user, form=form)
 

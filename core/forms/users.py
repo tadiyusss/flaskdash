@@ -8,11 +8,11 @@ style = Style()
 
 class CreateUserForm(FlaskForm):
     username = StringField('Username', 
-        validators=[DataRequired(), Length(min=2, max=20)], 
+        validators=[DataRequired(), Length(min=2, max=20), validate_username_unique], 
         render_kw={"class": style.text_input}
     )
     email = StringField('Email', 
-        validators=[DataRequired(), Email()],
+        validators=[DataRequired(), Email(), validate_email_unique],
         render_kw={"class": style.text_input}
     )
 
