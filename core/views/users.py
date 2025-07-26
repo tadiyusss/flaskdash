@@ -45,6 +45,22 @@ def generate_blueprint(core):
         users = User.query.all()
         return render_template('dashboard/users.html', user=current_user, users = users)
     
+    @core.route('/users/manage/<string:user_uid>/delete')
+    @role_required('Administrator')
+    @login_required
+    def delete_user(user_uid):
+        selected_user = User.query.filter_by(uid=user_uid).first_or_404()
+
+        if current_user.uid == selected_user.uid:
+            flash('You cannot delete your own account.', 'global-error')
+            return redirect(url_for('core.users'))
+
+        selected_user.delete_profile_image()
+        db.session.delete(selected_user)
+        db.session.commit()
+        
+        flash('User deleted successfully.', 'global-success')
+        return redirect(url_for('core.users'))
 
     @core.route('/users/manage/<string:user_uid>/edit/name', methods=['GET', 'POST'])
     @role_required('Administrator')

@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from sqlalchemy import Enum
 import uuid
+import os
 import enum
 
 
@@ -37,6 +38,18 @@ class User(db.Model, UserMixin):
     
     def check_password(self, raw_password):
         return check_password_hash(self.password, raw_password)
+    
+    def delete_profile_image(self):
+        if self.profile_image and self.profile_image != 'default-avatar.jpg':
+            try:
+                os.remove(os.path.join('core', 'static', 'images', 'profiles', self.profile_image))
+                print(f"Deleted profile image: {self.profile_image}")
+            except FileNotFoundError:
+                print(f"File not found: {self.profile_image}")
+                pass
+
+    def __repr__(self):
+        return f"<User {self.username} ({self.uid})>"
 
 class SettingsType(enum.Enum):
     text = 'text'
@@ -64,28 +77,6 @@ class Setting(db.Model):
 
     def __repr__(self):
         return f"<Setting {self.name} ({self.key})>"
-
-    @staticmethod
-    def create_or_update(name, key, value, type=SettingsType.text, description=None, editable=True):
-        setting = Setting.query.filter_by(key=key).first()
-        if setting:
-            setting.name = name
-            setting.value = value
-            setting.type = type
-            setting.description = description
-            setting.editable = editable
-        else:
-            setting = Setting(
-                name=name,
-                key=key,
-                value=value,
-                type=type,
-                description=description,
-                editable=editable
-            )
-            db.session.add(setting)
-        db.session.commit()
-        return setting
     
     def to_dict(self):
         return {
