@@ -10,3 +10,4 @@ test_dashboard_users.py
 *.jpg
 *.png
 *.webp
+test.py
