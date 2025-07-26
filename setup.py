@@ -22,11 +22,6 @@ if __name__ == "__main__":
 
         with app.app_context():
 
-            # Create default settings
-            for setting in DEFAULT_SETTINGS:
-                db.session.add(Setting(**setting))
-            db.session.commit()
-            print("Default settings created successfully.")
 
             for role in DEFAULT_ROLES:
                 new_role = Role(**role)
