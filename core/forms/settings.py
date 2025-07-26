@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, TextAreaField, IntegerField, URLField, BooleanField
+from wtforms import StringField, EmailField, TextAreaField, IntegerField, URLField, BooleanField, SelectField
 from core.styles import Style
-from core.models import Setting
+from core.models import Setting, SettingChoices, SettingsType
 
 style = Style()
 
@@ -54,6 +54,14 @@ def create_settings_form():
                 default=setting.value,
                 description=setting.description,
                 render_kw={"class": style.text_input}
+            )
+        elif field_type == 'select':
+            choices = SettingChoices.query.filter_by(setting_key=setting.key).all()
+            field = SelectField(setting.name,
+                choices=[(choice.value, choice.label) for choice in choices],
+                default=setting.value,
+                description=setting.description,
+                render_kw={"class": style.select}
             )
         else:
             continue

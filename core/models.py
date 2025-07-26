@@ -46,6 +46,8 @@ class SettingsType(enum.Enum):
     email = 'email'
     url = 'url'
     datetime = 'datetime'
+    select = 'select'
+    radio = 'radio'
 
 class Setting(db.Model):
     __table_args__ = (
@@ -95,3 +97,31 @@ class Setting(db.Model):
             'description': self.description,
             'editable': self.editable
         }
+
+class SettingChoices(db.Model):
+    __table_args__ = (
+        db.UniqueConstraint('setting_key', 'value', name='uq_setting_choice'),
+    )
+    id = db.Column(db.Integer, primary_key=True)
+    setting_key = db.Column(db.String(100), db.ForeignKey('setting.key'), nullable=False)
+    value = db.Column(db.String(100), nullable=False)
+    label = db.Column(db.String(100), nullable=False)
+
+
+"""
+setting = Setting.create_or_update(
+    name="Site Theme",
+    key="site_theme",
+    value="light",
+    type=SettingsType.select,
+    description="Choose the theme for the site",
+    editable=True
+)
+
+SettingChoices.create(
+    setting_key=setting.key,
+    value="light",
+    label="Light Theme"
+)
+
+"""

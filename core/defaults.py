@@ -22,6 +22,20 @@ DEFAULT_SETTINGS = [
         "type": "bool",
         "description": "Enable or disable user registration on the site.",
         "editable": True
+    },
+    {
+        "key": "default_language",
+        "name": "Default Language",
+        "value": "en",
+        "type": "select",
+        "description": "The default language for the site.",
+        "editable": True,
+        "choices": [
+            {"value": "en", "label": "English"},
+            {"value": "es", "label": "Spanish"},
+            {"value": "fr", "label": "French"},
+            {"value": "de", "label": "German"}
+        ]
     }
 ]
 
