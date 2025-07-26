@@ -1,3 +1,11 @@
+DEFAULT_SETTINGS_CATEGORY = [
+    {
+        "name": "site_settings",
+        "nice_name": "Site Settings",
+        "description": "Settings related to the overall site configuration.",
+    }
+]
+
 DEFAULT_SETTINGS = [
     {
         "key": "site_title",
@@ -5,7 +13,8 @@ DEFAULT_SETTINGS = [
         "value": "FlaskDash",
         "type": "text",
         "description": "The title of your site, displayed in the header.",
-        "editable": True
+        "editable": True,
+        "category_name": "site_settings"
     },
     {
         "key": "site_description",
@@ -13,7 +22,8 @@ DEFAULT_SETTINGS = [
         "value": "A simple Flask dashboard application.",
         "type": "textarea",
         "description": "A brief description of your site for SEO purposes.",
-        "editable": True
+        "editable": True,
+        "category_name": "site_settings"
     },
     {
         "key": "allow_registration",
@@ -21,7 +31,8 @@ DEFAULT_SETTINGS = [
         "value": False,
         "type": "bool",
         "description": "Enable or disable user registration on the site.",
-        "editable": True
+        "editable": True,
+        "category_name": "site_settings"
     },
     {
         "key": "default_language",
@@ -35,7 +46,8 @@ DEFAULT_SETTINGS = [
             {"value": "es", "label": "Spanish"},
             {"value": "fr", "label": "French"},
             {"value": "de", "label": "German"}
-        ]
+        ],
+        "category_name": "site_settings"
     }
 ]
 
@@ -49,8 +61,8 @@ DEFAULT_ROLES = [
         "description": "Editor with access to content management features."
     },
     {
-        "name": "Viewer",
-        "description": "Viewer with read-only access to content."
+        "name": "User",
+        "description": "Regular user with limited access to features."
     }
 ]
 

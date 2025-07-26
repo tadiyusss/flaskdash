@@ -32,8 +32,8 @@ class Setting(db.Model):
         db.UniqueConstraint('key', name='uq_setting_key'),
     )
     id = db.Column(db.Integer, primary_key=True)
-    category = db.relationship('SettingCategory', backref=db.backref('settings', lazy=True))
-    category_id = db.Column(db.Integer, db.ForeignKey('setting_category.id'), nullable=True)
+    category_name = db.Column(db.String(100), db.ForeignKey('setting_category.name'), nullable=False)
+    category = db.relationship('SettingCategory', backref='settings', lazy=True)
     name = db.Column(db.String(100), nullable=False)
     key = db.Column(db.String(100), nullable=False, unique=True)
     value = db.Column(db.String(200), nullable=False)

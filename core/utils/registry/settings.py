@@ -1,6 +1,23 @@
-from core.models.settings import Setting, SettingsType, SettingChoices, db
+from core.models.settings import Setting, SettingsType, SettingChoices, SettingCategory, db
 
-def register_setting(name: str, key: str, value: str, type: SettingsType, description: str = None, editable: bool = True) -> bool:
+def register_setting_category(name: str, nice_name: str, description: str = None) -> bool:
+    exists = SettingCategory.query.filter_by(name=name).first()
+
+    if exists:
+        print(f"Setting category '{name}' already exists.")
+        return False
+
+    category = SettingCategory(
+        name=name,
+        nice_name=nice_name,
+        description=description
+    )
+    db.session.add(category)
+    db.session.commit()
+    print(f"Setting category '{name}' registered successfully.")
+    return True
+
+def register_setting(name: str, key: str, value: str, type: SettingsType, category_name: str, description: str = None, editable: bool = True) -> bool:
     exists = Setting.query.filter_by(key=key).first()
 
     if type not in SettingsType:
@@ -16,7 +33,8 @@ def register_setting(name: str, key: str, value: str, type: SettingsType, descri
         value=value,
         type=type,
         description=description,
-        editable=editable
+        editable=editable,
+        category_name=category_name
     )
     db.session.add(setting)
     db.session.commit()
