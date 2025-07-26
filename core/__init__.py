@@ -1,7 +1,7 @@
 from flask import Flask
 from .extensions import db, login_manager, migrate
 from .route import core
-from .models import User
+from .models.users import User
 from .context import init_context
 from config import *
 from core.initializations.settings import register_default_settings

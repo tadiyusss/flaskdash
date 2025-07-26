@@ -4,7 +4,7 @@ from .extensions import db
 from .forms import * 
 from core.views import auth, users, profile
 from core.forms.settings import create_settings_form
-from core.models import Setting
+from core.models.settings import Setting
 from core.utils.decorators import role_required
 from wtforms import BooleanField
 

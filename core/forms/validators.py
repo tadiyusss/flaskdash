@@ -1,4 +1,4 @@
-from core.models import User
+from core.models.users import User
 from wtforms import ValidationError
 from flask_login import current_user
 

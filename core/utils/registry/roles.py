@@ -1,4 +1,4 @@
-from core.models import Role, db
+from core.models.users import Role, db
 
 def register_role(name: str, description: str = None):
     exists = Role.query.filter_by(name=name).first()

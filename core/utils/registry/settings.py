@@ -1,4 +1,4 @@
-from core.models import Setting, SettingsType, SettingChoices, db
+from core.models.settings import Setting, SettingsType, SettingChoices, db
 
 def register_setting(name: str, key: str, value: str, type: SettingsType, description: str = None, editable: bool = True) -> bool:
     exists = Setting.query.filter_by(key=key).first()

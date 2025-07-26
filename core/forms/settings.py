@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, TextAreaField, IntegerField, URLField, BooleanField, SelectField
 from core.styles import Style
-from core.models import Setting, SettingChoices, SettingsType
+from core.models.settings import Setting, SettingChoices, SettingsType
 
 style = Style()
 
