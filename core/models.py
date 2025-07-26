@@ -54,7 +54,7 @@ class Setting(db.Model):
     )
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    key = db.Column(db.String(100), nullable=False)
+    key = db.Column(db.String(100), nullable=False, unique=True)
     value = db.Column(db.String(200), nullable=False)
     type = db.Column(Enum(SettingsType), nullable=False, default=SettingsType.text)
     description = db.Column(db.String(200), nullable=True)

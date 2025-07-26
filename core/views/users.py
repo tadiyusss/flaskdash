@@ -1,8 +1,8 @@
 from flask_login import login_required, login_user, logout_user, current_user
 from flask import render_template, redirect, url_for, flash, request
 from core.models import User, Role
-from core.forms.users import CreateUserForm, ManageUserPasswordForm, ManageUserRoleForm
-from core.forms.profile import EditNameForm, EditProfileForm
+from core.forms.users import CreateUserForm, ManageUserPasswordForm, ManageUserRoleForm, ManageNameForm
+from core.forms.profile import EditProfileForm
 from core.extensions import db
 import os
 import uuid
@@ -48,11 +48,19 @@ def generate_blueprint(core):
     @login_required
     def edit_user_name(user_uid):
         selected_user = User.query.filter_by(uid=user_uid).first_or_404()
-        name_form = EditNameForm(obj=selected_user)
+        name_form = ManageNameForm(obj=selected_user)
 
         if not name_form.validate_on_submit():
             for error in name_form.errors.values():
                 flash(error[0], 'global-error')
+            return redirect(url_for('core.manage_user', user_uid=user_uid))
+
+        if name_form.username.data != selected_user.username and User.query.filter_by(username=name_form.username.data).first():
+            flash('Username already exists.', 'global-error')
+            return redirect(url_for('core.manage_user', user_uid=user_uid))
+
+        if name_form.email.data != selected_user.email and User.query.filter_by(email=name_form.email.data).first():
+            flash('Email already exists.', 'global-error')
             return redirect(url_for('core.manage_user', user_uid=user_uid))
 
         selected_user.firstname = name_form.firstname.data
@@ -140,7 +148,7 @@ def generate_blueprint(core):
             return redirect(url_for('core.users'))
         
         password_form = ManageUserPasswordForm()
-        name_form = EditNameForm()
+        name_form = ManageNameForm()
         role_form = ManageUserRoleForm()
         edit_profile_form = EditProfileForm()
 
