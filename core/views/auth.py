@@ -1,9 +1,10 @@
 from flask_login import login_required, login_user, logout_user, current_user
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from core.forms.auth import LoginForm, RegisterForm
 from core.extensions import db
 from core.models.users import User 
 from flask import g
+from core.models.users import LoginHistory
 
 
 def generate_blueprint(core):
@@ -18,6 +19,10 @@ def generate_blueprint(core):
             user = User.query.filter_by(email=form.email.data).first()
             if user and user.check_password(form.password.data):
                 login_user(user)
+                # Record login history
+                login_history = LoginHistory(user_id=user.id, ip_address=request.remote_addr)
+                db.session.add(login_history)
+                db.session.commit()
                 return redirect(url_for('core.dashboard'))
             else:
                 flash('Invalid email or password.', 'error')
