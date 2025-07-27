@@ -42,6 +42,11 @@ class User(db.Model, UserMixin):
     def check_password(self, raw_password):
         return check_password_hash(self.password, raw_password)
     
+    def has_role(self, roles):
+        if isinstance(roles, str):
+            roles = [roles]
+        return self.role in roles or '*' in roles
+
     def delete_profile_image(self):
         if self.profile_image and self.profile_image != 'default-avatar.jpg':
             try:
@@ -53,3 +58,17 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"<User {self.username} ({self.uid})>"
+
+class LoginHistory(db.Model):
+    __table_args__ = (
+        db.UniqueConstraint('user_id', 'timestamp', name='uq_login_history_user_timestamp'),
+    )
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', backref='login_histories')
+    timestamp = db.Column(db.DateTime, default=db.func.current_timestamp())
+    ip_address = db.Column(db.String(45), nullable=True)
+
+    def __repr__(self):
+        return f"<LoginHistory {self.user.username} at {self.timestamp}>"
