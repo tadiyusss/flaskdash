@@ -1,5 +1,16 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Home{% endblock %}
 {% block main %}
-    <h1>Empty</h1>
+    <div class="w-full space-y-2">
+        <div class="grid xl:grid-cols-4 md:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-2">
+            {% for item in analytics_items %}
+                {% if current_user.role in item['roles'] %}
+                <div class="p-4 border bg-white shadow-sm rounded">
+                    <h4 class="text-gray-600 text-sm">{{ item['title'] }}</h4>
+                    <h1 class="text-3xl">{{ item['value_function']() }}</h1>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
