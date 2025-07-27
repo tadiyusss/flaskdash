@@ -1,3 +1,37 @@
+from core.utils.dashboard import *
+
+DEFAULT_ANALYTICS_ITEMS = [
+    {
+        "title": "Total Users",
+        "value_function": lambda: get_total_users(),
+        "roles": [
+            "Administrator",
+        ]
+    },
+    {
+        "title": "Active Users",
+        "value_function": lambda: get_active_users(),
+        "roles": [
+            "Administrator",
+        ]
+    },
+    {
+        "title": "Uploads Storage Usage",
+        "value_function": lambda: get_uploads_storage_usage(),
+        "roles": [
+            "Administrator",
+        ]
+    },
+    {
+        "title": "Total Users",
+        "value_function": lambda: get_total_users(),
+        "roles": [
+            "Administrator",
+        ]
+    }
+]
+
+
 DEFAULT_SETTINGS_CATEGORY = [
     {
         "name": "site_settings",
