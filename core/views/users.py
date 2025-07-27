@@ -1,13 +1,14 @@
 from flask_login import login_required, login_user, logout_user, current_user
 from flask import render_template, redirect, url_for, flash, request
 from core.models.users import User, Role
-from core.forms.users import CreateUserForm, ManageUserPasswordForm, ManageUserRoleForm, ManageNameForm
+from core.forms.users import CreateUserForm, ManageUserPasswordForm, ManageUserRoleForm, ManageNameForm, CreateRoleForm
 from core.forms.profile import EditProfileForm
 from core.extensions import db
 import os
 import uuid
 from werkzeug.utils import secure_filename
 from core.utils.decorators import role_required
+from core.defaults import DEFAULT_ROLES
 
 def generate_blueprint(core):
     
@@ -176,3 +177,39 @@ def generate_blueprint(core):
         role_form.role.data = selected_user.role
 
         return render_template('dashboard/manage_user.html', user=current_user, name_form=name_form, selected_user=selected_user, password_form=password_form, role_form=role_form, edit_profile_form=edit_profile_form)
+    
+    @core.route('/roles', methods=['GET', 'POST'])
+    @role_required('Administrator')
+    @login_required
+    def roles():
+        roles = Role.query.all()
+        form = CreateRoleForm()
+        default_roles = [role['name'] for role in DEFAULT_ROLES]
+        if form.validate_on_submit():
+            new_role = Role(
+                name=form.name.data,
+                description=form.description.data
+            )
+            db.session.add(new_role)
+            db.session.commit()
+            flash('Role created successfully.', 'global-success')
+            return redirect(url_for('core.roles'))
+        else:
+            for error in form.errors.values():
+                flash(error[0], 'global-error')
+
+        return render_template('dashboard/roles.html', user=current_user, roles=roles, form=form, default_roles=default_roles)
+    
+    @core.route('/roles/<string:role_uid>/delete')
+    @role_required('Administrator')
+    @login_required
+    def delete_role(role_uid):
+        role = Role.query.filter_by(uid=role_uid).first_or_404()
+        if role.name in [r['name'] for r in DEFAULT_ROLES]:
+            flash('You cannot delete a default role.', 'global-error')
+            return redirect(url_for('core.roles'))
+
+        db.session.delete(role)
+        db.session.commit()
+        flash('Role deleted successfully.', 'global-success')
+        return redirect(url_for('core.roles'))

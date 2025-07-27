@@ -11,7 +11,12 @@ user_roles = db.Table('user_roles',
 )
 
 class Role(db.Model):
+    __table_args__ = (
+        db.UniqueConstraint('name', name='uq_role_name'),
+        db.UniqueConstraint('uid', name='uq_role_uid'),
+    )
     id = db.Column(db.Integer, primary_key=True)
+    uid = db.Column(db.String(36), default=lambda: str(uuid.uuid4()), unique=True)
     name = db.Column(db.String(50), nullable=False, unique=True)
     description = db.Column(db.String(200), nullable=True)
 

@@ -1,0 +1,68 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{{ g.settings['site_title'] }} - Roles{% endblock %}
+{% block main %}
+    <div class="w-full border rounded-lg p-4 bg-white shadow-sm max-w-4xl mx-auto" x-data="{model_open: false}">
+        <div class="space-y-8 text-zinc-800">
+            <div class="space-y-4">
+                <div class="border-b pb-2 flex items-center justify-between">
+                    <div class="block">
+                        <h4 class="text-lg">Manage Roles</h4>
+                        <p class="text-gray-400 text-sm">Add, create, and manage roles.</p>
+                    </div>
+                    <button @click="model_open = !model_open" class="text-sm rounded px-4 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Create Role</button>
+                </div>
+
+                <div>
+                    <div class="border rounded">
+                        <table class="w-full ">
+                            <thead>
+                                <tr class="bg-gray-50 border-b">
+                                    <th class="text-left font-normal text-sm text-gray-400 p-2 rounded-tl">Name</th>
+                                    <th class="text-left font-normal text-sm text-gray-400 p-2">Description</th>
+                                    <th class="text-left font-normal text-sm text-gray-400 p-2 rounded-tr">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for role in roles %}
+                                <tr class="text-sm border-t">
+                                    <td class="p-2">{{ role.name }}</td>
+                                    <td class="p-2">{{ role.description }}</td>
+                                    <td class="px-2 py-4">
+                                        <a href="{{ url_for('core.delete_role', role_uid = role.uid) }}" class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200 {% if role.name in default_roles %}pointer-events-none opacity-80{% endif %}">Delete</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form method="POST" x-show="model_open" x-transition class="fixed inset-0 flex items-center justify-center z-50">
+            <div @click="model_open = false" class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+            <div @click.away="model_open = false" class="relative bg-white rounded-lg shadow-lg w-full max-w-md z-50">
+                <div class="w-full p-4" id="model-header">
+                    <h1 class="text-lg">Create Role</h1>
+                </div>
+                <div class="p-4 border-y">
+                    {{ form.hidden_tag() }}
+                    <div class="space-y-2">
+                        <div>
+                            <label for="{{ form.name.id }}" class="text-sm text-gray-700">{{ form.name.label }}</label>
+                            {{ form.name }}
+                        </div>
+                        <div>
+                            <label for="{{ form.description.id }}" class="text-sm text-gray-700">{{ form.description.label }}</label>
+                            {{ form.description }}
+                        </div>
+                    </div>
+                </div>
+                <div id="modal-footer" class="p-4">
+                    {{ form.submit }}
+                </div>
+            </div>
+        </form>
+    </div>
+    
+{% endblock %}

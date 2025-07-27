@@ -1,10 +1,25 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, EmailField
-from core.forms.validators import validate_username_unique, validate_email_unique
+from wtforms import StringField, PasswordField, SubmitField, SelectField, EmailField, TextAreaField
+from core.forms.validators import validate_username_unique, validate_email_unique, validate_role_name_unique
 from wtforms.validators import DataRequired, Email, Length, Regexp
 from core.styles import Style
 
 style = Style()
+
+class CreateRoleForm(FlaskForm):
+    name = StringField('Role Name',
+        validators=[DataRequired("Role name is required."), Length(min=2, max=50), validate_role_name_unique],
+        render_kw={"class": style.text_input}
+    )
+
+    description = TextAreaField('Description',
+        validators=[DataRequired("Description is required."), Length(max=200)],
+        render_kw={"class": style.text_input, "rows": 3}
+    )
+
+    submit = SubmitField('Create Role',
+        render_kw={"class": style.button}
+    )
 
 class CreateUserForm(FlaskForm):
     username = StringField('Username', 
