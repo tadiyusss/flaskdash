@@ -1,7 +1,7 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Files{% endblock %}
 {% block main %}
-    <div class="w-full border rounded-lg p-4 bg-white shadow-sm max-w-6xl mx-auto" x-data="{model_open: false}">
+    <div class="w-full border rounded-lg p-4 bg-white shadow-sm max-w-6xl mx-auto">
         <div class="space-y-8 text-zinc-800">
             <div class="space-y-4">
                 <div class="border-b pb-2 flex items-center justify-between">
@@ -10,9 +10,10 @@
                         <p class="text-gray-400 text-sm">Manage and update uploaded files.</p>
                     </div>
                 </div>
-                <form method="POST" class="flex">
-                    <input type="file" class="w-full file:border-0 file:bg-gray-200 file:text-sm file:px-2 file:py-1 file:rounded-s file:mr-4 border rounded-s cursor-pointer text-sm">
-                    <button class="border px-4 py-1 rounded-e text-sm bg-gray-50 hover:bg-gray-100 ease duration-200">Upload</button>
+                <form method="POST" class="flex" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    {{ form.file(class="w-full file:border-0 file:bg-gray-200 file:text-sm file:px-2 file:py-1 file:rounded-s file:mr-4 border rounded-s cursor-pointer text-sm file:hover:pointer-cursor") }}
+                    {{ form.submit(class="border px-4 py-1 rounded-e text-sm bg-gray-50 hover:bg-gray-100 ease duration-200") }}
                 </form>
                 <div>
                     <div class="border rounded">
@@ -26,36 +27,37 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for role in roles %}
+                                {% if files_uploaded %}
+                                {% for file in files_uploaded %}
                                 <tr class="text-sm border-t">
-                                    <td class="p-2">{{ role.name }}</td>
-                                    <td class="p-2">{{ role.description }}</td>
+                                    <td class="p-2">{{ file.uploaded_filename }}</td>
+                                    <td class="p-2">{{ file.upload_date }}</td>
                                     <td class="px-2 py-4">
-                                        <a href="{{ url_for('core.delete_role', role_uid = role.uid) }}" class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200 {% if role.name in default_roles %}pointer-events-none opacity-80{% endif %}">Delete</a>
+                                        <a href="{{ url_for('static', filename='uploads/' + file.absolute_filename) }}" class="border flex size-6 shadow p-1 rounded bg-gray-50 hover:bg-gray-100 ease duration-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="">
+                                                <path d="M12.232 4.232a2.5 2.5 0 0 1 3.536 3.536l-1.225 1.224a.75.75 0 0 0 1.061 1.06l1.224-1.224a4 4 0 0 0-5.656-5.656l-3 3a4 4 0 0 0 .225 5.865.75.75 0 0 0 .977-1.138 2.5 2.5 0 0 1-.142-3.667l3-3Z" />
+                                                <path d="M11.603 7.963a.75.75 0 0 0-.977 1.138 2.5 2.5 0 0 1 .142 3.667l-3 3a2.5 2.5 0 0 1-3.536-3.536l1.225-1.224a.75.75 0 0 0-1.061-1.06l-1.224 1.224a4 4 0 1 0 5.656 5.656l3-3a4 4 0 0 0-.225-5.865Z" />
+                                            </svg>
+                                        </a>
+                                    </td>
+                                    <td class="px-2 py-4">
+                                        <a href="{{ url_for('core.delete_file', uid=file.uid) }}" class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Delete</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
+                                {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center py-2 text-gray-500">
+                                        <p>No File Uploads Found</p>
+                                    </td>
+                                </tr>
+                                {% endif %}
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        <form method="POST" x-show="model_open" x-transition class="fixed inset-0 flex items-center justify-center z-50">
-            <div @click="model_open = false" class="absolute inset-0 bg-black bg-opacity-50"></div>
-
-            <div @click.away="model_open = false" class="relative bg-white rounded-lg shadow-lg w-full max-w-md z-50">
-                <div class="w-full p-4" id="model-header">
-                    <h1 class="text-lg">Create Role</h1>
-                </div>
-                <div class="p-4 border-y">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem accusantium laboriosam maiores sunt placeat enim magnam eius error vero debitis vitae facere voluptates, tenetur omnis, porro voluptatibus, eum voluptate aliquid?</p>
-                </div>
-                <div id="modal-footer" class="p-4">
-                    <p>Hello</p>
-                </div>
-            </div>
-        </form>
     </div>
     
 {% endblock %}
