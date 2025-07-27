@@ -48,6 +48,7 @@ def generate_blueprint(core):
                 new_user = User(
                     username=form.username.data,
                     email=form.email.data,
+                    role=g.settings['default_user_role']
                 )
                 new_user.set_password(form.password.data)
                 db.session.add(new_user)
