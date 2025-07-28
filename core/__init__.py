@@ -6,6 +6,7 @@ from .context import init_context
 from config import *
 from core.initializations.settings import register_default_settings, register_default_categories
 from core.initializations.roles import register_default_roles
+from core.initializations.extensions import *
 from core.defaults import DEFAULT_SETTINGS
 
 def create_app(config_class=Config):
@@ -30,5 +31,6 @@ def create_app(config_class=Config):
         register_default_categories()
         register_default_settings()
         register_default_roles()
-
+        register_all_extensions(app)
+    
     return app
