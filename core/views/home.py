@@ -2,7 +2,7 @@ from flask import render_template
 from flask_login import login_required, current_user
 from core.utils.registry import analytics
 
-def generate_blueprint(core):
+def generate_routes(core):
     @core.route('/home')
     @login_required
     def dashboard():

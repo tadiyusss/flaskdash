@@ -9,14 +9,14 @@ from wtforms import BooleanField
 
 core = Blueprint('core', __name__, static_folder='static', template_folder='templates')
 
-auth.generate_blueprint(core)
-users.generate_blueprint(core)
-profile.generate_blueprint(core)
-roles.generate_blueprint(core)
-settings.generate_blueprint(core)
-extensions.generate_blueprint(core)
-files.generate_blueprint(core)
-home.generate_blueprint(core)
+auth.generate_routes(core)
+users.generate_routes(core)
+profile.generate_routes(core)
+roles.generate_routes(core)
+settings.generate_routes(core)
+extensions.generate_routes(core)
+files.generate_routes(core)
+home.generate_routes(core)
 
 
 

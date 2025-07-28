@@ -7,7 +7,7 @@ from flask import g
 from core.models.users import LoginHistory
 
 
-def generate_blueprint(core):
+def generate_routes(core):
 
     @core.route('/', methods=['GET', 'POST'])
     def login():

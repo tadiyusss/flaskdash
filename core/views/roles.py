@@ -6,7 +6,7 @@ from core.extensions import db
 from core.utils.decorators import role_required
 from core.defaults import DEFAULT_ROLES
 
-def generate_blueprint(core):
+def generate_routes(core):
     @core.route('/roles', methods=['GET', 'POST'])
     @role_required('Administrator')
     @login_required

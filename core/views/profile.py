@@ -6,7 +6,7 @@ from core import db
 import os
 import uuid
 
-def generate_blueprint(core):
+def generate_routes(core):
 
     @login_required
     @core.route('/profile/edit/picture', methods=['POST'])

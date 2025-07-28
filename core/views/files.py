@@ -8,7 +8,7 @@ import os
 from hashlib import sha256
 import uuid
 
-def generate_blueprint(core):
+def generate_routes(core):
 
     @core.route('/files/<string:uid>/delete', methods=['GET'])
     @role_required('Administrator')

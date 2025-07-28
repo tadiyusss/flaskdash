@@ -6,7 +6,7 @@ from core.models.settings import Setting
 from core.utils.decorators import role_required
 from wtforms import BooleanField
 
-def generate_blueprint(core):
+def generate_routes(core):
     @core.route('/settings', methods=['GET', 'POST'])
     @role_required('Administrator')
     @login_required

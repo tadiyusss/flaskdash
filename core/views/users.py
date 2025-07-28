@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 from core.utils.decorators import role_required
 from core.defaults import DEFAULT_ROLES
 
-def generate_blueprint(core):
+def generate_routes(core):
     
     @core.route('/users/create', methods=['GET', 'POST'])
     @role_required('Administrator')
