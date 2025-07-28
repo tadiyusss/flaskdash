@@ -42,15 +42,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="text-sm">
-                                    <td class="py-2 px-4 flex items-center space-x-2">Content Manager</td>
+                                {% for extension in extensions %}
+                                <tr class="text-sm border-t">
+                                    <td class="py-2 px-4">{{ extension['name'] }}</td>
                                     <td class="py-2 px-4">
-                                        <p class="line-clamp-4 text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum est iste atque dolorum tempora, dignissimos nostrum debitis maiores ad facere explicabo omnis quis, optio quas, consectetur unde quae qui assumenda quo excepturi non maxime soluta quaerat! Cum maiores ad vitae magni fuga quia vero, assumenda autem expedita dolores ipsum odit. Voluptate labore magnam sit natus nihil adipisci libero exercitationem quam vero officia nesciunt, accusantium dignissimos. Distinctio repudiandae eligendi illo. Atque doloremque perspiciatis magni eveniet cum quia voluptatem, error praesentium! Earum possimus at iure incidunt accusamus consequuntur dolorem explicabo pariatur eius cumque inventore doloremque omnis eum ratione illum rem, impedit quos voluptates hic aliquam. Minus accusantium fugiat, dolorum minima modi voluptatibus.</p>
+                                        <p class="line-clamp-4 text-gray-500">{{ extension['description'] }}</p>
                                     </td>
                                     <td class="py-2 px-4">
                                         <button class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Manage</button>
                                     </td>
                                 </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
