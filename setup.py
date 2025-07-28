@@ -23,13 +23,6 @@ if __name__ == "__main__":
 
         with app.app_context():
 
-
-            for role in DEFAULT_ROLES:
-                new_role = Role(**role)
-                db.session.add(new_role)
-            db.session.commit()
-            print("Default roles created successfully.")
-
             new_user = User(
                 username=username,
                 firstname=firstname,
