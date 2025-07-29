@@ -19,7 +19,7 @@ def role_required(role):
             
             if not current_user.is_authenticated:
                 abort(403)
-            if current_user.role != role or not hasattr(current_user, 'role'): 
+            if not current_user.has_role(role):
                 abort(403)
             return f(*args, **kwargs)
         return decorated_function
