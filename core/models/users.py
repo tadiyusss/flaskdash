@@ -51,9 +51,7 @@ class User(db.Model, UserMixin):
         if self.profile_image and self.profile_image != 'default-avatar.jpg':
             try:
                 os.remove(os.path.join('core', 'static', 'images', 'profiles', self.profile_image))
-                print(f"Deleted profile image: {self.profile_image}")
             except FileNotFoundError:
-                print(f"File not found: {self.profile_image}")
                 pass
 
     def __repr__(self):

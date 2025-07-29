@@ -4,7 +4,6 @@ def register_setting_category(name: str, nice_name: str, description: str = None
     exists = SettingCategory.query.filter_by(name=name).first()
 
     if exists:
-        print(f"Setting category '{name}' already exists.")
         return False
 
     category = SettingCategory(
@@ -14,7 +13,6 @@ def register_setting_category(name: str, nice_name: str, description: str = None
     )
     db.session.add(category)
     db.session.commit()
-    print(f"Setting category '{name}' registered successfully.")
     return True
 
 def register_setting(name: str, key: str, value: str, type: SettingsType, category_name: str, description: str = None, editable: bool = True) -> bool:
@@ -24,7 +22,6 @@ def register_setting(name: str, key: str, value: str, type: SettingsType, catego
         raise ValueError(f"Invalid setting type: {type}")
     
     if exists:
-        print(f"Setting with key '{key}' already exists.")
         return False
 
     setting = Setting(
@@ -38,7 +35,6 @@ def register_setting(name: str, key: str, value: str, type: SettingsType, catego
     )
     db.session.add(setting)
     db.session.commit()
-    print(f"Setting '{name}' registered successfully.")
     return True
     
 def get_setting(key: str) -> Setting | bool:
@@ -61,7 +57,6 @@ def register_choice(setting_key: int, value: str, label: str) -> bool:
     exists = SettingChoices.query.filter_by(setting_key=setting_key, value=value).first()
 
     if exists:
-        print(f"Choice with value '{value}' for setting '{setting_key}' already exists.")
         return False
     
     choice = SettingChoices(
@@ -71,5 +66,4 @@ def register_choice(setting_key: int, value: str, label: str) -> bool:
     )
     db.session.add(choice)
     db.session.commit()
-    print(f"Choice '{label}' registered successfully for setting '{setting_key}'.")
     return True

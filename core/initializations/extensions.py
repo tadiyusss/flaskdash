@@ -9,6 +9,5 @@ def include_extension(app, extension_name):
 
 def include_all_extensions(app):
     for extension in list_extensions():
-        print(f"Including extension: {extension}")
         register_extension(extension)
         include_extension(app, extension)
