@@ -42,17 +42,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for extension in extensions %}
-                                <tr class="text-sm border-t">
-                                    <td class="py-2 px-4">{{ extension['name'] }}</td>
-                                    <td class="py-2 px-4">
-                                        <p class="line-clamp-4 text-gray-500">{{ extension['description'] }}</p>
-                                    </td>
-                                    <td class="py-2 px-4">
-                                        <button class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Manage</button>
-                                    </td>
-                                </tr>
-                                {% endfor %}
+                                {% if extensions %}
+                                    {% for extension in extensions %}
+                                    <tr class="text-sm border-t">
+                                        <td class="py-2 px-4">{{ extension['name'] }}</td>
+                                        <td class="py-2 px-4">
+                                            <p class="line-clamp-4 text-gray-500">{{ extension['description'] }}</p>
+                                        </td>
+                                        <td class="py-2 px-4">
+                                            <button class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Manage</button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="3" class="text-center py-2">
+                                            <p class="text-gray-500">No Extensions Found</p>
+                                        </td>
+                                    </tr>
+                                {% endif %}
                             </tbody>
                         </table>
                     </div>
