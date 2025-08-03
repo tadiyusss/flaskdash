@@ -6,6 +6,7 @@ from core.models.settings import Setting
 from core.utils.decorators import role_required
 from wtforms import BooleanField
 
+
 def generate_routes(core):
     @core.route('/settings', methods=['GET', 'POST'])
     @role_required('Administrator')
@@ -13,6 +14,7 @@ def generate_routes(core):
     def settings():
         form = create_settings_form()
 
+        # Validate the form on submission
         if form.validate_on_submit():
             for field in form:
                 if isinstance(field, BooleanField):
@@ -26,4 +28,13 @@ def generate_routes(core):
                     db.session.commit()
                     flash(f"Setting '{setting.name}' updated successfully.", 'global-success')
             return redirect(url_for('core.settings'))
+        
+        # Pre-fill the form with existing settings values
+        for field in form:
+            setting_value = Setting.query.filter_by(key=field.name).first()
+            if setting_value:
+                if isinstance(field, BooleanField):
+                    field.data = setting_value.value == '1'
+                else:
+                    field.data = setting_value.value
         return render_template('dashboard/settings.html', user=current_user, form = form)

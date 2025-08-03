@@ -1,4 +1,10 @@
 from core.utils.dashboard import *
+from wtforms import StringField, BooleanField, TextAreaField, SelectField
+from wtforms.validators import DataRequired, Length
+from core.styles import Style
+from core.models.settings import Setting
+from core.models.users import Role
+style = Style()
 
 DEFAULT_ANALYTICS_ITEMS = [
     {
@@ -40,61 +46,46 @@ DEFAULT_SETTINGS_CATEGORY = [
     }
 ]
 
+
 DEFAULT_SETTINGS = [
     {
         "key": "site_title",
         "name": "Site Title",
         "value": "FlaskDash",
-        "type": "text",
-        "description": "The title of your site, displayed in the header.",
-        "editable": True,
+        "field": StringField("Site Title", validators=[DataRequired(), Length(max=100)], render_kw={"class": style.text_input}, description="The title of your site, displayed in the header."),
         "category_name": "site_settings"
     },
     {
         "key": "site_description",
         "name": "Site Description",
-        "value": "A simple Flask dashboard application.",
-        "type": "textarea",
-        "description": "A brief description of your site for SEO purposes.",
-        "editable": True,
+        "value": "A scalable Flask dashboard application.",
+        "field": TextAreaField("Site Description", validators=[DataRequired(), Length(max=200)], render_kw={"class": style.textarea}, description="A brief description of your site for SEO purposes."),
         "category_name": "site_settings"
     },
     {
         "key": "allow_registration",
         "name": "Allow User Registration",
         "value": False,
-        "type": "bool",
-        "description": "Enable or disable user registration on the site.",
-        "editable": True,
+        "field": BooleanField("Allow User Registration", description="Enable or disable user registration on the site."),
         "category_name": "site_settings"
     },
     {
         "key": "default_language",
         "name": "Default Language",
         "value": "en",
-        "type": "select",
-        "description": "The default language for the site.",
-        "editable": True,
-        "choices": [
-            {"value": "en", "label": "English"},
-            {"value": "es", "label": "Spanish"},
-            {"value": "fr", "label": "French"},
-            {"value": "de", "label": "German"}
-        ],
+        "field": SelectField("Default Language", choices=[("en", "English"), ("es", "Spanish"), ("fr", "French"), ("de", "German")], render_kw={"class": style.select}, description="The default language for the site."),
         "category_name": "site_settings"
     },
     {
         "key": "default_user_role",
         "name": "Default User Role",
         "value": "User",
-        "type": "select",
-        "description": "The default role assigned to new users upon registration.",
-        "editable": True,
-        "choices": [
-            {"value": "Administrator", "label": "Administrator"},
-            {"value": "Editor", "label": "Editor"},
-            {"value": "User", "label": "User"}
-        ],
+        "field": SelectField(
+            "Default User Role",
+            choices=lambda: [(role.name, role.name) for role in Role.query.all()],
+            render_kw={"class": style.select},
+            description="The default role assigned to new users upon registration."
+        ),
         "category_name": "site_settings"
     }
 ]
