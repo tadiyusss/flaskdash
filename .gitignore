@@ -13,3 +13,4 @@ test_dashboard_users.py
 test.py
 setup_test.py
 extensions/
+.env
