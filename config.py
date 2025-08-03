@@ -1,4 +1,7 @@
 import os
+import dotenv
+
+dotenv.load_dotenv()
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -7,7 +10,6 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or \
         f"sqlite:///{os.path.join(basedir, 'app.db')}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = "your-secret-key"
     
 class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get("TEST_DATABASE_URL") or \
@@ -15,3 +17,8 @@ class TestingConfig(Config):
     TESTING = True
     WTF_CSRF_ENABLED = False
     PRESERVE_CONTEXT_ON_EXCEPTION = False
+    DEBUG = True
+
+class MySQLConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get("MYSQL_DATABASE_URL")
+    SQLALCHEMY_TRACK_MODIFICATIONS = False

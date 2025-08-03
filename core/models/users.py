@@ -31,7 +31,7 @@ class User(db.Model, UserMixin):
     firstname = db.Column(db.String(100), nullable=True)
     lastname = db.Column(db.String(100), nullable=True)
     email = db.Column(db.String(120), nullable=False)
-    password = db.Column(db.String(128), nullable=False)
+    password = db.Column(db.String(256), nullable=False)
     profile_image = db.Column(db.String(200), default='default-avatar.jpg')
     role = db.Column(db.String(50), nullable=False)
     uid = db.Column(db.String(36), default=lambda: str(uuid.uuid4()), unique=True)
