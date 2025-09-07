@@ -42,3 +42,18 @@ class EditProfileForm(FlaskForm):
     submit = SubmitField('Change Image',
         render_kw={"class": style.button},
     )
+
+class EditPasswordForm(FlaskForm):
+    current_password = StringField('Current Password',
+        validators=[DataRequired("Current password is required.")],
+        render_kw={"class": style.text_input, "type": "password"}
+    )
+
+    new_password = StringField('New Password',
+        validators=[DataRequired("New password is required."), Length(min=6, message="Password must be at least 6 characters long.")],
+        render_kw={"class": style.text_input, "type": "password"}
+    )
+
+    submit = SubmitField('Change Password',
+        render_kw={"class": style.button}
+    )

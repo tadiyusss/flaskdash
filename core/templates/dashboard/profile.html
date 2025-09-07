@@ -74,19 +74,20 @@
                     <h4 class="text-lg">Password</h4>
                     <p class="text-gray-400 text-sm">Update your password to keep your account secure.</p>
                 </div>
-                <div class="mt-4 space-y-4">
+                <form class="mt-4 space-y-4" method="POST" action="{{ url_for('core.profile_edit_password') }}">
+                    {{ edit_password_form.hidden_tag() }}
                     <div class="grid md:grid-cols-2 gap-4 grid-cols-1">
                         <div>
-                            <label for="current_password" class="text-gray-600 text-sm">Current Password</label>
-                            <input type="password" id="current_password" class="mt-1 w-full px-2 py-1 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner">
+                            {{ edit_password_form.current_password.label(class="text-gray-600 text-sm") }}
+                            {{ edit_password_form.current_password }}
                         </div>
                         <div>
-                            <label for="new_password" class="text-gray-600 text-sm">New Password</label>
-                            <input type="password" id="new_password" class="mt-1 w-full px-2 py-1 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner">
+                            {{ edit_password_form.new_password.label(class="text-gray-600 text-sm") }}
+                            {{ edit_password_form.new_password }}
                         </div>
                     </div>
-                    <button class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Save Changes</button>
-                </div>
+                    {{ edit_name_form.submit }}
+                </form>
             </div>
         </div>
     </div>

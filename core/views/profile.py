@@ -1,4 +1,4 @@
-from core.forms.profile import EditNameForm, EditProfileForm
+from core.forms.profile import EditNameForm, EditProfileForm, EditPasswordForm
 from flask_login import login_required, current_user
 from flask import render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
@@ -7,6 +7,26 @@ import os
 import uuid
 
 def generate_routes(core):
+
+    @login_required
+    @core.route('/profile/edit/password', methods=['POST'])
+    def profile_edit_password():
+        form = EditPasswordForm()
+
+        if not form.validate_on_submit():
+            for error in form.errors.values():
+                flash(error[0], 'global-error')
+            return redirect(url_for('core.profile'))
+
+        if not current_user.check_password(form.current_password.data):
+            flash('Current password is incorrect.', 'global-error')
+            return redirect(url_for('core.profile'))
+
+        current_user.set_password(form.new_password.data)
+        db.session.commit()
+        flash('Password updated successfully.', 'global-success')
+
+        return redirect(url_for('core.profile'))
 
     @login_required
     @core.route('/profile/edit/picture', methods=['POST'])
@@ -66,8 +86,8 @@ def generate_routes(core):
     @core.route('/profile', methods = ['GET'])
     @login_required
     def profile():
-
+        edit_password_form = EditPasswordForm()
         edit_profile_form = EditProfileForm()
         edit_name_form = EditNameForm()
 
-        return render_template('dashboard/profile.html', user=current_user, edit_name_form = edit_name_form, edit_profile_form = edit_profile_form)
+        return render_template('dashboard/profile.html', user=current_user, edit_name_form = edit_name_form, edit_profile_form = edit_profile_form, edit_password_form = edit_password_form)
