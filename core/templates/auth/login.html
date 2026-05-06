@@ -9,18 +9,8 @@
 <div class="grid-bg min-h-screen flex items-center justify-center py-12 px-4">
 
     <div class="fade-in w-full max-w-md" x-data="{
-        email: '',
-        password: '',
         show: false,
-        loading: false,
-        error: '',
-        submit() {
-                this.error = '';
-                if (!this.email || !this.password) { this.error = 'Please fill in all fields.'; return; }
-                this.loading = true;
-                setTimeout(() => { this.loading = false; this.error = 'Invalid email or password.'; }, 1400);
-            }
-        }">
+    }">
         <div class="mb-8 text-center">
             <h1 class="brand text-2xl text-blue-800 tracking-tight">{{ g.settings['site_title'] }}</h1>
             <p class="text-blue-800/50 text-sm mt-1 font-medium">Extendable Dashboard</p>
@@ -97,11 +87,8 @@
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn-primary w-full text-white font-semibold text-sm py-2.5 rounded-lg flex items-center justify-center gap-2 disabled:opacity-60 mt-6" :disabled="loading">
-                        <svg x-show="loading" class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
-                        </svg>
-                        <span x-text="loading ? 'Signing in…' : 'Sign in'"></span>
+                    <button type="submit" class="btn-primary w-full text-white font-semibold text-sm py-2.5 rounded-lg flex items-center justify-center gap-2 disabled:opacity-60 mt-6">
+                        <span>Sign in</span>
                     </button>
                 </form>
                 </div>
