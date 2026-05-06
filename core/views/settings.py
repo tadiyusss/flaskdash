@@ -14,7 +14,6 @@ def generate_routes(core):
     def settings():
         form = create_settings_form()
 
-        # Validate the form on submission
         if form.validate_on_submit():
             for field in form:
                 if isinstance(field, BooleanField):
@@ -29,7 +28,6 @@ def generate_routes(core):
                     flash(f"Setting '{setting.name}' updated successfully.", 'global-success')
             return redirect(url_for('core.settings'))
         
-        # Pre-fill the form with existing settings values
         for field in form:
             setting_value = Setting.query.filter_by(key=field.name).first()
             if setting_value:

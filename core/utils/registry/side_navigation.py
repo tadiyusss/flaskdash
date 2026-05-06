@@ -46,17 +46,12 @@ def get_sidebar_items_for_user(user):
         return user.role in roles or '*' in roles
 
     register_items = []
-    for category in _registered_sidebar_items:
-        if category['name'] == "Dashboard":
-            continue # Skip dashboard for now, handle it later
-        if has_role(category['roles']):
-            items = [item for item in category['items'] if has_role(item['roles'])]
-            if items:
-                register_items.append({
-                    "name": category['name'],
-                    "items": items
-                })
-    dashboard_category = next((cat for cat in _registered_sidebar_items if cat['name'] == "Dashboard"), None)
+
+    dashboard_category = next(
+        (cat for cat in _registered_sidebar_items if cat['name'] == "Dashboard"),
+        None
+    )
+
     if dashboard_category and has_role(dashboard_category['roles']):
         items = [item for item in dashboard_category['items'] if has_role(item['roles'])]
         if items:
@@ -64,4 +59,17 @@ def get_sidebar_items_for_user(user):
                 "name": dashboard_category['name'],
                 "items": items
             })
+
+    for category in _registered_sidebar_items:
+        if category['name'] == "Dashboard":
+            continue
+
+        if has_role(category['roles']):
+            items = [item for item in category['items'] if has_role(item['roles'])]
+            if items:
+                register_items.append({
+                    "name": category['name'],
+                    "items": items
+                })
+
     return register_items
