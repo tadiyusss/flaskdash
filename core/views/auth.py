@@ -26,6 +26,12 @@ def generate_routes(core):
                 return redirect(url_for('core.dashboard'))
             else:
                 flash('Invalid email or password.', 'error')
+        else:
+            print(form.errors)  # Debugging line to print form errors in the console
+            if form.errors:
+                for field, errors in form.errors.items():
+                    for error in errors:
+                        flash(f"{getattr(form, field).label.text}: {error}", 'error')
         return render_template('auth/login.html', form=form)
 
     @core.route('/register', methods=['GET', 'POST'])

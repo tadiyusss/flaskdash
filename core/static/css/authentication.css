@@ -1,0 +1,41 @@
+body { font-family: 'DM Sans', sans-serif; }
+.brand { font-family: 'Playfair Display', serif; }
+.grid-bg {
+    background-color: #f0f4ff;
+    background-image: linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+.card-shadow { 
+    box-shadow: 0 2px 32px 0 rgba(30,64,175,0.10), 0 1px 4px 0 rgba(30,64,175,0.06); 
+}
+input:focus { 
+    outline: none; 
+}
+.fade-in { 
+    animation: fadeIn .45s ease both; 
+}
+@keyframes fadeIn {
+     from {
+        opacity:0; transform:translateY(18px);
+    } to { 
+        opacity:1; 
+        transform:translateY(0);
+    } 
+}
+.btn-primary {
+  background: #1e40af;
+  transition: background .2s, box-shadow .2s, transform .1s;
+}
+.btn-primary:hover { 
+    background: #1d4ed8; 
+    box-shadow: 0 4px 16px rgba(30,64,175,.25); 
+    transform: translateY(-1px); 
+}
+.btn-primary:active { 
+    transform: translateY(0); 
+}
+.divider-line { 
+    flex: 1; 
+    height: 1px; 
+    background: #dbeafe; 
+}

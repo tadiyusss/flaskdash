@@ -7,9 +7,6 @@ env
 instances/
 tests/
 test_dashboard_users.py
-*.jpg
-*.png
-*.webp
 test.py
 setup_test.py
 extensions/
@@ -19,3 +16,4 @@ node_modules
 core/static/css/styles.css
 core/static/js/app.js
 core/static/js/app.js.map
+core/static/uplaods/*.*

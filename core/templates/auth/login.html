@@ -1,51 +1,114 @@
 {% extends "base.html" %}
 
 {% block title %}{{ g.settings['site_title'] }} - Login{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/authentication.css') }}">
+{% endblock %}
 
 {% block content %}
-<div class="max-w-md mx-auto p-4 my-24 space-y-4">
-    <h4 class="text-2xl font-medium text-blue-800">{{ g.settings['site_title'] }}</h4>
-    <div class="border border-t-4 border-t-blue-600 border-gray-200 rounded w-full p-4 bg-white shadow">
-        <h4 class="text-2xl text-blue-800">Login</h4>
-        <p class="text-gray-600 text-sm">Log in to access your dashboard and manage your account.</p>
-        <form method="post" class="space-y-4 my-4">
-            {{ form.hidden_tag() }}
-            <div>
-                {{ form.email.label(class="text-sm font-medium text-gray-700") }}
-                {{ form.email }}
-                {% if form.email.errors %}
-                    {% for error in form.email.errors %}
-                        <p class="text-sm text-red-600">{{ error }}</p>
-                    {% endfor %}
-                {% endif %}
+<div class="grid-bg min-h-screen flex items-center justify-center py-12 px-4">
+
+    <div class="fade-in w-full max-w-md" x-data="{
+        email: '',
+        password: '',
+        show: false,
+        loading: false,
+        error: '',
+        submit() {
+                this.error = '';
+                if (!this.email || !this.password) { this.error = 'Please fill in all fields.'; return; }
+                this.loading = true;
+                setTimeout(() => { this.loading = false; this.error = 'Invalid email or password.'; }, 1400);
+            }
+        }">
+        <div class="mb-8 text-center">
+            <h1 class="brand text-2xl text-blue-800 tracking-tight">{{ g.settings['site_title'] }}</h1>
+            <p class="text-blue-800/50 text-sm mt-1 font-medium">Extendable Dashboard</p>
+        </div>
+        <div class="bg-white rounded-2xl card-shadow border border-blue-600/20 overflow-hidden">
+            <div class="px-8 pt-8 pb-6 border-b border-blue-600/10">
+                <h2 class="text-xl font-semibold text-blue-800">Welcome back</h2>
+                <p class="text-blue-800/50 text-sm mt-1">Sign in to access your dashboard</p>
             </div>
-            <div>
-                {{ form.password.label(class="text-sm font-medium text-gray-700") }}
-                {{ form.password }}
-                {% if form.password.errors %}
-                    {% for error in form.password.errors %}
-                        <p class="text-sm text-red-600">{{ error }}</p>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div>
-                {{ form.submit }}
-            </div>
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="bg-red-600 text-white py-2 px-4 rounded">
-                            <p>{{message}}</p>
+            <div class="px-6 py-6">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    {% if form.errors %}
+                    <p class="mb-3 text-red-700 font-medium">Please fix the following errors:</p>
+                        {% for field, errors in form.errors.items() %}
+                            {% for error in errors %}
+                                <div x-transition class="mb-2 flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+                                    <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <path stroke-linecap="round" d="M12 8v4m0 4h.01" />
+                                    </svg>
+                                    <span>{{ error }}</span>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div x-transition class="mb-2 flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+                                    <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <path stroke-linecap="round" d="M12 8v4m0 4h.01" />
+                                    </svg>
+                                    <span>{{ message }}</span>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <div class="mb-5">
+                        {{ form.email.label(class="block text-sm font-medium text-blue-800 mb-1.5") }}
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-800/30">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </span>
+                            {{ form.email }}
                         </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-        </form>
-    </div>
-    {% if g.settings['allow_registration'] == "1" %}
-    <div class="text-center">
-        <p class="text-gray-600">Don't have an account? <a href="{{ url_for('core.register') }}" class="underline">Register.</a></p>
-    </div>
-    {% endif %}
+                    </div>
+
+                    <div class="mb-2">
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label class="block text-sm font-medium text-blue-800">Password</label>
+                            <a href="#" class="text-xs text-blue-600 hover:text-blue-800 hover:underline font-medium transition">Forgot password?</a>
+                        </div>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-800/30">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                                    <path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4" />
+                                </svg>
+                            </span>
+                            {{ form.password }}
+                            <button type="button" @click="show = !show" class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-800/35 hover:text-blue-800 transition">
+                                <svg x-show="!show" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <svg x-show="show" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m2.46-2.286A9.96 9.96 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary w-full text-white font-semibold text-sm py-2.5 rounded-lg flex items-center justify-center gap-2 disabled:opacity-60 mt-6" :disabled="loading">
+                        <svg x-show="loading" class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+                        </svg>
+                        <span x-text="loading ? 'Signing in…' : 'Sign in'"></span>
+                    </button>
+                </form>
+                </div>
+            </div>
+            <!-- Footer -->
+            <p class="text-center text-sm text-blue-800/45 mt-6">Don't have an account? <a href="{{ url_for('core.register') }}" class="text-blue-700 font-semibold hover:underline hover:text-blue-900 transition">Create one free</a></p>
+            <p class="text-center text-xs text-blue-800/30 mt-4">© 2026 {{ g.settings['site_title'] }}</p>
+      </div>
 </div>
 {% endblock %}
