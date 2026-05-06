@@ -1,22 +1,22 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Users{% endblock %}
 {% block main %}
-    <div class="w-full border rounded-lg p-4 bg-white shadow-sm max-w-4xl mx-auto">
+    <div class="w-full border border-gray-200 rounded-lg p-4 bg-white shadow-sm max-w-4xl mx-auto">
         <div class="space-y-8 text-zinc-800">
             <div class="space-y-4">
-                <div class="border-b pb-2 flex items-center justify-between">
+                <div class="border-b border-gray-200 pb-2 flex items-center justify-between">
                     <div class="block">
                         <h4 class="text-lg">Manage Users</h4>
                         <p class="text-gray-400 text-sm">Add, create, and manage user information.</p>
                     </div>
-                    <a href="{{ url_for('core.create_user') }}" class="text-sm rounded px-4 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Create User</a>
+                    <a href="{{ url_for('core.create_user') }}" class="btn">Create User</a>
                 </div>
 
                 <div>
-                    <div class="border rounded">
+                    <div class="border border-gray-200 rounded">
                         <table class="w-full ">
                             <thead>
-                                <tr class="bg-gray-50 border-b">
+                                <tr class="bg-gray-50 border-b border-gray-200">
                                     <th class="text-left font-normal text-sm text-gray-400 p-2 rounded-tl">Username</th>
                                     <th class="text-left font-normal text-sm text-gray-400 p-2">Name</th>
                                     <th class="text-left font-normal text-sm text-gray-400 p-2">Email</th>
@@ -36,9 +36,9 @@
                                     <td class="p-2">{{ user.role }}</td>
                                     <td class="p-2">
                                         {% if user.uid != current_user.uid %}
-                                            <a href="{{ url_for('core.manage_user', user_uid=user.uid) }}" class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Manage</a>
+                                            <a href="{{ url_for('core.manage_user', user_uid=user.uid) }}" class="btn">Manage</a>
                                         {% else %}
-                                            <a href="{{ url_for('core.manage_user', user_uid=user.uid) }}" class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200 pointer-events-none opacity-80">Manage</a>
+                                            <a href="{{ url_for('core.manage_user', user_uid=user.uid) }}" class="btn pointer-events-none opacity-80">Manage</a>
                                         {% endif %}
                                     </td>
                                 </tr>

@@ -1,8 +1,6 @@
 from flask_wtf import FlaskForm
-from core.styles import Style
 from core.models.settings import Setting
 from core.utils.registry.settings import get_registered_settings
-style = Style()
 
 def create_settings_form():
     class DynamicSettingsForm(FlaskForm):

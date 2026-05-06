@@ -71,7 +71,7 @@
             </div>
 
             <div>
-                <div class="border-b pb-2">
+                <div class="border-b border-gray-200 pb-2">
                     <h4 class="text-lg">Password</h4>
                     <p class="text-gray-400 text-sm">Update the selected user's password securely.</p>
                 </div>
@@ -79,14 +79,14 @@
                     {{ password_form.hidden_tag() }}
                     <div>
                         {{ password_form.new_password.label(class="text-gray-600 text-sm") }}
-                        {{ password_form.new_password(class="mt-1 w-full px-2 py-1 rounded text-sm border focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner") }}
+                        {{ password_form.new_password(class="mt-1 w-full px-2 py-1 rounded text-sm border border-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner") }}
                     </div>
                     {{ password_form.submit }}
                 </form>
             </div>
 
             <div>
-                <div class="border-b pb-2">
+                <div class="border-b border-gray-200 pb-2">
                     <h4 class="text-lg">Account Role</h4>
                     <p class="text-gray-400 text-sm">Update the selected user's role.</p>
                 </div>

@@ -14,3 +14,8 @@ test.py
 setup_test.py
 extensions/
 .env
+venv
+node_modules
+core/static/css/styles.css
+core/static/js/app.js
+core/static/js/app.js.map

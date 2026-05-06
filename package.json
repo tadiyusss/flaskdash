@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "alpinejs": "^3.15.12",
+    "tailwindcss": "^4.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "esbuild": "^0.25.10",
+    "npm-run-all": "^4.1.5"
+  },
+  "scripts": {
+    "dev": "npm-run-all -p dev:*",
+    "dev:css": "npx @tailwindcss/cli -i ./core/static/css/input.css -o ./core/static/css/styles.css --watch",
+    "dev:js": "esbuild core/static/js/entry.js --bundle --outfile=core/static/js/app.js --format=esm --sourcemap --watch",
+    "build": "npm-run-all build:*",
+    "build:css": "npx @tailwindcss/cli -i ./core/static/css/input.css -o ./static/css/styles.css --minify",
+    "build:js": "esbuild core/static/js/entry.js --bundle --outfile=core/static/js/app.js --format=esm --minify"
+  }
+}

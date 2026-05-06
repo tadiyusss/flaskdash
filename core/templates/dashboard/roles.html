@@ -1,22 +1,22 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Roles{% endblock %}
 {% block main %}
-    <div class="w-full border rounded-lg p-4 bg-white shadow-sm max-w-4xl mx-auto" x-data="{model_open: false}">
+    <div class="w-full border border-gray-200 rounded-lg p-4 bg-white shadow-sm max-w-4xl mx-auto" x-data="{model_open: false}">
         <div class="space-y-8 text-zinc-800">
             <div class="space-y-4">
-                <div class="border-b pb-2 flex items-center justify-between">
+                <div class="border-b border-gray-200 pb-2 flex items-center justify-between">
                     <div class="block">
                         <h4 class="text-lg">Manage Roles</h4>
                         <p class="text-gray-400 text-sm">Add, create, and manage roles.</p>
                     </div>
-                    <button @click="model_open = !model_open" class="text-sm rounded px-4 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200">Create Role</button>
+                    <button @click="model_open = !model_open" class="text-sm rounded px-4 py-1 rounded border border-gray-200 shadow text-gray-700 hover:bg-gray-50 ease duration-200">Create Role</button>
                 </div>
 
                 <div>
-                    <div class="border rounded">
+                    <div class="border border-gray-200 rounded">
                         <table class="w-full ">
                             <thead>
-                                <tr class="bg-gray-50 border-b">
+                                <tr class="bg-gray-50 border-b border-gray-200">
                                     <th class="text-left font-normal text-sm text-gray-400 p-2 rounded-tl">Name</th>
                                     <th class="text-left font-normal text-sm text-gray-400 p-2">Description</th>
                                     <th class="text-left font-normal text-sm text-gray-400 p-2 rounded-tr">Actions</th>
@@ -24,11 +24,11 @@
                             </thead>
                             <tbody>
                                 {% for role in roles %}
-                                <tr class="text-sm border-t">
+                                <tr class="text-sm border-t border-gray-200">
                                     <td class="p-2">{{ role.name }}</td>
                                     <td class="p-2">{{ role.description }}</td>
                                     <td class="px-2 py-4">
-                                        <a href="{{ url_for('core.delete_role', role_uid = role.uid) }}" class="text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 ease duration-200 {% if role.name in default_roles %}pointer-events-none opacity-80{% endif %}">Delete</a>
+                                        <a href="{{ url_for('core.delete_role', role_uid = role.uid) }}" class="text-sm rounded px-2 py-1 rounded border border-gray-200 shadow text-gray-700 hover:bg-gray-50 ease duration-200 {% if role.name in default_roles %}pointer-events-none opacity-80{% endif %}">Delete</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
