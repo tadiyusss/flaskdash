@@ -38,7 +38,8 @@ class User(db.Model, UserMixin):
 
     def set_password(self, raw_password):
         self.password = generate_password_hash(raw_password)
-    
+        db.session.commit()
+        
     def check_password(self, raw_password):
         return check_password_hash(self.password, raw_password)
     

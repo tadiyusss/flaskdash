@@ -1,11 +1,12 @@
 from flask_login import login_required, login_user, logout_user, current_user
 from flask import Blueprint, render_template, redirect, url_for, flash, request
-from core.forms.auth import LoginForm, RegisterForm
+from core.forms.auth import LoginForm, RegisterForm, ForgotPasswordForm, ResetPasswordForm
 from core.extensions import db
 from core.models.users import User 
 from flask import g
 from core.models.users import LoginHistory
-
+from core.utils.email import send_password_reset_email
+from core.utils.tokens import verify_reset_token
 
 def generate_routes(core):
 
@@ -69,6 +70,43 @@ def generate_routes(core):
                 return redirect(url_for('core.dashboard'))
             
         return render_template('auth/register.html', form=form)
+
+    @core.route('/forgot-password', methods=['GET', 'POST'])
+    def forgot_password():
+        form = ForgotPasswordForm()
+
+        if form.validate_on_submit():
+            user = User.query.filter_by(email=form.email.data).first()
+            if user:
+                try:
+                    send_password_reset_email(user)
+                except Exception as e:
+                    flash('Failed to send email. Please try again later.', 'error')
+                    return redirect(url_for('core.forgot_password'))            
+            flash('Password reset instructions have been sent to your email.', 'success')        
+        return render_template('auth/forgot-password.html', form=form)
+
+    @core.route('/reset-password/<token>', methods=['GET', 'POST'])
+    def reset_password(token):
+        user = verify_reset_token(token)
+        form = ResetPasswordForm()
+        if not user:
+            flash('Invalid or expired token.', 'error')
+            return redirect(url_for('core.forgot_password'))
+        
+        if form.validate_on_submit():
+            if form.password.data != form.retype_password.data:
+                form.retype_password.errors.append('Passwords do not match.')
+            else:
+
+                if user:
+                    user.set_password(form.password.data)
+                    flash('Your password has been reset. You can now log in.', 'success')
+                    return redirect(url_for('core.login'))
+                else:
+                    flash('User not found.', 'error')
+                    return redirect(url_for('core.forgot_password'))
+        return render_template('auth/reset-password.html', token=token, form=form)
 
     @core.route('/logout')
     @login_required
