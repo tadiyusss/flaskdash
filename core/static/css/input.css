@@ -6,11 +6,42 @@
 }
 
 .btn {
-    @apply text-sm rounded px-2 py-1 rounded border shadow text-gray-700 hover:bg-gray-50 duration-200 cursor-pointer border-gray-200;
+    @apply inline-flex items-center gap-1.5 text-[0.8125rem] font-semibold cursor-pointer px-4 py-[7px] rounded-lg border border-gray-200 active:translate-y-px;
+    transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+.btn-primary {
+    @apply text-white hover:shadow-[0_4px_12px_rgba(30,64,175,0.25)];
+    background: #1e40af;
+}
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+.btn-outline {
+    @apply text-blue-800 border-[1.5px] border-solid border-[rgba(37,99,235,0.35)] hover:border-blue-500;
+    background: transparent;
+}
+.btn-outline:hover {
+    background: #eff6ff;
+}
+.btn-ghost {
+    @apply text-blue-800;
+    background: transparent;
+}
+.btn-ghost:hover {
+    background: #eff6ff;
+}
+.btn-danger {
+    @apply text-red-600 border-red-200 border-[1.5px] border-solid;
+    background: #fef2f2;
+}
+.btn-danger:hover {
+    background: #fee2e2;
 }
 
 .btn-full {
-    @apply text-sm rounded py-2 rounded border shadow text-gray-700 hover:bg-gray-50 duration-200 cursor-pointer w-full border-gray-200;
+    @apply inline-flex items-center gap-1.5 text-[0.8125rem] font-semibold cursor-pointer px-4 py-[7px] rounded-lg border-[none] active:translate-y-px w-full;
+    transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
 }
 
 .textarea{
@@ -22,7 +53,7 @@
 }
 
 .sidenav-item {
-    @apply size-8 text-gray-500 border bg-white rounded-lg p-2 shadow border-gray-200;
+    @apply size-4;
 }
 
 .form-label {

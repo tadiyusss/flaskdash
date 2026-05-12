@@ -1,71 +1,63 @@
 {% extends "base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Dashboard{% endblock %}
-{% block content %}
-<div class="flex">
-    <!-- Sidebar -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-30 w-64 bg-white min-h-dvh shadow pb-10 transform -translate-x-full md:translate-x-0 md:static md:inset-auto transition-transform duration-300 ease-in-out">
-        <div class="space-y-1">
-            <div class="p-4 flex items-center justify-between">
-                <h2 class="text-xl">{{ g.settings['site_title'] }}</h2>
-                <button id="closeSidebar" class="md:hidden p-2 rounded hover:bg-gray-200 focus:outline-none" aria-label="Close sidebar">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="px-4 py-1">
-                {% for category in get_sidebar() %}
-                <h6 class="text-sm text-gray-400">{{category['name']}}</h6>
-                
-                <div class="my-1">
-                    {% for item in category['items'] %}
-                        <a href="{{ url_for(item['route']) }}" class="flex items-center gap-2 px-2 py-2 hover:bg-gray-100 rounded-md transition-colors">
-                            {{ item['icon']|safe }}
-                            <p class="text-sm text-gray-700">{{ item['name'] }}</p>
-                        </a>
-                    {% endfor %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </aside>
-    <!-- Overlay for mobile -->
-    <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-30 z-20 hidden md:hidden"></div>
-    <!-- Main content -->
-    <div class="flex-1 flex flex-col min-h-screen">
-        <!-- Top bar -->
-        <header class="md:hidden flex items-center justify-between p-4 bg-white shadow">
-            <button id="openSidebar" class="p-2 rounded hover:bg-gray-200 focus:outline-none" aria-label="Open sidebar">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-            </button>
-        </header>
-        <main class="flex-1 p-4">
-            {% block main %}{% endblock %}
-        </main>
-    </div>
-</div>
-<div id="notifications-container" class="fixed top-4 right-4 md:right-4 md:left-auto left-1/2 transform -translate-x-1/2 md:translate-x-0 z-50 max-w-sm space-y-2">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                {% if category == 'global-success' %}
-                    <div x-data="{ show: true }" x-show="show" x-transition.opacity x-init="setTimeout(() => show = false, 3000)" class="w-full px-4 py-2 bg-green-700 shadow rounded text-white text-sm">
-                        <p>{{ message }}</p>
-                    </div>
-                {% elif category == 'global-error' %}
-                    <div x-data="{ show: true }" x-show="show" x-transition.opacity x-init="setTimeout(() => show = false, 3000)" class="w-full px-4 py-2 bg-red-700 shadow rounded text-white text-sm">
-                        <p>{{ message }}</p>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-    
-</div>
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 {% endblock %}
-{% block javascript %}
-<script src="{{ url_for('static', filename='js/sidebar.js') }}"></script>
-{% block include_javascript %}{% endblock %}
+{% block content %}
+
+<div
+    class="flex min-h-screen"
+    x-data="{
+        sidebarOpen: window.innerWidth >= 768,
+        init() {
+            this.handleResize = () => {
+                this.sidebarOpen = window.innerWidth >= 768;
+            };
+            window.addEventListener('resize', this.handleResize);
+        }
+    }"
+>
+
+<aside
+    class="sidebar w-[240px] bg-white border-r border-blue-600/10 flex flex-col py-5 px-3 fixed top-0 left-0 h-full z-30 shadow-sm transition-transform duration-300 ease-in-out"
+    :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+>
+	<div class="flex items-center gap-3 px-3 mb-6">
+		<span class="brand text-lg text-blue-800">{{ g.settings['site_title'] }}</span>
+	</div>
+
+    {% for category in get_sidebar() %}
+    <div class="section-label">{{category['name']}}</div>
+        {% for item in category['items'] %}
+        <nav class="flex flex-col gap-0.5">
+            <a href="{{ url_for(item['route']) }}" class="nav-item">
+                {{ item['icon']|safe }} 
+                {{ item['name'] }}
+            </a>
+        </nav>
+        {% endfor %}
+    {% endfor %}
+</aside>
+
+<main class="flex-1 min-h-screen p-4" :class="sidebarOpen ? 'ml-[240px]' : 'ml-0'">
+    {% block main %}{% endblock %}
+</main>
+
+</div>
+
+<div
+    x-show="toast"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0 translate-y-4"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-xl border text-sm font-medium bg-white border-blue-200 text-blue-700"
+>
+  <span>Toast Sample</span>
+  <button @click="toast=null" class="ml-2 text-current opacity-40 hover:opacity-80 transition">
+    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+</div>
 {% endblock %}

@@ -27,7 +27,6 @@ def generate_routes(core):
             else:
                 flash('Invalid email or password.', 'error')
         else:
-            print(form.errors)  # Debugging line to print form errors in the console
             if form.errors:
                 for field, errors in form.errors.items():
                     for error in errors:
@@ -54,9 +53,11 @@ def generate_routes(core):
             
             if User.query.filter_by(username=form.username.data).first():
                 form.username.errors.append('Username already exists.')
-            
+
             if not form.errors:
                 new_user = User(
+                    firstname=form.firstname.data,
+                    lastname=form.lastname.data,
                     username=form.username.data,
                     email=form.email.data,
                     role=g.settings['default_user_role']
