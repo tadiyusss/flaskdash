@@ -68,6 +68,13 @@ DEFAULT_SETTINGS = [
         "category_name": "site_settings"
     },
     {
+        "key": "allow_first_name_last_name",
+        "name": "Allow First Name and Last Name",
+        "value": False,
+        "field": BooleanField("Allow First Name and Last Name", description="Enable or disable first name and last name fields in user profiles."),
+        "category_name": "site_settings"
+    },
+    {
         "key": "default_language",
         "name": "Default Language",
         "value": "en",
@@ -85,7 +92,7 @@ DEFAULT_SETTINGS = [
             description="The default role assigned to new users upon registration."
         ),
         "category_name": "site_settings"
-    }
+    },
 ]
 
 DEFAULT_ROLES = [

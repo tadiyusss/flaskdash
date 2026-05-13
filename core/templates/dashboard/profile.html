@@ -33,7 +33,13 @@
                             </label>
                             {{ edit_profile_form.profile_image }}
                             <div class="block">
-                                <p class="text-gray-700 font-medium">{{ current_user.firstname or '' }} {{ current_user.lastname or '' }}</p>
+                                <p class="text-gray-700 font-medium">
+                                    {% if g.settings['allow_first_name_last_name'] == "1" %}
+                                        {{ current_user.firstname or '' }} {{ current_user.lastname or '' }}
+                                    {% else %}
+                                        {{ current_user.username or '' }}
+                                    {% endif %}
+                                </p>
                                 <p class="text-gray-400 text-sm">{{ current_user.email }}</p>
                             </div>
                         </div>

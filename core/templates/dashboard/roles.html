@@ -17,9 +17,9 @@
                         <table class="w-full ">
                             <thead>
                                 <tr class="bg-gray-50 border-b border-gray-200">
-                                    <th class="text-left font-normal text-sm text-gray-400 p-2 rounded-tl">Name</th>
-                                    <th class="text-left font-normal text-sm text-gray-400 p-2">Description</th>
-                                    <th class="text-left font-normal text-sm text-gray-400 p-2 rounded-tr">Actions</th>
+                                    <th class="text-left font-normal text-xs text-gray-400 p-2 rounded-tl">Name</th>
+                                    <th class="text-left font-normal text-xs text-gray-400 p-2">Description</th>
+                                    <th class="text-left font-normal text-xs text-gray-400 p-2 rounded-tr">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,7 +31,14 @@
                                         <a href="{{ url_for('core.delete_role', role_uid = role.uid) }}" class="text-sm rounded px-2 py-1 rounded border border-gray-200 shadow text-gray-700 hover:bg-gray-50 ease duration-200 {% if role.name in default_roles %}pointer-events-none opacity-80{% endif %}">Delete</a>
                                     </td>
                                 </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="3" class="text-center py-4 text-gray-500 text-xs">
+                                        <p>No Roles Found</p>
+                                    </td>
+                                </tr>
                                 {% endfor %}
+                                
                             </tbody>
                         </table>
                     </div>
