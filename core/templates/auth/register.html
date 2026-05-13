@@ -43,6 +43,7 @@
 				<form method="POST">
                     {{ form.hidden_tag() }}
 					<div class="grid grid-cols-1 gap-4 mb-5">
+						{% if g.settings['allow_first_name_last_name'] == "1" %}
 						<div>
                             {{ form.firstname.label(class="block text-sm font-medium text-blue-800 mb-1.5") }}
                             {{ form.firstname }}
@@ -57,6 +58,7 @@
                                 <p class="text-red-500 text-xs mt-1">{{ form.errors.lastname[0] }}</p>
                             {% endif %}
 						</div>
+						{% endif %}
                         <div>
                             {{ form.username.label(class="block text-sm font-medium text-blue-800 mb-1.5") }}
                             {{ form.username }}

@@ -18,7 +18,9 @@
                             <thead>
                                 <tr class="bg-gray-50 border-b border-gray-200">
                                     <th class="text-left font-normal text-sm text-gray-400 p-2 rounded-tl">Username</th>
+                                    {% if g.settings['allow_first_name_last_name'] == "1" %}
                                     <th class="text-left font-normal text-sm text-gray-400 p-2">Name</th>
+                                    {% endif %}
                                     <th class="text-left font-normal text-sm text-gray-400 p-2">Email</th>
                                     <th class="text-left font-normal text-sm text-gray-400 p-2">Role</th>
                                     <th class="text-left font-normal text-sm text-gray-400 p-2 rounded-tr">Actions</th>
@@ -31,7 +33,11 @@
                                         <img src="{{ url_for('static', filename='images/profiles/' + user.profile_image) }}" class="size-10 rounded-full object-cover" alt="User Avatar">
                                         <p>{{ user.username }}</p>
                                     </td>
-                                    <td class="p-2">{{ user.firstname or "" }} {{ user.lastname or "" }}</td>
+                                    {% if g.settings['allow_first_name_last_name'] == "1" %}
+                                        <td class="p-2">
+                                            {{ user.firstname or "" }} {{ user.lastname or "" }}
+                                        </td>
+                                    {% endif %}
                                     <td class="p-2">{{ user.email }}</td>
                                     <td class="p-2">{{ user.role }}</td>
                                     <td class="p-2">

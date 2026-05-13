@@ -58,6 +58,7 @@
                                 {{ edit_name_form.email.label(class="text-gray-600 text-sm") }}
                                 {{ edit_name_form.email(value=current_user.email or "") }}
                             </div>
+                            {% if g.settings['allow_first_name_last_name'] == "1" %}
                             <div>
                                 {{ edit_name_form.firstname.label(class="text-gray-600 text-sm") }}
                                 {{ edit_name_form.firstname(value=current_user.firstname or "") }}
@@ -66,6 +67,7 @@
                                 {{ edit_name_form.lastname.label(class="text-gray-600 text-sm") }}
                                 {{ edit_name_form.lastname(value=current_user.lastname or "") }}
                             </div>
+                            {% endif %}
                         </div>
                         <div class="flex items-center space-x-4">
                             {{ edit_name_form.submit }}

@@ -75,13 +75,6 @@ DEFAULT_SETTINGS = [
         "category_name": "site_settings"
     },
     {
-        "key": "default_language",
-        "name": "Default Language",
-        "value": "en",
-        "field": SelectField("Default Language", choices=[("en", "English"), ("es", "Spanish"), ("fr", "French"), ("de", "German")], render_kw={"class": "select"}, description="The default language for the site."),
-        "category_name": "site_settings"
-    },
-    {
         "key": "default_user_role",
         "name": "Default User Role",
         "value": "User",

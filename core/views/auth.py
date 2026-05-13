@@ -45,6 +45,10 @@ def generate_routes(core):
         
         form = RegisterForm()
 
+        if g.settings['allow_first_name_last_name'] == '0':
+            del form.firstname
+            del form.lastname
+
         if form.validate_on_submit():
             if User.query.filter_by(email=form.email.data).first():
                 form.email.errors.append('Email already exists.')
@@ -56,9 +60,13 @@ def generate_routes(core):
                 form.username.errors.append('Username already exists.')
 
             if not form.errors:
+
+                firstname = form.firstname.data if g.settings['allow_first_name_last_name'] == '1' else None
+                lastname = form.lastname.data if g.settings['allow_first_name_last_name'] == '1' else None
+
                 new_user = User(
-                    firstname=form.firstname.data,
-                    lastname=form.lastname.data,
+                    firstname=firstname,
+                    lastname=lastname,
                     username=form.username.data,
                     email=form.email.data,
                     role=g.settings['default_user_role']
