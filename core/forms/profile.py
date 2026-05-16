@@ -37,7 +37,7 @@ class EditProfileForm(FlaskForm):
         validators=[FileAllowed(ALLOWED_IMAGE_EXTENSIONS, 'Invalid file extension.'), FileRequired('File was empty!')],
         render_kw={"class": "hidden", "x-on:change": "imagePreview()", "accept": "image/*"}
     )
-    submit = SubmitField('Change Image',
+    submit = SubmitField('Save Image',
         render_kw={"class": "btn"},
     )
 

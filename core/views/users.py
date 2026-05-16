@@ -6,6 +6,7 @@ from core.forms.profile import EditProfileForm
 from core.extensions import db
 import os
 import uuid
+from flask import g
 from werkzeug.utils import secure_filename
 from core.utils.decorators import role_required
 from core.defaults import DEFAULT_ROLES
@@ -18,15 +19,23 @@ def generate_routes(core):
     def create_user():
         form = CreateUserForm()
 
-        form.role.choices = [(role.name, role.name) for role in Role.query.all()]
+        if g.settings['allow_first_name_last_name'] == "0":
+            del form.firstname
+            del form.lastname
 
+        form.role.choices = [(role.name, role.name) for role in Role.query.all()]
+        
         if form.validate_on_submit():
+            if g.settings['allow_first_name_last_name'] == False:
+                form.firstname.data = ''
+                form.lastname.data = ''
+                
             new_user = User(
                 username=form.username.data,
                 email=form.email.data,
+                role=form.role.data,
                 firstname=form.firstname.data,
-                lastname=form.lastname.data,
-                role=form.role.data
+                lastname=form.lastname.data
             )
             new_user.set_password(form.password.data)
             db.session.add(new_user)

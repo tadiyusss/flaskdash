@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField, EmailField, TextAreaField
-from core.forms.validators import validate_username_unique, validate_email_unique, validate_role_name_unique
+from core.forms.validators import validate_username_unique, validate_email_unique, validate_role_name_unique, validate_password_length, validate_password_uppercase_letter, validate_password_lowercase_letter, validate_password_digit, validate_my_username_unique, validate_my_email_unique
 from wtforms.validators import DataRequired, Email, Length, Regexp
 
 class CreateRoleForm(FlaskForm):
@@ -39,8 +39,8 @@ class CreateUserForm(FlaskForm):
     )
 
     password = PasswordField('Password', 
-        validators=[DataRequired(), Length(min=6)],
-        render_kw={"class": "text-input"}
+        validators=[DataRequired(), validate_password_length, validate_password_uppercase_letter, validate_password_lowercase_letter, validate_password_digit],
+        render_kw={"class": "text-input"},
     )
 
     role = SelectField('Role',

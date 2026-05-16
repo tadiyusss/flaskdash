@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 from core import db
 import os
 import uuid
+from flask import g
 
 def generate_routes(core):
 
@@ -69,13 +70,28 @@ def generate_routes(core):
     def profile_edit_name():
         form = EditNameForm()
 
+        if g.settings['allow_first_name_last_name'] == '0':
+            del form.firstname
+            del form.lastname
+        
+
         if not form.validate_on_submit():
             for error in form.errors.values():
                 flash(error[0], 'global-error')
             return redirect(url_for('core.profile'))
 
-        current_user.firstname = form.firstname.data
-        current_user.lastname = form.lastname.data
+        if form.username.data != current_user.username and db.session.query(current_user.__class__).filter_by(username=form.username.data).first():
+            flash('Username already exists.', 'global-error')
+            return redirect(url_for('core.profile'))
+
+        if form.email.data != current_user.email and db.session.query(current_user.__class__).filter_by(email=form.email.data).first():
+            flash('Email already exists.', 'global-error')
+            return redirect(url_for('core.profile'))
+        
+        if g.settings['allow_first_name_last_name'] == '1':
+            current_user.firstname = form.firstname.data
+            current_user.lastname = form.lastname.data
+            
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()

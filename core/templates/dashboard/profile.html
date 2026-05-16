@@ -1,102 +1,222 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Profile{% endblock %}
 {% block main %}
-    <div class="w-full border border-gray-200 rounded-lg p-4 bg-white shadow-sm max-w-2xl mx-auto">
-        <div class="space-y-8 text-zinc-800">
-            <div>
-                <div class="border-b border-gray-200 pb-2">
-                    <h4 class="text-lg">Edit Profile</h4>
-                    <p class="text-gray-400 text-sm">Update your photo, first name, and last name to keep your profile up to date.</p>
-                </div>
-                <div class="mt-4 space-y-4">
-                    <form method="POST" class="md:flex md:items-center md:justify-between md:space-y-0 space-y-4" enctype="multipart/form-data" action="{{ url_for('core.profile_edit_picture') }}">
-                        {{ edit_profile_form.hidden_tag() }}
-                        <div class="flex items-center space-x-4" x-data="{
-                            profile_image_preview: '{{ url_for('static', filename='images/profiles/' + current_user.profile_image) }}',
-                            imagePreview() {
-                                const file = document.getElementById('profile_image').files[0];
-                                if (file) {
-                                    const reader = new FileReader();
-                                    reader.onload = (e) => {
-                                        this.profile_image_preview = e.target.result;
-                                    };
-                                    reader.readAsDataURL(file);
-                                } else {
-                                    this.profile_image_preview = '{{ url_for('static', filename='images/profiles/default.png') }}';
-                                }
-                            }
-                            
-                        }">
+<div class="max-w-2xl mx-auto space-y-6">
 
-                            <label for="{{ edit_profile_form.profile_image.id }}" class="cursor-pointer">
-                                <img class="size-20 rounded-full object-cover" :src="profile_image_preview" id="profile_image_preview" alt="Profile Image">
-                            </label>
-                            {{ edit_profile_form.profile_image }}
-                            <div class="block">
-                                <p class="text-gray-700 font-medium">
-                                    {% if g.settings['allow_first_name_last_name'] == "1" %}
-                                        {{ current_user.firstname or '' }} {{ current_user.lastname or '' }}
-                                    {% else %}
-                                        {{ current_user.username or '' }}
-                                    {% endif %}
-                                </p>
-                                <p class="text-gray-400 text-sm">{{ current_user.email }}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            {{ edit_profile_form.submit }}
-                        </div>
-                    </form>
-                    <form class="space-y-4" method="POST" action="{{ url_for('core.profile_edit_name') }}">
-                        <div class="grid md:grid-cols-2 gap-4 grid-cols-1">
-                            {{ edit_name_form.hidden_tag() }}
-                            <div>
-                                {{ edit_name_form.username.label(class="text-gray-600 text-sm") }}
-                                {{ edit_name_form.username(value=current_user.username or "") }}
-                            </div>
-                            <div>
-                                {{ edit_name_form.email.label(class="text-gray-600 text-sm") }}
-                                {{ edit_name_form.email(value=current_user.email or "") }}
-                            </div>
-                            {% if g.settings['allow_first_name_last_name'] == "1" %}
-                            <div>
-                                {{ edit_name_form.firstname.label(class="text-gray-600 text-sm") }}
-                                {{ edit_name_form.firstname(value=current_user.firstname or "") }}
-                            </div>
-                            <div>
-                                {{ edit_name_form.lastname.label(class="text-gray-600 text-sm") }}
-                                {{ edit_name_form.lastname(value=current_user.lastname or "") }}
-                            </div>
-                            {% endif %}
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            {{ edit_name_form.submit }}
-                        </div>
-                    </form>
-                    
-                </div>
-            </div>
+    <div class="card p-7">
 
-            <div>
-                <div class="border-b border-gray-200 pb-2">
-                    <h4 class="text-lg">Password</h4>
-                    <p class="text-gray-400 text-sm">Update your password to keep your account secure.</p>
-                </div>
-                <form class="mt-4 space-y-4" method="POST" action="{{ url_for('core.profile_edit_password') }}">
-                    {{ edit_password_form.hidden_tag() }}
-                    <div class="grid md:grid-cols-2 gap-4 grid-cols-1">
-                        <div>
-                            {{ edit_password_form.current_password.label(class="text-gray-600 text-sm") }}
-                            {{ edit_password_form.current_password }}
-                        </div>
-                        <div>
-                            {{ edit_password_form.new_password.label(class="text-gray-600 text-sm") }}
-                            {{ edit_password_form.new_password }}
-                        </div>
-                    </div>
-                    {{ edit_name_form.submit }}
-                </form>
-            </div>
+        <div class="border-b border-blue-600/[0.09] pb-3.5 mb-5">
+            <h3 class="text-sm font-semibold text-blue-800">Edit Profile</h3>
+            <p class="text-xs text-blue-800/45 mt-0.5">Update your photo, first name, and last name to keep your profile up to date.</p>
         </div>
+
+        <form method="POST"
+              enctype="multipart/form-data"
+              action="{{ url_for('core.profile_edit_picture') }}"
+              class="mb-6"
+              x-data="{
+                profile_image_preview: '{{ url_for('static', filename='images/profiles/' + current_user.profile_image) }}',
+                imagePreview() {
+                    const file = document.getElementById('profile_image').files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => { this.profile_image_preview = e.target.result; };
+                        reader.readAsDataURL(file);
+                    } else {
+                        this.profile_image_preview = '{{ url_for('static', filename='images/profiles/default.png') }}';
+                    }
+                }
+              }">
+
+            {{ edit_profile_form.hidden_tag() }}
+
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <label for="{{ edit_profile_form.profile_image.id }}" class="cursor-pointer block group">
+                            <img class="w-16 h-16 rounded-full object-cover transition group-hover:opacity-80"
+                                 style="border: 3px solid #fff; box-shadow: 0 0 0 2px rgba(37,99,235,0.25), 0 4px 12px rgba(30,64,175,0.12);"
+                                 :src="profile_image_preview"
+                                 id="profile_image_preview"
+                                 alt="Profile Image"/>
+                            <div class="absolute inset-0 rounded-full bg-blue-800/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                    <circle cx="12" cy="13" r="3"/>
+                                </svg>
+                            </div>
+                        </label>
+                        {{ edit_profile_form.profile_image(id="profile_image", **{"@change": "imagePreview()"}) }}
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-blue-800">
+                            {% if g.settings['allow_first_name_last_name'] == "1" %}
+                                {{ current_user.firstname or '' }} {{ current_user.lastname or '' }}
+                            {% else %}
+                                {{ current_user.username or '' }}
+                            {% endif %}
+                        </p>
+                        <p class="text-xs text-blue-800/45 mt-0.5">{{ current_user.email }}</p>
+                        <label for="{{ edit_profile_form.profile_image.id }}"
+                               class="inline-flex items-center gap-1.5 mt-2 text-xs font-semibold text-blue-600 cursor-pointer hover:text-blue-800 transition">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                            </svg>
+                            Change photo
+                        </label>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    {{ edit_profile_form.submit(class="btn btn-primary") }}
+                </div>
+            </div>
+        </form>
+
+        <form method="POST"
+              action="{{ url_for('core.profile_edit_name') }}"
+              class="space-y-4">
+
+            {{ edit_name_form.hidden_tag() }}
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    {{ edit_name_form.username.label(class="form-label") }}
+                    {{ edit_name_form.username(value=current_user.username or "", placeholder="your_username") }}
+                </div>
+                <div>
+                    {{ edit_name_form.email.label(class="form-label") }}
+                    {{ edit_name_form.email(value=current_user.email or "", placeholder="you@company.com") }}
+                </div>
+                {% if g.settings['allow_first_name_last_name'] == "1" %}
+                <div>
+                    {{ edit_name_form.firstname.label(class="form-label") }}
+                    {{ edit_name_form.firstname(value=current_user.firstname or "", placeholder="Jane") }}
+                </div>
+                <div>
+                    {{ edit_name_form.lastname.label(class="form-label") }}
+                    {{ edit_name_form.lastname(value=current_user.lastname or "", placeholder="Doe") }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="flex items-center gap-2 pt-1">
+                {{ edit_name_form.submit(class="btn btn-primary") }}
+            </div>
+
+        </form>
     </div>
+
+    <div class="card p-7"
+         x-data="{
+           current: '',
+           newPass: '',
+           showCurrent: false,
+           showNew: false,
+           get strength() {
+               let s = 0;
+               if (this.newPass.length >= 8) s++;
+               if (/[A-Z]/.test(this.newPass)) s++;
+               if (/[0-9]/.test(this.newPass)) s++;
+               if (/[^A-Za-z0-9]/.test(this.newPass)) s++;
+               return s;
+           },
+           get strengthLabel() { return ['','Weak','Fair','Good','Strong'][this.strength]; },
+           get strengthColor() { return ['','#ef4444','#f59e0b','#3b82f6','#22c55e'][this.strength]; }
+         }">
+
+        <div class="border-b border-blue-600/[0.09] pb-3.5 mb-5">
+            <h3 class="text-sm font-semibold text-blue-800">Password</h3>
+            <p class="text-xs text-blue-800/45 mt-0.5">Update your password to keep your account secure.</p>
+        </div>
+
+        <form method="POST"
+              action="{{ url_for('core.profile_edit_password') }}"
+              class="space-y-4">
+
+            {{ edit_password_form.hidden_tag() }}
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                <div>
+                    {{ edit_password_form.current_password.label(class="form-label") }}
+                    <div class="relative">
+                        {{ edit_password_form.current_password(
+                            x_model="current",
+                            type="password",
+                            placeholder="••••••••",
+                            id="current_password_field"
+                        ) }}
+                        <button type="button"
+                                @click="showCurrent = !showCurrent; document.getElementById('current_password_field').type = showCurrent ? 'text' : 'password'"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-800/35 hover:text-blue-800 transition">
+                            <svg x-show="!showCurrent" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                            <svg x-show="showCurrent" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m2.46-2.286A9.96 9.96 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    {{ edit_password_form.new_password.label(class="form-label") }}
+                    <div class="relative">
+                        {{ edit_password_form.new_password(
+                            x_model="newPass",
+                            type="password",
+                            placeholder="••••••••",
+                            id="new_password_field"
+                        ) }}
+                        <button type="button"
+                                @click="showNew = !showNew; document.getElementById('new_password_field').type = showNew ? 'text' : 'password'"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-800/35 hover:text-blue-800 transition">
+                            <svg x-show="!showNew" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                            <svg x-show="showNew" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m2.46-2.286A9.96 9.96 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div x-show="newPass.length > 0" x-transition>
+                        <div class="h-[5px] bg-blue-100 rounded-full overflow-hidden mt-1.5">
+                            <div class="h-full rounded-full transition-all duration-300"
+                                 :style="`width:${strength * 25}%; background:${strengthColor}`"></div>
+                        </div>
+                        <p class="text-xs mt-1 font-medium" :style="`color:${strengthColor}`" x-text="strengthLabel + ' password'"></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div x-show="newPass.length > 0" x-transition class="bg-blue-50/60 border border-blue-600/10 rounded-lg p-3 grid grid-cols-2 gap-1.5">
+                <div class="flex items-center gap-1.5 text-xs" :class="newPass.length >= 8 ? 'text-green-600' : 'text-blue-800/40'">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    At least 8 characters
+                </div>
+                <div class="flex items-center gap-1.5 text-xs" :class="/[A-Z]/.test(newPass) ? 'text-green-600' : 'text-blue-800/40'">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    One uppercase letter
+                </div>
+                <div class="flex items-center gap-1.5 text-xs" :class="/[0-9]/.test(newPass) ? 'text-green-600' : 'text-blue-800/40'">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    One number
+                </div>
+                <div class="flex items-center gap-1.5 text-xs" :class="/[^A-Za-z0-9]/.test(newPass) ? 'text-green-600' : 'text-blue-800/40'">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    One special character
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 pt-1">
+                {{ edit_password_form.submit(class="btn btn-primary") }}
+            </div>
+
+        </form>
+    </div>
+
+</div>
 {% endblock %}
