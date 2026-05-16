@@ -1,13 +1,23 @@
-from core.defaults import DEFAULT_ANALYTICS_ITEMS
+from core.defaults import DEFAULT_ANALYTICS_GRID
+from core.utils.analytics import Grid
 
-analytics_items = DEFAULT_ANALYTICS_ITEMS
+_default_analytics_grid = DEFAULT_ANALYTICS_GRID
 
-def register_default_analytics(title: str, value_function, roles: list):
-    analytics_items.append({
-        "title": title,
-        "value_function": lambda: value_function,
-        "roles": roles
-    })
+def register_analytics(grid: Grid):
+    _default_analytics_grid.append(grid)
+    
+def get_analytics_items(user):
+    """
+    Get analytics items for the current user based on their roles.
+    This function checks the registered analytics grids and filters the items based on the user's roles.
+    """
 
-def get_analytics_items(current_user):
-    return [item for item in analytics_items if current_user.has_role(item['roles'])]
+    items = []
+    for grid in _default_analytics_grid:
+        if grid.show_for_user(user):
+            grid.filter_contents_for_user(user)
+            if len(grid.contents) > 0:
+                items.append(grid)
+
+
+    return items

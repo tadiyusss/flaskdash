@@ -1,6 +1,7 @@
 from flask import render_template
 from flask_login import login_required, current_user
 from core.utils.registry import analytics
+from core.utils.analytics import LargeAnalyticsCardData
 
 def generate_routes(core):
     @core.route('/home')

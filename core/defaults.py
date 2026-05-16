@@ -1,40 +1,35 @@
 from core.utils.dashboard import *
 from wtforms import StringField, BooleanField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length
-from core.models.settings import Setting
 from core.models.users import Role
+from core.utils.analytics import Grid, LargeAnalyticsCardData, MediumAnalyticsCardData, SmallAnalyticsCardData
 
-DEFAULT_ANALYTICS_ITEMS = [
-    {
-        "title": "Total Users",
-        "value_function": lambda: get_total_users(),
-        "roles": [
-            "Administrator",
-        ]
-    },
-    {
-        "title": "Active Users",
-        "value_function": lambda: get_active_users(),
-        "roles": [
-            "Administrator",
-        ]
-    },
-    {
-        "title": "Uploads Storage Usage",
-        "value_function": lambda: get_uploads_storage_usage(),
-        "roles": [
-            "Administrator",
-        ]
-    },
-    {
-        "title": "Total Users",
-        "value_function": lambda: get_total_users(),
-        "roles": [
-            "Administrator",
-        ]
-    }
+DEFAULT_ANALYTICS_GRID = [
+    Grid(
+        title="Dashboard Analytics",
+        contents=[
+            SmallAnalyticsCardData(
+                title="Total Users",
+                value_function=lambda: get_total_users(),
+                roles=["Administrator"],
+                icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='analytics-icon'><path d='M7 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM14.5 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM1.615 16.428a1.224 1.224 0 0 1-.569-1.175 6.002 6.002 0 0 1 11.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 0 1 7 18a9.953 9.953 0 0 1-5.385-1.572ZM14.5 16h-.106c.07-.297.088-.611.048-.933a7.47 7.47 0 0 0-1.588-3.755 4.502 4.502 0 0 1 5.874 2.636.818.818 0 0 1-.36.98A7.465 7.465 0 0 1 14.5 16Z' /></svg>"
+            ),
+            SmallAnalyticsCardData(
+                title="Active Users",
+                value_function=lambda: get_active_users(),
+                roles=["Administrator"],
+                icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='analytics-icon'><path d='M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM1.49 15.326a.78.78 0 0 1-.358-.442 3 3 0 0 1 4.308-3.516 6.484 6.484 0 0 0-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 0 1-2.07-.655ZM16.44 15.98a4.97 4.97 0 0 0 2.07-.654.78.78 0 0 0 .357-.442 3 3 0 0 0-4.308-3.517 6.484 6.484 0 0 1 1.907 3.96 2.32 2.32 0 0 1-.026.654ZM18 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM5.304 16.19a.844.844 0 0 1-.277-.71 5 5 0 0 1 9.947 0 .843.843 0 0 1-.277.71A6.975 6.975 0 0 1 10 18a6.974 6.974 0 0 1-4.696-1.81Z' /></svg>"
+            ),
+            SmallAnalyticsCardData(
+                title="Uploads Storage Usage",
+                value_function=lambda: get_uploads_storage_usage(),
+                roles=["Administrator"],
+                icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='analytics-icon'><path d='M3.75 3A1.75 1.75 0 0 0 2 4.75v3.26a3.235 3.235 0 0 1 1.75-.51h12.5c.644 0 1.245.188 1.75.51V6.75A1.75 1.75 0 0 0 16.25 5h-4.836a.25.25 0 0 1-.177-.073L9.823 3.513A1.75 1.75 0 0 0 8.586 3H3.75ZM3.75 9A1.75 1.75 0 0 0 2 10.75v4.5c0 .966.784 1.75 1.75 1.75h12.5A1.75 1.75 0 0 0 18 15.25v-4.5A1.75 1.75 0 0 0 16.25 9H3.75Z' /></svg>"
+            ),
+        ],
+        roles=["Administrator"],
+    )
 ]
-
 
 DEFAULT_SETTINGS_CATEGORY = [
     {

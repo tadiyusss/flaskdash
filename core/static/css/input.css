@@ -59,3 +59,11 @@
 .form-label {
     @apply text-gray-600 text-sm;
 }
+
+.analytics-icon{
+    @apply size-5 text-white;
+}
+
+.md-analytics-icon{
+    @apply w-5 h-5 text-blue-700;
+}
