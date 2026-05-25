@@ -69,6 +69,7 @@ def generate_routes(core):
             return redirect(url_for('core.users'))
 
         selected_user.delete_profile_image()
+        selected_user.delete_login_history()
         db.session.delete(selected_user)
         db.session.commit()
         

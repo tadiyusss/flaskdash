@@ -55,6 +55,10 @@ class User(db.Model, UserMixin):
             except FileNotFoundError:
                 pass
 
+    def delete_login_history(self):
+        LoginHistory.query.filter_by(user_id=self.id).delete()
+        db.session.commit()
+
     def __repr__(self):
         return f"<User {self.username} ({self.uid})>"
 
