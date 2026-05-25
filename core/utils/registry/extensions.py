@@ -38,7 +38,8 @@ def register_extension(name):
             "author": metadata.AUTHOR,
             "url_prefix": metadata.URL_PREFIX,
             "static_folder": metadata.STATIC_FOLDER,
-            "template_folder": metadata.TEMPLATE_FOLDER
+            "template_folder": metadata.TEMPLATE_FOLDER,
+            "slug": metadata.SLUG
         })
 
 def get_registered_extension_metadata(name):

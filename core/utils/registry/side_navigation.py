@@ -27,6 +27,10 @@ def register_sidebar_item(item: DashboardItem, category_name: str):
             category.items.append(item)
 
 def get_sidebar_items_for_user(user):
+    """
+    Get the sidebar items that should be visible to a user based on their role.
+    :param user: The user object for whom to retrieve the sidebar items.
+    """
     user_role = user.role
     visible_sidebar = []
     for category in _registered_sidebar_items:

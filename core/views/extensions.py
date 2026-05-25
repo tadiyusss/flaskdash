@@ -10,3 +10,13 @@ def generate_routes(core):
     def extensions():
         extensions = EXTENSIONS_METADATA
         return render_template('dashboard/extensions.html', user=current_user, extensions=extensions)
+    
+    @core.route('/extensions/manage/<string:slug>')
+    @role_required('Administrator')
+    @login_required
+    def manage_extensions(slug):
+        for extension in EXTENSIONS_METADATA:
+            print(extension)
+            if extension['slug'] == slug:
+                return render_template('dashboard/manage_extension.html', user=current_user, extension=extension)
+        return "Extension not found", 404
