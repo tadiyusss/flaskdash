@@ -7,7 +7,7 @@ from .context import init_context
 from config import *
 from core.initializations.roles import register_default_roles
 from core.initializations.extensions import include_all_extensions
-from core.initializations.settings import register_default_categories, register_default_settings
+from core.initializations.settings import register_default_settings
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -30,7 +30,6 @@ def create_app(config_class=Config):
     with app.app_context():
         db.create_all()
         register_default_roles()
-        register_default_categories()
         register_default_settings()
         include_all_extensions(app)
     

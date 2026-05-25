@@ -3,6 +3,8 @@ from wtforms import StringField, BooleanField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length
 from core.models.users import Role
 from core.utils.analytics import Grid, LargeAnalyticsCardData, MediumAnalyticsCardData, SmallAnalyticsCardData
+from core.utils.settings import SettingCategory, SettingItem
+from core.utils.roles import Role as RoleData
 
 DEFAULT_ANALYTICS_GRID = [
     Grid(
@@ -32,70 +34,63 @@ DEFAULT_ANALYTICS_GRID = [
 ]
 
 DEFAULT_SETTINGS_CATEGORY = [
-    {
-        "name": "site_settings",
-        "nice_name": "Site Settings",
-        "description": "Settings related to the overall site configuration.",
-    }
-]
-
-
-DEFAULT_SETTINGS = [
-    {
-        "key": "site_title",
-        "name": "Site Title",
-        "value": "FlaskDash",
-        "field": StringField("Site Title", validators=[DataRequired(), Length(max=100)], render_kw={"class": "text-input"}, description="The title of your site, displayed in the header."),
-        "category_name": "site_settings"
-    },
-    {
-        "key": "site_description",
-        "name": "Site Description",
-        "value": "A scalable Flask dashboard application.",
-        "field": TextAreaField("Site Description", validators=[DataRequired(), Length(max=200)], render_kw={"class": "textarea"}, description="A brief description of your site for SEO purposes."),
-        "category_name": "site_settings"
-    },
-    {
-        "key": "allow_registration",
-        "name": "Allow User Registration",
-        "value": False,
-        "field": BooleanField("Allow User Registration", description="Enable or disable user registration on the site."),
-        "category_name": "site_settings"
-    },
-    {
-        "key": "allow_first_name_last_name",
-        "name": "Allow First Name and Last Name",
-        "value": False,
-        "field": BooleanField("Allow First Name and Last Name", description="Enable or disable first name and last name fields in user profiles."),
-        "category_name": "site_settings"
-    },
-    {
-        "key": "default_user_role",
-        "name": "Default User Role",
-        "value": "User",
-        "field": SelectField(
-            "Default User Role",
-            choices=lambda: [(role.name, role.name) for role in Role.query.all()],
-            render_kw={"class": "select"},
-            description="The default role assigned to new users upon registration."
-        ),
-        "category_name": "site_settings"
-    },
+    SettingCategory(
+        name="site_settings",
+        nice_name="Site Settings",
+        description="Settings related to the overall site configuration.",
+        settings=[
+            SettingItem(
+                key="site_title",
+                name="Site Title",
+                value="FlaskDash",
+                field=StringField("Site Title", validators=[DataRequired(), Length(max=100)], render_kw={"class": "text-input"}, description="The title of your site, displayed in the header.")
+            ),
+            SettingItem(
+                key="site_description",
+                name="Site Description",
+                value="A scalable Flask dashboard application.",
+                field=TextAreaField("Site Description", validators=[DataRequired(), Length(max=200)], render_kw={"class": "textarea"}, description="A brief description of your site for SEO purposes.")
+            ),
+            SettingItem(
+                key="allow_registration",
+                name="Allow User Registration",
+                value=False,
+                field=BooleanField("Allow User Registration", description="Enable or disable user registration on the site.")
+            ),
+            SettingItem(
+                key="allow_first_name_last_name",
+                name="Allow First Name and Last Name",
+                value=False,
+                field=BooleanField("Allow First Name and Last Name", description="Enable or disable first name and last name fields in user profiles.")
+            ),
+            SettingItem(
+                key="default_user_role",
+                name="Default User Role",
+                value="User",
+                field=SelectField(
+                    "Default User Role",
+                    choices=lambda: [(role.name, role.name) for role in Role.query.all()],
+                    render_kw={"class": "select"},
+                    description="The default role assigned to new users upon registration."
+                )
+            )
+        ]
+    )
 ]
 
 DEFAULT_ROLES = [
-    {
-        "name": "Administrator",
-        "description": "Administrator with full access to all features."
-    },
-    {   
-        "name": "Editor",
-        "description": "Editor with access to content management features."
-    },
-    {
-        "name": "User",
-        "description": "Regular user with limited access to features."
-    }
+    RoleData(
+        name="Administrator",
+        description="Administrator with full access to all features."
+    ),
+    RoleData(
+        name="Editor",
+        description="Editor with access to content management features."
+    ),
+    RoleData(
+        name="User",
+        description="Regular user with limited access to features."
+    )
 ]
 
 """

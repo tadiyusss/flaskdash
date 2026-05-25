@@ -13,7 +13,8 @@ def generate_routes(core):
     def roles():
         roles = Role.query.all()
         form = CreateRoleForm()
-        default_roles = [role['name'] for role in DEFAULT_ROLES]
+        default_roles = [role.name for role in DEFAULT_ROLES]
+
         if form.validate_on_submit():
             new_role = Role(
                 name=form.name.data,
@@ -34,7 +35,7 @@ def generate_routes(core):
     @login_required
     def delete_role(role_uid):
         role = Role.query.filter_by(uid=role_uid).first_or_404()
-        if role.name in [r['name'] for r in DEFAULT_ROLES]:
+        if role.name in [r.name for r in DEFAULT_ROLES]:
             flash('You cannot delete a default role.', 'global-error')
             return redirect(url_for('core.roles'))
 

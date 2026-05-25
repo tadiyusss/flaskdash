@@ -6,4 +6,7 @@ def register_default_roles():
     Register default roles.
     """
     for role in DEFAULT_ROLES:
-        register_role(**role)
+        register_role(
+            name=role.name,
+            description=role.description
+        )
