@@ -26,17 +26,20 @@ def generate_routes(core):
         form.role.choices = [(role.name, role.name) for role in Role.query.all()]
         
         if form.validate_on_submit():
-            if g.settings['allow_first_name_last_name'] == False:
-                form.firstname.data = ''
-                form.lastname.data = ''
-                
-            new_user = User(
-                username=form.username.data,
-                email=form.email.data,
-                role=form.role.data,
-                firstname=form.firstname.data,
-                lastname=form.lastname.data
-            )
+
+            user_kwargs = {
+                'username': form.username.data,
+                'email': form.email.data,
+                'role': form.role.data,
+            }
+
+            if g.settings.get('allow_first_name_last_name') == "1":
+                user_kwargs.update({
+                    'firstname': form.firstname.data,
+                    'lastname': form.lastname.data,
+                })
+
+            new_user = User(**user_kwargs)
             new_user.set_password(form.password.data)
             db.session.add(new_user)
             db.session.commit()

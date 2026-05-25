@@ -27,12 +27,12 @@
 	</div>
 
     {% for category in get_sidebar() %}
-    <div class="section-label">{{category['name']}}</div>
-        {% for item in category['items'] %}
+    <div class="section-label">{{category.name}}</div>
+        {% for item in category.items %}
         <nav class="flex flex-col gap-0.5">
-            <a href="{{ url_for(item['route']) }}" class="nav-item">
-                {{ item['icon']|safe }} 
-                {{ item['name'] }}
+            <a href="{{ url_for(item.route) }}" class="nav-item">
+                {{ item.icon|safe }} 
+                {{ item.name }}
             </a>
         </nav>
         {% endfor %}
