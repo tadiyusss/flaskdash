@@ -1,25 +1,27 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Settings{% endblock %}
 {% block main %}
-<div class="max-w-2xl mx-auto">
+<div class="max-w-2xl mx-auto space-y-6">
+	{% for category in categories %}
 	<div class="card p-6">
 		<div class="border-b border-blue-600/[0.09] pb-3.5 mb-2">
-			<h3 class="font-semibold text-blue-800">Site Settings</h3>
-			<p class="text-sm text-blue-800/45">Configure your site's name, branding, and other global preferences.</p>
+			<h3 class="font-semibold text-blue-800">{{ category.nice_name }}</h3>
+			<p class="text-sm text-blue-800/45">{{ category.description }}</p>
 		</div>
-		<form method="POST" class="space-y-2">
-			{{ form.hidden_tag() }} 
-            {% for field in form %} 
-                {% if field.name != "csrf_token" %} 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start py-2 border-b border-blue-600/[0.06] last:border-0">
-                    <div>
-                        <label for="{{ field.id }}" class="block text-xs font-semibold text-blue-800">{{ field.label.text }}</label>
-                        <p class="text-xs text-blue-800/40 mt-0.5 leading-relaxed">{{ field.description }}</p>
-                    </div>
-                    <div>
-                        {{ field(class="text-input") }}
-                    </div>
-                </div> 
+		<form method="POST" class="space-y-2"> 
+            {% for field in forms[loop.index0] %} 
+                {% if field.name == "csrf_token" %} 
+					{{ field(class="hidden") }}
+				{% else %}
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start py-2 border-b border-blue-600/[0.06] last:border-0">
+						<div>
+							<label for="{{ field.id }}" class="block text-xs font-semibold text-blue-800">{{ field.label.text }}</label>
+							<p class="text-xs text-blue-800/40 mt-0.5 leading-relaxed">{{ field.description }}</p>
+						</div>
+						<div>
+							{{ field(class="text-input") }}
+						</div>
+					</div> 
                 {% endif %} 
             {% endfor %} 
             <div class="flex items-center gap-2 pt-2">
@@ -31,5 +33,6 @@
 			</div>
 		</form>
 	</div>
+	{% endfor %}
 </div>
 {% endblock %}

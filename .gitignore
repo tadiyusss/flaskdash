@@ -18,3 +18,5 @@ core/static/js/app.js.map
 core/static/uploads/*
 core/static/images/*
 temp/
+run_mysql.py
+*_test.py

@@ -44,25 +44,29 @@ DEFAULT_SETTINGS_CATEGORY = [
                 key="site_title",
                 name="Site Title",
                 value="FlaskDash",
-                field=StringField("Site Title", validators=[DataRequired(), Length(max=100)], render_kw={"class": "text-input"}, description="The title of your site, displayed in the header.")
+                field=StringField("Site Title", validators=[DataRequired(), Length(max=100)], render_kw={"class": "text-input"}, description="The title of your site, displayed in the header."),
+                category_name="site_settings"
             ),
             SettingItem(
                 key="site_description",
                 name="Site Description",
                 value="A scalable Flask dashboard application.",
-                field=TextAreaField("Site Description", validators=[DataRequired(), Length(max=200)], render_kw={"class": "textarea"}, description="A brief description of your site for SEO purposes.")
+                field=TextAreaField("Site Description", validators=[DataRequired(), Length(max=200)], render_kw={"class": "textarea"}, description="A brief description of your site for SEO purposes."),
+                category_name="site_settings"
             ),
             SettingItem(
                 key="allow_registration",
                 name="Allow User Registration",
                 value=False,
-                field=BooleanField("Allow User Registration", description="Enable or disable user registration on the site.")
+                field=BooleanField("Allow User Registration", description="Enable or disable user registration on the site."),
+                category_name="site_settings"
             ),
             SettingItem(
                 key="allow_first_name_last_name",
                 name="Allow First Name and Last Name",
                 value=False,
-                field=BooleanField("Allow First Name and Last Name", description="Enable or disable first name and last name fields in user profiles.")
+                field=BooleanField("Allow First Name and Last Name", description="Enable or disable first name and last name fields in user profiles."),
+                category_name="site_settings"
             ),
             SettingItem(
                 key="default_user_role",
@@ -73,7 +77,8 @@ DEFAULT_SETTINGS_CATEGORY = [
                     choices=lambda: [(role.name, role.name) for role in Role.query.all()],
                     render_kw={"class": "select"},
                     description="The default role assigned to new users upon registration."
-                )
+                ),
+                category_name="site_settings"
             )
         ]
     )
