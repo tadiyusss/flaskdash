@@ -14,7 +14,7 @@ def generate_routes(core):
     @login_required
     def settings():
         setting_categories = get_registered_categories()
-        forms = [create_settings_form(category) for category in setting_categories]
+        forms = [build_settings_form(category) for category in setting_categories]
         
         for form in forms:
             if form.validate_on_submit():
