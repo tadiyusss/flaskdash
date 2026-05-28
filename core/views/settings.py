@@ -1,7 +1,7 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from core.extensions import db
-from core.forms.settings import build_settings_form
+from core.forms.settings import create_settings_form
 from core.models.settings import Setting
 from core.utils.decorators import role_required
 from wtforms import BooleanField
@@ -14,11 +14,12 @@ def generate_routes(core):
     @login_required
     def settings():
         setting_categories = get_registered_categories()
-        forms = [build_settings_form(category) for category in setting_categories]
-        
+        forms = [create_settings_form(category) for category in setting_categories]
+
         for form in forms:
             if form.validate_on_submit():
                 for field in form:
+                    print(f"Processing field: {field.name} with data: {field.data}")
                     if isinstance(field, BooleanField):
                         value = '1' if field.data else '0'
                     else:
@@ -29,7 +30,9 @@ def generate_routes(core):
                         setting.value = value
                         db.session.commit()
                         flash(f"Setting '{setting.name}' updated successfully.", 'global-success')
-                return redirect(url_for('core.settings'))
+
+            else:
+                print(form.errors)
             
         for form in forms:
             for field in form:
