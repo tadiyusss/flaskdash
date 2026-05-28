@@ -1,23 +1,20 @@
 from flask_wtf import FlaskForm
 from core.models.settings import Setting
+from wtforms import SubmitField
 from core.utils.registry.settings import get_registered_settings
-from core.utils.settings import SettingCategory, SettingItem
+from core.utils.settings import SettingCategory
 
-def create_settings_form(category: SettingCategory):
+def build_settings_form(category: SettingCategory):
     """
-    Create a dynamic WTForms form based on the registered settings for a given category.
-    :param category: The settings category for which to create the form.
-    :return: A dynamically generated WTForms form class.
+    Dynamically creates a Flask-WTF form from SettingCategory
     """
 
     class DynamicSettingsForm(FlaskForm):
-        pass
-
+        submit = SubmitField("Save Settings")
+        
     for setting in category.settings:
         field = setting.field
-        existing_setting = Setting.query.filter_by(key=setting.key).first()
-        if existing_setting:
-            field.default = existing_setting.value
+        field.default = setting.value
 
         setattr(DynamicSettingsForm, setting.key, field)
 
