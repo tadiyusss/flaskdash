@@ -1,12 +1,14 @@
-from core.models.users import Role, db
+from core.models.users import Role as RoleModel
+from core import db
+from core.utils.roles import Role
 
-def register_role(name: str, description: str = None):
-    exists = Role.query.filter_by(name=name).first()
+def register_role(role: Role):
+    exists = RoleModel.query.filter_by(name=role.name).first()
 
     if exists:
         return False
 
-    role = Role(name=name, description=description)
+    role = RoleModel(name=role.name, description=role.description)
     db.session.add(role)
     db.session.commit()
     return True
