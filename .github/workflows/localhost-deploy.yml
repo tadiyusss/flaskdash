@@ -1,41 +1,41 @@
 name: FlaskDash Deployment
 
 on:
-push:
-branches:
-- main
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: self-hosted
 
-steps:
-  - name: Checkout Repository
-    uses: actions/checkout@v4
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-  - name: Show Environment Info
-    run: |
-      echo "Running on self-hosted runner"
-      python --version
-      pip --version
+      - name: Show Environment Info
+        run: |
+          echo "Running on self-hosted runner"
+          python --version
+          pip --version
 
-  - name: Pull Latest Changes
-    run: |
-      git fetch origin
-      git reset --hard origin/main
+      - name: Pull Latest Changes
+        run: |
+          git fetch origin
+          git reset --hard origin/main
 
-  - name: Install Dependencies
-    run: |
-      pip install -r requirements.txt
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
 
-  - name: Run Database Migrations
-    run: |
-      flask db upgrade
+      - name: Run Database Migrations
+        run: |
+          flask db upgrade
 
-  - name: Restart FlaskDash Service
-    run: |
-      sudo systemctl restart flaskdash
+      - name: Restart FlaskDash Service
+        run: |
+          sudo systemctl restart flaskdash
 
-  - name: Verify Service Status
-    run: |
-      sudo systemctl status flaskdash --no-pager
+      - name: Verify Service Status
+        run: |
+          sudo systemctl status flaskdash --no-pager
