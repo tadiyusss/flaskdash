@@ -6,8 +6,8 @@ branches:
 - main
 
 jobs:
-deploy:
-runs-on: self-hosted
+  deploy:
+    runs-on: self-hosted
 
 steps:
   - name: Checkout Repository
