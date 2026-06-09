@@ -26,72 +26,14 @@ def include_all_extensions(app):
 
 def handle_extension_migrations(extension_name, app):
     migration_path = Path(f"extensions/{extension_name}/migrations")
-    versions_path = migration_path / "versions"
 
     with app.app_context():
-        if not migration_path.exists():
-            initialize_extension_migrations(extension_name)
-            patch_env_file(extension_name)
+        if migration_path.exists():
+            # check if patched
+            if not (migration_path / "env.py").exists():
+                print(f"Patched env.py not found for {extension_name}, patching now...")
+                patch_env_file(extension_name)
 
-        if not versions_path.exists() or not any(versions_path.iterdir()):
-            try:
-                migrate(
-                    directory=str(migration_path),
-                    message=f"initial migration for {extension_name}"
-                )
-            except SystemExit:
-                logger.info(f"[{extension_name}] No models to migrate")
-
-            upgrade_extension(extension_name, app)
-            return
-
-        upgrade_extension(extension_name, app)
-
-        if has_schema_changes(extension_name, app):
-            try:
-                migrate(
-                    directory=str(migration_path),
-                    message=f"auto migration for {extension_name}"
-                )
-                upgrade_extension(extension_name, app)
-            except SystemExit:
-                pass
-            except Exception as e:
-                logger.error(f"[{extension_name}] Migration error: {e}")
-                raise
-
-
-def has_schema_changes(extension_name, app) -> bool:
-    migration_path = Path(f"extensions/{extension_name}/migrations")
-
-    alembic_cfg = AlembicConfig()
-    alembic_cfg.set_main_option("script_location", str(migration_path))
-    alembic_cfg.set_main_option("version_table", f"alembic_version_{extension_name}")
-
-    with app.app_context():
-        with db.engine.connect() as conn:
-            context = MigrationContext.configure(
-                conn,
-                opts={"version_table": f"alembic_version_{extension_name}"}
-            )
-            diff = compare_metadata(context, db.metadata)
-
-    return bool(diff)
-
-
-def upgrade_extension(extension_name, app):
-    migration_path = Path(f"extensions/{extension_name}/migrations")
-
-    with app.app_context():
-        try:
-            upgrade(directory=str(migration_path))
-        except Exception as e:
-            if "can't locate revision" in str(e).lower():
-                logger.warning(f"[{extension_name}] Broken revision detected, stamping head")
-                stamp(directory=str(migration_path), revision="head")
-                upgrade(directory=str(migration_path))
-            else:
-                raise
 
 
 def patch_env_file(extension_name):
@@ -111,10 +53,3 @@ def patch_env_file(extension_name):
     patched = patched.replace("target_metadata = None", "")
 
     env_file.write_text(patched)
-
-
-def initialize_extension_migrations(extension_name):
-    migration_directory = Path(f"extensions/{extension_name}/migrations")
-
-    if not migration_directory.exists():
-        init(directory=str(migration_directory))

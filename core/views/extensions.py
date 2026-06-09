@@ -16,7 +16,6 @@ def generate_routes(core):
     @login_required
     def manage_extensions(slug):
         for extension in EXTENSIONS_METADATA:
-            print(extension)
             if extension['slug'] == slug:
                 return render_template('dashboard/manage_extension.html', user=current_user, extension=extension)
         return "Extension not found", 404
