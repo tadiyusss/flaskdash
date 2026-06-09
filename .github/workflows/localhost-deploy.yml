@@ -39,4 +39,3 @@ steps:
   - name: Verify Service Status
     run: |
       sudo systemctl status flaskdash --no-pager
-```
