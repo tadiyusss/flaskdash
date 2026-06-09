@@ -6,6 +6,12 @@ _default_analytics_grid = DEFAULT_ANALYTICS_GRID
 def register_analytics(grid: Grid):
     _default_analytics_grid.append(grid)
     
+def register_analytics_item(item, grid_title):
+    for grid in _default_analytics_grid:
+        if grid.title == grid_title:
+            grid.contents.append(item)
+            break
+
 def get_analytics_items(user):
     """
     Get analytics items for the current user based on their roles.
