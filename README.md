@@ -236,10 +236,10 @@ def init_extension(app, db):
 
 This section explains how extensions integrate with the **core system** using four primary integration points:
 
-- Settings
-- Analytics
-- Roles
-- Sidebar Navigation
+- [Settings](#1-settings-integration)
+- [Analytics](#2-analytics-widget-integration)
+- [Roles](#3-analytics-widget-integration)
+- [Sidebar Navigation](#4-dashboard-side-navigation-integration)
 
 All integrations are registered inside the extension’s `init_extension(app, db)` lifecycle through dedicated initialization modules.
 
@@ -302,6 +302,121 @@ item = SettingItem(
     category_name="category_name"
 )
 register_setting(item)
+```
+
+___
+
+### 2. Analytics Widget Integration
+
+Analytics allow extensions to display dashboard metrics on the core home page.
+
+Use analytics for:
+
+- Usage statistics
+- Business metrics
+- System health indicators
+- Feature activity tracking
+
+#### Adding a Analytics Grid and Analytics Item
+
+```python
+from core.utils.analytics import Grid, SmallAnalyticsCardData
+from core.utils.registry.analytics import register_analytics
+
+
+ANALYTICS = [
+    Grid(
+        title="Grid Title",
+        contents=[
+            SmallAnalyticsCardData(
+                title="Data Name",
+                value_function=lambda: data_func(),
+                roles=["Administrator"],
+                icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='analytics-icon'><path d='M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z' /><path fill-rule='evenodd' d='M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z' clip-rule='evenodd' /></svg>"
+            )
+        ],
+        roles=["Administrator"],
+    )
+]
+register_analytics(item)
+```
+
+___
+
+### 3. Custom Role Integration
+
+Roles define access control and permissions for both core and extension features.
+
+Use roles for:
+- Route protection
+- Feature access control
+- Admin/user separation
+- Fine-grained permission handling
+
+#### Creating a Role
+
+```python
+from core.utils.registry.roles import register_role
+from core.utils.roles import Role
+
+role = Role(
+    name="Role Name",
+    description="Description about the role.",
+)
+
+register_role(role)
+```
+
+___
+
+### 4. Dashboard Side Navigation Integration
+
+Sidebar navigation allows extensions to register menu items in the authenticated user dashboard.
+
+Use sidebar items for:
+- Extension pages
+- Dashboard tools
+- Feature entry points
+- Navigation shortcuts
+
+#### Creating a sidebar category with items
+
+```python
+from core.utils.registry.side_navigation import register_category
+from core.utils.dashboard import DashboardCategory, DashboardItem
+
+category = DashboardCategory(
+    name="Category Name",
+    roles=["Administrator"],
+    items=[
+        DashboardItem(
+            name="Item Name",
+            icon_type="svg",
+            icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='sidenav-item'><path fill-rule='evenodd' d='M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0ZM8.94 6.94a.75.75 0 1 1-1.061-1.061 3 3 0 1 1 2.871 5.026v.345a.75.75 0 0 1-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 1 0 8.94 6.94ZM10 15a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z' clip-rule='evenodd' /></svg>",
+            route="extension_name.function_name",
+            roles=["Administrator"]
+        )
+    ]
+)
+
+register_category(category)
+```
+
+Registering a sidebar item with an existing category
+
+```python
+from core.utils.registry.side_navigation import register_sidebar_item
+from core.utils.dashboard import DashboardItem
+
+item = DashboardItem(
+    name="Another item name",
+    icon_type="svg",
+    icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='sidenav-item'><path fill-rule='evenodd' d='M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0ZM8.94 6.94a.75.75 0 1 1-1.061-1.061 3 3 0 1 1 2.871 5.026v.345a.75.75 0 0 1-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 1 0 8.94 6.94ZM10 15a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z' clip-rule='evenodd' /></svg>",
+    route="extension_name.function_name",
+    roles=["Administrator"]
+)
+
+register_sidebar_item(item, "Category Name")
 ```
 
 ___
