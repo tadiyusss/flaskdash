@@ -4,6 +4,15 @@ A modular and extensible admin dashboard built with Flask — designed for devel
 
 This project is **actively being developed** and will serve as a foundation for SaaS products, internal tools, admin panels, and plugin-driven platforms.
 
+## Table of Contents
+
+- [Use Cases](#why-use-this-dashboard)
+- [Features](#key-features)
+- [Project Structure](#project-structure)
+- [Download](#download)
+- [Setup Environemnt](#create-virtual-environment)
+- [Extension Setup](#extension-setup-guide)
+- [Core Integrations](#core-integrations)
 
 ### Why Use This Dashboard?
 
@@ -23,15 +32,6 @@ Whether you're building a **SaaS**, an **internal management tool**, or a **cust
 
 - **Configurable Settings Management**  
   Admins can manage general site settings (title, description, theme, etc.) from the UI — no code changes required.
-
-
-## Table of Contents
-
-- [Project Structure](#project-structure)
-- [Download](#download)
-- [Setup Environemnt](#create-virtual-environment)
-- [Extension Setup](#extension-setup-guide)
-- [Core Integrations](#core-integrations)
 
 ## Project Structure
 
