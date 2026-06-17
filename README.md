@@ -25,7 +25,15 @@ Whether you're building a **SaaS**, an **internal management tool**, or a **cust
   Admins can manage general site settings (title, description, theme, etc.) from the UI — no code changes required.
 
 
-### Project Structure
+## Table of Contents
+
+- [Project Structure](#project-structure)
+- [Download](#download)
+- [Setup Environemnt](#create-virtual-environment)
+- [Extension Setup](#extension-setup-guide)
+- [Core Integrations](#core-integrations)
+
+## Project Structure
 
 ```text
 ├───.github
@@ -180,8 +188,120 @@ TEMPLATE_FOLDER = "templates"
 
 The application automatically scans the extensions/ directory and loads extensions that contain both:
 
-- metadata.py
-- __init__.py
+- ```metadata.py```
+- ```__init__.py```
 
 Extensions missing either file will be ignored.
 
+### Extension Initialization Guide (`__init__.py`)
+
+Every extension **must** include an `init_extension(app, db)` function inside its `__init__.py` file.  
+This function acts as the **entry point** for registering all extension components into the core system.
+
+### Purpose
+
+The init_extension function is responsible for:
+
+- Initializing database tables (if needed)
+- Registering settings
+- Registering analytics
+- Registering roles
+- Registering sidebar/navigation items
+- Returning the Flask Blueprint
+
+### Example Implementation
+
+```python
+from flask import Blueprint
+from .metadata import TEMPLATE_FOLDER, STATIC_FOLDER
+
+bp = Blueprint(
+    "example_extension",
+    __name__,
+    template_folder=TEMPLATE_FOLDER,
+    static_folder=STATIC_FOLDER,
+    static_url_path="/static/example_extension"
+)
+
+from .routes import route_example
+
+def init_extension(app, db):
+    with app.app_context():
+        # Initialize database tables (if extension uses models)
+        db.create_all()
+    return bp
+```
+
+## Core Integrations
+
+This section explains how extensions integrate with the **core system** using four primary integration points:
+
+- Settings
+- Analytics
+- Roles
+- Sidebar Navigation
+
+All integrations are registered inside the extension’s `init_extension(app, db)` lifecycle through dedicated initialization modules.
+
+The core system provides a **registry-based architecture** that allows extensions to safely extend functionality without modifying core code.
+
+### 1. Settings Integration
+
+Settings allow extensions to expose configurable options inside the **core Settings page**.
+
+Use settings for:
+
+- Feature toggles
+- API keys
+- UI preferences
+- Extension configuration
+- Environment-dependent values
+
+#### Adding a Setting Category with Setting Item
+
+```python
+from core.utils.registry.settings import register_category
+from core.utils.settings import SettingCategory, SettingItem
+from wtforms import StringField
+
+settings_category = SettingCategory(
+    name="category_name",
+    nice_name="Category Name",
+    description="A sample setting category",
+    settings=[
+        SettingItem(
+            key="unique_key",
+            name="Setting Name",
+            value="default_value",
+            field=StringField(
+                "Field Name", 
+                description="Description about the field.",
+            ),
+            category_name="category_name"
+        )
+    ]
+)
+register_category(settings_category)
+```
+
+#### Adding a one Setting Item 
+
+```python
+from core.utils.registry.settings import register_setting
+from core.utils.settings import SettingItem
+from wtforms import StringField
+
+item = SettingItem(
+    key="another_unique_key",
+    name="Another Setting Name",
+    value="default_value",
+    field=StringField(
+        "Another Field Name", 
+        description="Another description about the field.",
+    ),
+    category_name="category_name"
+)
+register_setting(item)
+```
+
+___
