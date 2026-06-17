@@ -1,9 +1,7 @@
 from core import create_app
 from getpass import getpass
-from core.models.users import User, Role
-from core.models.settings import Setting
+from core.models.users import User
 from core.extensions import db
-from core.defaults import DEFAULT_SETTINGS, DEFAULT_ROLES
 
 app = create_app()
 
