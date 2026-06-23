@@ -20,12 +20,28 @@ class Role(db.Model):
     name = db.Column(db.String(50), nullable=False, unique=True)
     description = db.Column(db.String(200), nullable=True)
 
+class UserRole(db.Model):
+    __table_args__ = (
+        db.UniqueConstraint('user_id', 'role_id', name='uq_user_role_user_role'),
+    )
+
+    __tablename__ = 'user_role'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
+    
+    user = db.relationship('User', backref=db.backref('user_roles', cascade='all, delete-orphan'))
+    role = db.relationship('Role', backref=db.backref('user_roles', cascade='all, delete-orphan'))
+
+
 class User(db.Model, UserMixin): 
     __table_args__ = (
         db.UniqueConstraint('username', name='uq_user_username'),
         db.UniqueConstraint('email', name='uq_user_email'),
         db.UniqueConstraint('uid', name='uq_user_uid'),
     )
+    
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False)
     firstname = db.Column(db.String(100), nullable=True)
@@ -33,7 +49,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), nullable=False)
     password = db.Column(db.String(256), nullable=False)
     profile_image = db.Column(db.String(200), default='default-avatar.jpg')
-    role = db.Column(db.String(50), nullable=False)
     uid = db.Column(db.String(36), default=lambda: str(uuid.uuid4()), unique=True)
 
     def set_password(self, raw_password):
@@ -43,10 +58,8 @@ class User(db.Model, UserMixin):
     def check_password(self, raw_password):
         return check_password_hash(self.password, raw_password)
     
-    def has_role(self, roles):
-        if isinstance(roles, str):
-            roles = [roles]
-        return self.role in roles or '*' in roles
+    def has_role(self, role: str):
+        return any(user_role.role.name == role for user_role in self.user_roles)
 
     def delete_profile_image(self):
         if self.profile_image and self.profile_image != 'default-avatar.jpg':
@@ -68,8 +81,8 @@ class LoginHistory(db.Model):
     )
     
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user = db.relationship('User', backref='login_histories')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
+    user = db.relationship('User', backref=db.backref('login_histories', cascade='all, delete-orphan'))
     timestamp = db.Column(db.DateTime, default=db.func.current_timestamp())
     ip_address = db.Column(db.String(45), nullable=True)
 

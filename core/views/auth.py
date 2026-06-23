@@ -2,7 +2,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from core.forms.auth import LoginForm, RegisterForm, ForgotPasswordForm, ResetPasswordForm
 from core.extensions import db
-from core.models.users import User 
+from core.models.users import User, UserRole, Role
 from flask import g
 from core.models.users import LoginHistory
 from core.utils.email import send_password_reset_email
@@ -68,12 +68,19 @@ def generate_routes(core):
                     firstname=firstname,
                     lastname=lastname,
                     username=form.username.data,
-                    email=form.email.data,
-                    role=g.settings['default_user_role']
+                    email=form.email.data
                 )
                 new_user.set_password(form.password.data)
                 db.session.add(new_user)
                 db.session.commit()
+
+                default_role = Role.query.filter_by(name=g.settings['default_user_role']).first()
+
+                if default_role:
+                    user_role = UserRole(user_id=new_user.id, role_id=default_role.id)
+                    db.session.add(user_role)
+                    db.session.commit()
+
                 login_user(new_user)
                 return redirect(url_for('core.dashboard'))
             
