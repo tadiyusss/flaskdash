@@ -1,4 +1,5 @@
 from typing import List, Union
+from core.models.users import User
 
 """
 Cards Naming Guide:
@@ -10,7 +11,7 @@ Cards Naming Guide:
 """
 
 class GlobalCardData:
-    def __init__(self, title: str, value_function: callable, roles=None, colspan=1, rowspan=1):
+    def __init__(self, title: str, value_function: callable, roles: List[str] = None, colspan=1, rowspan=1):
         self.title = title
         self.value_function = value_function
         self.roles = roles or []
@@ -31,7 +32,7 @@ class GlobalCardData:
     def show_for_user(self, user): 
         if not self.roles: 
             return True 
-        return any(role in user.role for role in self.roles)
+        return any(user.has_role(role) for role in self.roles)
         
 
 class LargeAnalyticsCardData(GlobalCardData):
@@ -103,13 +104,22 @@ class Grid:
             'contents': [content.to_dict() for content in self.contents]
         }
 
-    def show_for_user(self, user):
+    def show_for_user(self, user: User):
+        print(f"[-] Checking if grid '{self.title}' should be shown for user {user.username}")
         if not self.roles:
-            return True
-        return any(role in user.role for role in self.roles)
+            print(f"[!!] No roles specified for grid '{self.title}', showing to all users.")
+            return False
+        print(f"[-] Grid '{self.title}' requires roles: {self.roles}")
+        for role in self.roles:
+            print(f"[-] Checking if user {user.username} has role {role} for grid '{self.title}'")
+            if user.has_role(role):
+                print(f"[+] User {user.username} has role {role}, showing grid '{self.title}'")
+                return True
     
     def filter_contents_for_user(self, user):
+        print(f"Filtering contents for user {user.username} in grid '{self.title}'")
         filtered_contents = []
+
         for content in self.contents:
             if content.show_for_user(user):
                 filtered_contents.append(content)
