@@ -61,6 +61,18 @@ class User(db.Model, UserMixin):
     def has_role(self, role: str):
         return any(user_role.role.name == role for user_role in self.user_roles)
 
+    def set_roles(self, roles: list):
+        for user_role in self.user_roles:
+            db.session.delete(user_role)
+
+        for role_name in roles:
+            role = Role.query.filter_by(name=role_name).first()
+            if role:
+                user_role = UserRole(user_id=self.id, role_id=role.id)
+                db.session.add(user_role)
+
+        db.session.commit()
+
     def delete_profile_image(self):
         if self.profile_image and self.profile_image != 'default-avatar.jpg':
             try:

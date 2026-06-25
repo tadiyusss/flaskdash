@@ -28,7 +28,6 @@
                         <th class="text-left px-4 py-3 text-blue-800/50 font-semibold ">Name</th>
                         {% endif %}
                         <th class="text-left px-4 py-3 text-blue-800/50 font-semibold ">Email</th>
-                        <th class="text-left px-4 py-3 text-blue-800/50 font-semibold ">Role</th>
                         <th class="text-left px-4 py-3 text-blue-800/50 font-semibold ">Actions</th>
                     </tr>
                 </thead>
@@ -50,19 +49,6 @@
                         </td>
                         {% endif %}
                         <td class="px-4 py-3.5 text-blue-800/60">{{ user.email }}</td>
-                        <td class="px-4 py-3.5">
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold
-                                {% if user.role == 'admin' %}
-                                    bg-blue-100 text-blue-700
-                                {% else %}
-                                    bg-blue-50 text-blue-800/60
-                                {% endif %}">
-                                <span class="w-1.5 h-1.5 rounded-full
-                                    {% if user.role == 'admin' %}bg-blue-500{% else %}bg-blue-300{% endif %}">
-                                </span>
-                                {{ user.role }}
-                            </span>
-                        </td>
                         <td class="px-4 py-3.5">
                             <a href="{{ url_for('core.manage_user', user_uid=user.uid) }}"
                                class="btn btn-outline text-xs py-1.5 {{ 'opacity-50 pointer-events-none' if user.uid == current_user.uid }}">

@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, EmailField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, SelectField, EmailField, TextAreaField, BooleanField
 from core.forms.validators import validate_username_unique, validate_email_unique, validate_role_name_unique, validate_password_length, validate_password_uppercase_letter, validate_password_lowercase_letter, validate_password_digit, validate_my_username_unique, validate_my_email_unique
 from wtforms.validators import DataRequired, Email, Length, Regexp
+from core.models.users import Role, User
 
 class CreateRoleForm(FlaskForm):
     name = StringField('Role Name',
@@ -48,15 +49,24 @@ class CreateUserForm(FlaskForm):
         render_kw={"class": "text-input"}
     )
 
-class ManageUserRoleForm(FlaskForm):
-    role = SelectField('Role',
-        validators=[DataRequired()],
-        render_kw={"class": "text-input"}
-    )
+def build_manage_user_role_form(user: User):
+    class DynamicManageUserRoleForm(FlaskForm):
+        submit = SubmitField('Change Role',
+            render_kw={"class": "btn"}
+        )
 
-    submit = SubmitField('Change Role',
-        render_kw={"class": "btn"}
-    )
+    roles = Role.query.all()
+    user_roles = [user_role.role.name for user_role in user.user_roles]
+    for role in roles:
+        setattr(DynamicManageUserRoleForm, f'role_{role.id}', BooleanField(
+                role.name,
+                render_kw={"class": "form-checkbox"},
+                description=role.description,
+                default=role.name in user_roles
+            )
+        )
+    
+    return DynamicManageUserRoleForm()
 
 class ManageUserPasswordForm(FlaskForm):
     new_password = PasswordField('New Password',

@@ -1,7 +1,7 @@
 from flask_login import login_required, login_user, logout_user, current_user
 from flask import render_template, redirect, url_for, flash, request
 from core.models.users import User, Role
-from core.forms.users import CreateUserForm, ManageUserPasswordForm, ManageUserRoleForm, ManageNameForm, CreateRoleForm
+from core.forms.users import CreateUserForm, ManageUserPasswordForm, ManageNameForm, CreateRoleForm, build_manage_user_role_form
 from core.forms.profile import EditProfileForm
 from core.extensions import db
 import os
@@ -126,18 +126,19 @@ def generate_routes(core):
     @login_required
     def edit_user_role(user_uid):
         selected_user = User.query.filter_by(uid=user_uid).first_or_404()
-        role_form = ManageUserRoleForm()
-        role_form.role.choices = [(role.name, role.name) for role in Role.query.all()]
+        role_form = build_manage_user_role_form(selected_user)
 
         if not role_form.validate_on_submit():
             for error in role_form.errors.values():
                 flash(error[0], 'global-error')
             return redirect(url_for('core.manage_user', user_uid=user_uid))
 
-        selected_user.role = role_form.role.data
+        selected_roles = [role.name for role in Role.query.all() if getattr(role_form, f'role_{role.id}').data]
+        selected_user.set_roles(selected_roles)
         db.session.commit()
-        flash('User role updated successfully.', 'global-success')
+        flash('User roles updated successfully.', 'global-success')
         return redirect(url_for('core.manage_user', user_uid=user_uid))
+
 
     @core.route('/users/manage/<string:user_uid>/edit/picture', methods=['GET', 'POST'])
     @role_required('Administrator')
@@ -180,14 +181,11 @@ def generate_routes(core):
             flash('You cannot manage your own account in this page. Please use the profile page', 'global-error')
             return redirect(url_for('core.users'))
         
+        selected_user = User.query.filter_by(uid=user_uid).first_or_404()
         password_form = ManageUserPasswordForm()
         name_form = ManageNameForm()
-        role_form = ManageUserRoleForm()
+        role_form = build_manage_user_role_form(selected_user)
         edit_profile_form = EditProfileForm()
-
-        selected_user = User.query.filter_by(uid=user_uid).first_or_404()
-        role_form.role.choices = [(role.name, role.name) for role in Role.query.all()]
-        role_form.role.data = selected_user.role
 
         return render_template('dashboard/manage_user.html', user=current_user, name_form=name_form, selected_user=selected_user, password_form=password_form, role_form=role_form, edit_profile_form=edit_profile_form)
     

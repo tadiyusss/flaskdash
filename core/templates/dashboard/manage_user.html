@@ -150,20 +150,32 @@
 	<div class="card p-7">
 		<div class="border-b border-blue-600/[0.09] pb-3.5 mb-5">
 			<h3 class="text-sm font-semibold text-blue-800">Account Role</h3>
-			<p class="text-xs text-blue-800/45 mt-0.5">Update the selected user's role.</p>
+			<p class="text-xs text-blue-800/45 mt-0.5">Update the selected user's role and permissions.</p>
 		</div>
 		<form method="POST" action="{{ url_for('core.edit_user_role', user_uid=selected_user.uid) }}" class="space-y-4">
 			{{ role_form.hidden_tag() }}
-			<div>
-				{{ role_form.role.label(class="form-label") }}
-				{{ role_form.role() }}
+			<div class="grid grid-cols-1 gap-2.5"> 
+				{% for field in role_form %} 
+					{% if field.type == "BooleanField" %} 
+					<label class="flex items-start gap-3 p-3.5 rounded-lg border border-blue-600/[0.13] bg-blue-50/40 cursor-pointer hover:border-blue-600/30 hover:bg-blue-50/70 transition-all">
+						{{ field(class="mt-0.5 w-4 h-4 rounded accent-blue-600 flex-shrink-0") }}
+						<div>
+							<div class="flex items-center gap-2 mb-0.5">
+								<span class="text-sm font-semibold text-blue-800">{{ field.label.text }}</span>
+							</div>
+							<p class="text-xs text-blue-800/45">{{ field.description }}</p>
+						</div>
+					</label> 
+					{% endif %} 
+				{% endfor %} 
 			</div>
 			<div class="flex items-center justify-between pt-1">
 				{{ role_form.submit(class="btn btn-primary") }}
 				<a href="{{ url_for('core.delete_user', user_uid=selected_user.uid) }}" class="btn btn-danger">
 					<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 						<path stroke-linecap="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-					</svg> Delete Account </a>
+					</svg> Delete Account 
+				</a>
 			</div>
 		</form>
 	</div>
