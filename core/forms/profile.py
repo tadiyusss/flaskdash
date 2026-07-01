@@ -37,9 +37,6 @@ class EditProfileForm(FlaskForm):
         validators=[FileAllowed(ALLOWED_IMAGE_EXTENSIONS, 'Invalid file extension.'), FileRequired('File was empty!')],
         render_kw={"class": "hidden", "x-on:change": "imagePreview()", "accept": "image/*"}
     )
-    submit = SubmitField('Save Image',
-        render_kw={"class": "btn"},
-    )
 
 class EditPasswordForm(FlaskForm):
     current_password = StringField('Current Password',

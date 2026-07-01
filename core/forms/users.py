@@ -51,9 +51,7 @@ class CreateUserForm(FlaskForm):
 
 def build_manage_user_role_form(user: User):
     class DynamicManageUserRoleForm(FlaskForm):
-        submit = SubmitField('Change Role',
-            render_kw={"class": "btn"}
-        )
+        pass
 
     roles = Role.query.all()
     user_roles = [user_role.role.name for user_role in user.user_roles]
@@ -72,9 +70,6 @@ class ManageUserPasswordForm(FlaskForm):
     new_password = PasswordField('New Password',
         validators=[DataRequired(), Length(min=6)],
         render_kw={"class": "text-input"}
-    )
-    submit = SubmitField('Change Password',
-        render_kw={"class": "btn"}
     )
 
 class ManageNameForm(FlaskForm):
@@ -96,8 +91,4 @@ class ManageNameForm(FlaskForm):
     lastname = StringField('Last Name',
         validators=[Regexp(r'^[a-zA-Z]+$', message="Last name must contain only letters.")],
         render_kw={"class": "text-input"}
-    )
-
-    submit = SubmitField('Save Changes',
-        render_kw={"class": "btn"}
     )

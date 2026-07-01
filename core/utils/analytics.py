@@ -105,16 +105,14 @@ class Grid:
         }
 
     def show_for_user(self, user: User):
-        print(f"[-] Checking if grid '{self.title}' should be shown for user {user.username}")
         if not self.roles:
-            print(f"[!!] No roles specified for grid '{self.title}', showing to all users.")
             return False
-        print(f"[-] Grid '{self.title}' requires roles: {self.roles}")
+
         for role in self.roles:
-            print(f"[-] Checking if user {user.username} has role {role} for grid '{self.title}'")
             if user.has_role(role):
                 print(f"[+] User {user.username} has role {role}, showing grid '{self.title}'")
                 return True
+        return False
     
     def filter_contents_for_user(self, user):
         print(f"Filtering contents for user {user.username} in grid '{self.title}'")
