@@ -110,7 +110,6 @@ class Grid:
 
         for role in self.roles:
             if user.has_role(role):
-                print(f"[+] User {user.username} has role {role}, showing grid '{self.title}'")
                 return True
         return False
     
