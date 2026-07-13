@@ -67,3 +67,11 @@
 .md-analytics-icon{
     @apply w-5 h-5 text-blue-700;
 }
+
+.normal-action-btn{
+    @apply size-4 transition text-blue-800/50 hover:text-blue-800;
+}
+
+.danger-action-btn{
+    @apply size-4 transition text-red-800/50 hover:text-red-800;
+}
