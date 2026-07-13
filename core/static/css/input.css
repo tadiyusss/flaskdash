@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@config "../../../tailwind.config.js";
 
 .text-input{
     @apply w-full px-3 py-2.5 border border-blue-200 rounded-lg text-blue-800 text-xs bg-white transition;

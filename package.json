@@ -1,20 +1,37 @@
 {
-  "dependencies": {
-    "@tailwindcss/cli": "^4.2.4",
-    "alpinejs": "^3.15.12",
-    "tailwindcss": "^4.2.4"
-  },
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.19",
-    "esbuild": "^0.25.10",
-    "npm-run-all": "^4.1.5"
+  "name": "flaskdash",
+  "version": "1.0.0",
+  "description": "A modular and extensible admin dashboard built with Flask — designed for developers and startups who want a flexible, scalable backend interface that grows with their project.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
   },
   "scripts": {
-    "dev": "npm-run-all -p dev:*",
-    "dev:css": "npx @tailwindcss/cli -i ./core/static/css/input.css -o ./core/static/css/styles.css --watch",
-    "dev:js": "esbuild core/static/js/entry.js --bundle --outfile=core/static/js/app.js --format=esm --sourcemap --watch",
-    "build": "npm-run-all build:*",
-    "build:css": "npx @tailwindcss/cli -i ./core/static/css/input.css -o ./static/css/styles.css --minify",
-    "build:js": "esbuild core/static/js/entry.js --bundle --outfile=core/static/js/app.js --format=esm --minify"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:css": "tailwindcss -i ./core/static/css/input.css -o ./core/static/css/styles.css --watch",
+    "dev:js": "esbuild core/static/js/entry.js --bundle --format=iife --outfile=core/static/js/app.js --watch",
+    "dev": "npm-run-all --parallel dev:css dev:js",
+    "build": "tailwindcss -i ./core/static/css/input.css -o ./core/static/css/styles.css --minify && esbuild core/static/js/entry.js --bundle --format=iife --minify --outfile=core/static/js/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tadiyusss/flaskdash.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tadiyusss/flaskdash/issues"
+  },
+  "homepage": "https://github.com/tadiyusss/flaskdash#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.2",
+    "alpinejs": "^3.15.12",
+    "tailwindcss": "^4.3.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.1",
+    "npm-run-all": "^4.1.5"
   }
 }
