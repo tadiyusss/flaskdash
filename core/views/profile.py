@@ -6,104 +6,105 @@ from core import db
 import os
 import uuid
 from flask import g
+from core.route import core
 
-def generate_routes(core):
 
-    @login_required
-    @core.route('/profile/edit/password', methods=['POST'])
-    def profile_edit_password():
-        form = EditPasswordForm()
 
-        if not form.validate_on_submit():
-            for error in form.errors.values():
-                flash(error[0], 'global-error')
-            return redirect(url_for('core.profile'))
+@login_required
+@core.route('/profile/edit/password', methods=['POST'])
+def profile_edit_password():
+    form = EditPasswordForm()
 
-        if not current_user.check_password(form.current_password.data):
-            flash('Current password is incorrect.', 'global-error')
-            return redirect(url_for('core.profile'))
-
-        current_user.set_password(form.new_password.data)
-        db.session.commit()
-        flash('Password updated successfully.', 'global-success')
-
+    if not form.validate_on_submit():
+        for error in form.errors.values():
+            flash(error[0], 'global-error')
         return redirect(url_for('core.profile'))
 
-    @login_required
-    @core.route('/profile/edit/picture', methods=['POST'])
-    def profile_edit_picture():
-
-        edit_profile_form = EditProfileForm()
-
-        if not edit_profile_form.validate_on_submit():
-            for error in edit_profile_form.errors.values():
-                flash(error[0], 'global-error')
-            return redirect(url_for('core.profile'))
-
-        if edit_profile_form.profile_image.data == None:
-            flash('No image selected.', 'global-error')
-
-        image_file = edit_profile_form.profile_image.data
-
-        ext = os.path.splitext(secure_filename(image_file.filename))[1]
-        unique_filename = f"{uuid.uuid4().hex}{ext}"
-        save_path = os.path.join(core.static_folder, 'images', 'profiles', unique_filename)
-
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-
-        image_file.save(save_path)
-
-        if current_user.profile_image != 'default-avatar.jpg':
-            old_image_path = os.path.join(core.static_folder, 'images', 'profiles', current_user.profile_image)
-            if os.path.exists(old_image_path):
-                os.remove(old_image_path)
-
-        current_user.profile_image = unique_filename
-        db.session.commit()
-
-        flash('Profile image updated successfully.', 'global-success')
+    if not current_user.check_password(form.current_password.data):
+        flash('Current password is incorrect.', 'global-error')
         return redirect(url_for('core.profile'))
 
+    current_user.set_password(form.new_password.data)
+    db.session.commit()
+    flash('Password updated successfully.', 'global-success')
 
-    @login_required
-    @core.route('/profile/edit/name', methods=['POST'])
-    def profile_edit_name():
-        form = EditNameForm()
+    return redirect(url_for('core.profile'))
 
-        if g.settings['allow_first_name_last_name'] == '0':
-            del form.firstname
-            del form.lastname
+@login_required
+@core.route('/profile/edit/picture', methods=['POST'])
+def profile_edit_picture():
+
+    edit_profile_form = EditProfileForm()
+
+    if not edit_profile_form.validate_on_submit():
+        for error in edit_profile_form.errors.values():
+            flash(error[0], 'global-error')
+        return redirect(url_for('core.profile'))
+
+    if edit_profile_form.profile_image.data == None:
+        flash('No image selected.', 'global-error')
+
+    image_file = edit_profile_form.profile_image.data
+
+    ext = os.path.splitext(secure_filename(image_file.filename))[1]
+    unique_filename = f"{uuid.uuid4().hex}{ext}"
+    save_path = os.path.join(core.static_folder, 'images', 'profiles', unique_filename)
+
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+
+    image_file.save(save_path)
+
+    if current_user.profile_image != 'default-avatar.jpg':
+        old_image_path = os.path.join(core.static_folder, 'images', 'profiles', current_user.profile_image)
+        if os.path.exists(old_image_path):
+            os.remove(old_image_path)
+
+    current_user.profile_image = unique_filename
+    db.session.commit()
+
+    flash('Profile image updated successfully.', 'global-success')
+    return redirect(url_for('core.profile'))
+
+
+@login_required
+@core.route('/profile/edit/name', methods=['POST'])
+def profile_edit_name():
+    form = EditNameForm()
+
+    if g.settings['allow_first_name_last_name'] == '0':
+        del form.firstname
+        del form.lastname
         
 
-        if not form.validate_on_submit():
-            for error in form.errors.values():
-                flash(error[0], 'global-error')
-            return redirect(url_for('core.profile'))
+    if not form.validate_on_submit():
+        for error in form.errors.values():
+            flash(error[0], 'global-error')
+        return redirect(url_for('core.profile'))
 
-        if form.username.data != current_user.username and db.session.query(current_user.__class__).filter_by(username=form.username.data).first():
-            flash('Username already exists.', 'global-error')
-            return redirect(url_for('core.profile'))
+    if form.username.data != current_user.username and db.session.query(current_user.__class__).filter_by(username=form.username.data).first():
+        flash('Username already exists.', 'global-error')
+        return redirect(url_for('core.profile'))
 
-        if form.email.data != current_user.email and db.session.query(current_user.__class__).filter_by(email=form.email.data).first():
-            flash('Email already exists.', 'global-error')
-            return redirect(url_for('core.profile'))
+    if form.email.data != current_user.email and db.session.query(current_user.__class__).filter_by(email=form.email.data).first():
+        flash('Email already exists.', 'global-error')
+        return redirect(url_for('core.profile'))
         
-        if g.settings['allow_first_name_last_name'] == '1':
-            current_user.firstname = form.firstname.data
-            current_user.lastname = form.lastname.data
+    if g.settings['allow_first_name_last_name'] == '1':
+        current_user.firstname = form.firstname.data
+        current_user.lastname = form.lastname.data
             
-        current_user.username = form.username.data
-        current_user.email = form.email.data
-        db.session.commit()
-        flash('Profile name updated successfully.', 'global-success')
+    current_user.username = form.username.data
+    current_user.email = form.email.data
+    db.session.commit()
+    flash('Profile name updated successfully.', 'global-success')
 
-        return redirect(url_for('core.profile'))
+    return redirect(url_for('core.profile'))
 
-    @core.route('/profile', methods = ['GET'])
-    @login_required
-    def profile():
-        edit_password_form = EditPasswordForm()
-        edit_profile_form = EditProfileForm()
-        edit_name_form = EditNameForm()
+@core.route('/profile', methods = ['GET'])
+@login_required
+def profile():
+    edit_password_form = EditPasswordForm()
+    edit_profile_form = EditProfileForm()
+    edit_name_form = EditNameForm()
 
-        return render_template('dashboard/profile.html', user=current_user, edit_name_form = edit_name_form, edit_profile_form = edit_profile_form, edit_password_form = edit_password_form)
+    return render_template('dashboard/profile.html', user=current_user, edit_name_form = edit_name_form, edit_profile_form = edit_profile_form, edit_password_form = edit_password_form)
