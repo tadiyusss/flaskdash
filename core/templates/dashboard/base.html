@@ -18,12 +18,24 @@
     }"
 >
 
+<div
+    x-show="sidebarOpen"
+    x-cloak
+    @click="sidebarOpen = false"
+    class="fixed inset-0 bg-black/30 z-20 md:hidden"
+></div>
+
 <aside
-    class="sidebar w-[240px] bg-white border-r border-blue-600/10 flex flex-col py-5 px-3 fixed top-0 left-0 h-full z-30 shadow-sm transition-transform duration-300 ease-in-out"
+    class="w-screen md:w-[240px] min-h-screen flex-shrink-0 bg-white border-r border-blue-600/10 flex flex-col py-5 px-3 fixed top-0 left-0 h-full z-30 shadow-sm transition-transform duration-300 ease-in-out"
     :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
 >
 	<div class="flex items-center gap-3 px-3 mb-6">
 		<span class="brand text-lg text-blue-800">{{ g.settings['site_title'] }}</span>
+        <button @click="sidebarOpen = false" class="ml-auto md:hidden border border-gray-200 p-2 rounded-lg hover:bg-gray-100 transition">
+            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
 	</div>
 
     {% for category in get_sidebar() %}
@@ -39,7 +51,7 @@
     {% endfor %}
 </aside>
 
-<main class="flex-1 min-h-screen" :class="sidebarOpen ? 'ml-[240px]' : 'ml-0'">
+<main class="flex-1 min-h-screen min-w-0 w-full overflow-x-hidden" :class="sidebarOpen ? 'md:ml-[240px]' : 'ml-0'">
     <header class="sticky top-0 z-20 bg-white/90 backdrop-blur border-b border-blue-600/10 px-8 py-4 flex items-center justify-between">
 		<div class="flex items-center gap-3">
 			<button @click="sidebarOpen = !sidebarOpen" class="btn btn-ghost p-2 rounded-lg">
@@ -52,7 +64,7 @@
 			</div>
 		</div>
 	</header>
-    <div class="p-4">
+    <div class="p-4 min-w-0 overflow-x-hidden">
         {% block main %}{% endblock %}
     </div>
 </main>

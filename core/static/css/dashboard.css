@@ -29,9 +29,6 @@
     .nav-item.active { background: #1e40af; color: #fff; }
     .nav-item.active svg { opacity: 1; }
 
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #bfdbfe; border-radius: 9999px; }
  
     tbody tr { transition: background .12s; }
     tbody tr:hover { background: #eff6ff; }
