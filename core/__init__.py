@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_mail import Mail
-from .extensions import db, login_manager, migrate
+from .extensions import db, login_manager, migrate, socketio
 from .route import core
 from .models.users import User
 from .context import init_context
@@ -18,6 +18,7 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     migrate.init_app(app, db)
     mail = Mail(app)
+    socketio.init_app(app)
 
     login_manager.login_view = 'core.login'
 
@@ -33,4 +34,4 @@ def create_app(config_class=Config):
         register_default_settings()
         include_all_extensions(app)
     
-    return app
+    return app, socketio
