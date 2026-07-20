@@ -1,8 +1,9 @@
 from core.utils.analytics_functions import *
-from wtforms import StringField, BooleanField, TextAreaField, SelectField
+from wtforms import StringField, BooleanField, TextAreaField, SelectField, FileField
+from flask_wtf.file import FileAllowed
 from wtforms.validators import DataRequired, Length
 from core.models.users import Role
-from core.utils.analytics import Grid, LargeAnalyticsCardData, MediumAnalyticsCardData, SmallAnalyticsCardData
+from core.utils.analytics import Grid, SmallAnalyticsCardData
 from core.utils.settings import SettingCategory, SettingItem
 from core.utils.roles import Role as RoleData
 from core.utils.dashboard import DashboardItem, DashboardCategory
@@ -45,6 +46,15 @@ DEFAULT_SETTINGS_CATEGORY = [
                 name="Site Title",
                 value="FlaskDash",
                 field=StringField("Site Title", validators=[DataRequired(), Length(max=100)], render_kw={"class": "text-input"}, description="The title of your site, displayed in the header."),
+                category_name="site_settings"
+            ),
+            SettingItem(
+                key="favicon_icon",
+                name="Favicon Icon",
+                value="",
+                field=FileField("Favicon Icon", validators=[FileAllowed(['png', 'jpg', 'jpeg'])] , description="Upload a favicon icon for your site. This will be displayed in the browser tab.", render_kw={
+                    "class": "border border-blue-200 w-full rounded-lg file:bg-blue-800 file:text-white file:px-2.5 file:py-2 file:mr-4 hover:file:bg-blue-700 transition file:text-xs text-blue-800 text-xs ease duration-200"
+                }),
                 category_name="site_settings"
             ),
             SettingItem(

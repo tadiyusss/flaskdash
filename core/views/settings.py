@@ -4,10 +4,12 @@ from core.extensions import db
 from core.forms.settings import create_settings_form
 from core.models.settings import Setting
 from core.utils.decorators import role_required
-from wtforms import BooleanField
+from wtforms import BooleanField, FileField
+from werkzeug.utils import secure_filename
 from core.utils.registry.settings import get_registered_categories
 from core.route import core
-
+import uuid
+import os
 
 @core.route('/settings', methods=['GET', 'POST'])
 @role_required('Administrator')
@@ -19,9 +21,15 @@ def settings():
     for form in forms:
         if form.validate_on_submit():
             for field in form:
-                print(f"Processing field: {field.name} with data: {field.data}")
                 if isinstance(field, BooleanField):
                     value = '1' if field.data else '0'
+                elif isinstance(field, FileField):
+                    if field.data:
+                        filename = secure_filename(field.data.filename)
+                        unique_filename = f"{uuid.uuid4().hex}_{filename}"
+                        upload_path = os.path.join('media', unique_filename)
+                        field.data.save(upload_path)
+                        value = unique_filename
                 else:
                     value = field.data
 
@@ -30,9 +38,6 @@ def settings():
                     setting.value = value
                     db.session.commit()
                     flash(f"Setting '{setting.name}' updated successfully.", 'global-success')
-
-        else:
-            print(form.errors)
             
     for form in forms:
         for field in form:
