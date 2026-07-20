@@ -114,7 +114,6 @@ class Grid:
         return False
     
     def filter_contents_for_user(self, user):
-        print(f"Filtering contents for user {user.username} in grid '{self.title}'")
         filtered_contents = []
 
         for content in self.contents:

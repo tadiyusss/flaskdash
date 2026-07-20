@@ -8,7 +8,7 @@
 			<h3 class="font-semibold text-blue-800">{{ category.nice_name }}</h3>
 			<p class="text-sm text-blue-800/45">{{ category.description }}</p>
 		</div>
-		<form method="POST" class="space-y-2"> 
+		<form method="POST" class="space-y-2" enctype="multipart/form-data">
             {% for field in forms[loop.index0] %} 
                 {% if field.name == "csrf_token" %} 
 					{{ field(class="hidden") }}
@@ -17,9 +17,14 @@
 						<div>
 							<label for="{{ field.id }}" class="block text-xs font-semibold text-blue-800">{{ field.label.text }}</label>
 							<p class="text-xs text-blue-800/40 mt-0.5 leading-relaxed">{{ field.description }}</p>
+							<ul>
+								{% for error in field.errors %}
+								<li class="text-xs text-red-600 mt-0.5 leading-relaxed">{{ error }}</li>
+								{% endfor %}
+							</ul>
 						</div>
 						<div>
-							{{ field(class="text-input") }}
+							{{ field }}
 						</div>
 					</div> 
                 {% endif %} 

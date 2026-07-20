@@ -31,7 +31,6 @@ def handle_extension_migrations(extension_name, app):
         if migration_path.exists():
             # check if patched
             if not (migration_path / "env.py").exists():
-                print(f"Patched env.py not found for {extension_name}, patching now...")
                 patch_env_file(extension_name)
 
 
