@@ -43,4 +43,19 @@ def create_admin(username, firstname, lastname, email):
 @click.command('delete-user')
 @click.option('--username', prompt='Username', help='The username of the user to delete.')
 def delete_user(username):
-    click.echo(f"Deleting user: {username}")
+    from core import create_app
+    from core.models.users import User
+    from core.extensions import db
+
+    app, socketio = create_app()
+
+    with app.app_context():
+        user_to_delete = User.query.filter_by(username=username).first()
+        if not user_to_delete:
+            click.echo(f"User '{username}' not found.")
+            return
+
+        db.session.delete(user_to_delete)
+        db.session.commit()
+
+        click.echo(f"User '{username}' deleted successfully.")
