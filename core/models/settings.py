@@ -22,7 +22,7 @@ class Setting(db.Model):
     category = db.relationship('SettingCategory', backref='settings', lazy=True)
     name = db.Column(db.String(100), nullable=False)
     key = db.Column(db.String(100), nullable=False, unique=True)
-    value = db.Column(db.String(200), nullable=False)
+    value = db.Column(db.String(200), nullable=True)
 
     def __repr__(self):
         return f"<Setting {self.name} ({self.key})>"
