@@ -8,6 +8,7 @@ from config import *
 from core.initializations.roles import register_default_roles
 from core.initializations.extensions import include_all_extensions
 from core.initializations.settings import register_default_settings
+from core.initializations.commands import register_default_commands
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -32,6 +33,7 @@ def create_app(config_class=Config):
         db.create_all()
         register_default_roles()
         register_default_settings()
+        register_default_commands()
         include_all_extensions(app)
     
     return app, socketio

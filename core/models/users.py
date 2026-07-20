@@ -5,10 +5,6 @@ import uuid
 import os
 import enum
 
-user_roles = db.Table('user_roles',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('role_id', db.Integer, db.ForeignKey('role.id'))
-)
 
 class Role(db.Model):
     __table_args__ = (
@@ -28,8 +24,8 @@ class UserRole(db.Model):
     __tablename__ = 'user_role'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id', ondelete='CASCADE'), nullable=False)
     
     user = db.relationship('User', backref=db.backref('user_roles', cascade='all, delete-orphan'))
     role = db.relationship('Role', backref=db.backref('user_roles', cascade='all, delete-orphan'))
