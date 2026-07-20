@@ -8,6 +8,9 @@
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
         <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+        {% if g.settings['favicon_icon'] %}
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
+		{% endif %}
         {% block head %}{% endblock %}
     </head>
     <body class="grid-bg">

@@ -52,7 +52,7 @@ DEFAULT_SETTINGS_CATEGORY = [
                 key="favicon_icon",
                 name="Favicon Icon",
                 value="",
-                field=FileField("Favicon Icon", validators=[FileAllowed(['png', 'jpg', 'jpeg'])] , description="Upload a favicon icon for your site. This will be displayed in the browser tab.", render_kw={
+                field=FileField("Favicon Icon", validators=[FileAllowed(['png', 'jpg', 'jpeg', 'ico'])] , description="Upload a favicon icon for your site. This will be displayed in the browser tab.", render_kw={
                     "class": "border border-blue-200 w-full rounded-lg file:bg-blue-800 file:text-white file:px-2.5 file:py-2 file:mr-4 hover:file:bg-blue-700 transition file:text-xs text-blue-800 text-xs ease duration-200"
                 }),
                 category_name="site_settings"

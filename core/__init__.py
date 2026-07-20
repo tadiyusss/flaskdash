@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_mail import Mail
 from .extensions import db, login_manager, migrate, socketio
-from .route import core, media
+from .route import core, media, system
 from .models.users import User
 from .context import init_context
 from config import *
@@ -29,6 +29,7 @@ def create_app(config_class=Config):
 
     app.register_blueprint(core, url_prefix='/dashboard')
     app.register_blueprint(media)
+    app.register_blueprint(system)
 
     with app.app_context():
         db.create_all()
