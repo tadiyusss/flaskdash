@@ -1,15 +1,16 @@
 from flask import Blueprint
 from .metadata import TEMPLATE_FOLDER, STATIC_FOLDER
+# from .initialization.sidebar import initialize_sidebar
 
 bp = Blueprint('{{ extension_snake_name }}', __name__, template_folder=TEMPLATE_FOLDER, static_folder=STATIC_FOLDER, static_url_path="/static/{{ extension_snake_name }}")
 
 # import your routes here...
-"""
-from .routes import filename
-"""
+
+from .routes import example
 
 def init_extension(app, db):
     with app.app_context():
         db.create_all()
-        # call your integrations here...
+        # Call your initializations here
+        # initialize_sidebar()
     return bp 
