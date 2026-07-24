@@ -1,6 +1,6 @@
 import click
 
-@click.command('create-admin')
+@click.command('create-admin', help='Create a new administrator user.')
 @click.option('--username', prompt='Username', help='The username for the new administrator.')
 @click.option('--firstname', prompt='First Name', help='The first name of the new administrator.')
 @click.option('--lastname', prompt='Last Name', help='The last name of the new administrator.')
@@ -40,7 +40,7 @@ def create_admin(username, firstname, lastname, email):
         click.echo(f"Administrator user '{username}' created successfully.")
 
 
-@click.command('delete-user')
+@click.command('delete-user', help='Delete an existing user by username.')
 @click.option('--username', prompt='Username', help='The username of the user to delete.')
 def delete_user(username):
     from core import create_app

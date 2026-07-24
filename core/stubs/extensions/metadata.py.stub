@@ -1,0 +1,9 @@
+NAME = "{{ extension_name }}"
+SLUG = "{{ extension_slug_name }}"
+DESCRIPTION = "{{ extension_description }}"
+VERSION = "0.1"
+DEPENDENCIES = []
+AUTHOR = "{{ author }}"
+URL_PREFIX = "{{ url_prefix }}"
+STATIC_FOLDER = "{{ static_folder }}"
+TEMPLATE_FOLDER = "{{ templates_folder }}"
