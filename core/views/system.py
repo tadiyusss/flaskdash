@@ -1,6 +1,6 @@
 from core.route import system
 from flask import g, send_file, abort
-import os
+from pathlib import Path
 
 @system.route('/favicon.ico')
 def show_favicon():
@@ -10,5 +10,10 @@ def show_favicon():
     if filename == "" or filename is None:
         abort(404)
 
-    media_folder = os.path.join(os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..', '..')), 'media')
-    return send_file(os.path.join(media_folder, filename), mimetype='image/x-icon')
+    media_folder = Path(__file__).resolve().parent.parent.parent / 'media'
+
+    file_path = media_folder / filename
+    if not file_path.exists():
+        abort(404)
+
+    return send_file(str(file_path), mimetype='image/x-icon')

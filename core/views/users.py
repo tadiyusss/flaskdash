@@ -29,7 +29,6 @@ def create_user():
         user_kwargs = {
             'username': form.username.data,
             'email': form.email.data,
-            'role': form.role.data,
         }
 
         if g.settings.get('allow_first_name_last_name') == "1":
@@ -40,8 +39,11 @@ def create_user():
 
         new_user = User(**user_kwargs)
         new_user.set_password(form.password.data)
+
         db.session.add(new_user)
         db.session.commit()
+
+        new_user.set_roles([form.role.data])
         flash('User created successfully.', 'global-success')
         return redirect(url_for('core.users'))
     else:
