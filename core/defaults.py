@@ -7,6 +7,11 @@ from core.utils.analytics import Grid, SmallAnalyticsCardData
 from core.utils.settings import SettingCategory, SettingItem
 from core.utils.roles import Role as RoleData
 from core.utils.dashboard import DashboardItem, DashboardCategory
+from pathlib import Path
+
+THEMES_DIR = Path(__file__).parent.parent / 'themes'
+
+from core.utils.themes import list_themes
 
 DEFAULT_ANALYTICS_GRID = [
     Grid(
@@ -71,6 +76,13 @@ DEFAULT_SETTINGS_CATEGORY = [
                 name="Site Description",
                 value="A scalable Flask dashboard application.",
                 field=TextAreaField("Site Description", validators=[DataRequired(), Length(max=200)], render_kw={"class": "textarea"}, description="A brief description of your site for SEO purposes."),
+                category_name="site_settings"
+            ),
+            SettingItem(
+                key="site_theme",
+                name="Site Theme",
+                value="default",
+                field=SelectField('Site Theme', choices=lambda: [(theme, theme) for theme in list_themes()], render_kw={"class": "select"}, description="Select the theme for your site."),
                 category_name="site_settings"
             ),
             SettingItem(
@@ -180,6 +192,14 @@ DEFAULT_SIDEBAR_ITEMS = [
                 icon_type="svg",
                 icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='sidenav-item'><path d='M10.362 1.093a.75.75 0 0 0-.724 0L2.523 5.018 10 9.143l7.477-4.125-7.115-3.925ZM18 6.443l-7.25 4v8.25l6.862-3.786A.75.75 0 0 0 18 14.25V6.443ZM9.25 18.693v-8.25l-7.25-4v7.807a.75.75 0 0 0 .388.657l6.862 3.786Z' /></svg>",
                 route="core.extensions",
+                roles=["Administrator"]
+            ),
+
+            DashboardItem(
+                name="Themes",
+                icon_type="svg",
+                icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='sidenav-item'><path d='M15.993 1.385a1.87 1.87 0 0 1 2.623 2.622l-4.03 5.27a12.749 12.749 0 0 1-4.237 3.562 4.508 4.508 0 0 0-3.188-3.188 12.75 12.75 0 0 1 3.562-4.236l5.27-4.03ZM6 11a3 3 0 0 0-3 3 .5.5 0 0 1-.72.45.75.75 0 0 0-1.035.931A4.001 4.001 0 0 0 9 14.004V14a3.01 3.01 0 0 0-1.66-2.685A2.99 2.99 0 0 0 6 11Z' /></svg>",
+                route="core.themes",
                 roles=["Administrator"]
             ),
 

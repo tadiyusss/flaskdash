@@ -7,6 +7,6 @@ core = Blueprint('core', __name__, static_folder='static', template_folder='temp
 media = Blueprint('media', __name__)
 system = Blueprint('system', __name__)
 
-from core.views import auth, users, profile, roles, settings, extensions, files, home
+from core.views import auth, users, profile, roles, settings, extensions, files, home, themes 
 from core.views import media as media_views
 from core.views import system as system_views

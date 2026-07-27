@@ -1,19 +1,16 @@
 {% extends "base.html" %}
 
 {% block title %}{{ g.settings['site_title'] }} - Login{% endblock %}
-{% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/authentication.css') }}">
-{% endblock %}
 
 {% block content %}
-<div class="grid-bg min-h-screen flex items-center justify-center py-12 px-4">
+<div class="fd-authentication-bg">
 
-    <div class="fade-in w-full max-w-md" x-data="{
+    <div class="max-w-md mx-auto my-32" x-data="{
         show: false,
     }">
         <div class="mb-8 text-center">
-            <h1 class="brand text-2xl text-blue-800 tracking-tight">{{ g.settings['site_title'] }}</h1>
-            <p class="text-blue-800/50 text-sm mt-1 font-medium">{{ g.settings['site_description'] }}</p>
+            <h1 class="fd-title">{{ g.settings['site_title'] }}</h1>
+            <p class="fd-description">{{ g.settings['site_description'] }}</p>
         </div>
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -23,7 +20,7 @@
                             <span>{{ message }}</span>
                         </div>
                     {% elif category == 'error' %}
-                        <div x-transition class="mb-5 flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
+                        <div x-transition class="fd-toast-error mb-3">
                             <span>{{ message }}</span>
                         </div>
                     {% else %}
@@ -34,10 +31,10 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        <div class="bg-white rounded-2xl card-shadow border border-blue-600/20 overflow-hidden">
-            <div class="px-8 pt-8 pb-6 border-b border-blue-600/10">
-                <h2 class="text-xl font-semibold text-blue-800">Welcome back</h2>
-                <p class="text-blue-800/50 text-sm mt-1">Sign in to access your dashboard</p>
+        <div class="fd-card">
+            <div class="fd-card-header">
+                <h2 class="fd-card-header-heading">Welcome back</h2>
+                <p class="fd-card-header-description">Sign in to access your dashboard</p>
             </div>
             <div class="px-6 py-6">
                 <form method="POST">
@@ -57,7 +54,7 @@
                         {% endfor %}
                     {% endif %}
                     <div class="mb-5">
-                        {{ form.email.label(class="block text-sm font-medium text-blue-800 mb-1.5") }}
+                        {{ form.email.label(class="fd-form-label") }}
                         <div class="relative">
                             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-800/30">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -69,9 +66,9 @@
                     </div>
 
                     <div class="mb-2">
-                        <div class="flex justify-between items-center mb-1.5">
-                            <label class="block text-sm font-medium text-blue-800">Password</label>
-                            <a href="{{ url_for('core.forgot_password') }}" class="text-xs text-blue-600 hover:text-blue-800 hover:underline font-medium transition">Forgot password?</a>
+                        <div class="flex justify-between items-center">
+                            {{ form.password.label(class="fd-form-label") }}
+                            <a href="{{ url_for('core.forgot_password') }}" class="fd-form-label">Forgot password?</a>
                         </div>
                         <div class="relative">
                             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-800/30">
@@ -93,7 +90,7 @@
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn-primary w-full text-white font-semibold text-sm py-2.5 rounded-lg flex items-center justify-center gap-2 disabled:opacity-60 mt-6">
+                    <button type="submit" class="fd-btn-secondary fd-btn-md w-full">
                         <span>Sign in</span>
                     </button>
                 </form>

@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+.fd-test {
+    @apply text-blue-800;
+}
+
+.sample-class {
+    @apply bg-gray-100 p-4 rounded-lg;
+}

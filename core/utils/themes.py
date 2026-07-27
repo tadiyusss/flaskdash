@@ -1,8 +1,8 @@
 from pathlib import Path
 import subprocess
 import sys
+from core.defaults import THEMES_DIR
 
-THEMES_DIR = Path(__file__).parent.parent.parent / 'themes'
 STATIC_DIR = Path(__file__).parent.parent / 'static' / 'css' / 'themes'
 
 def build_theme(theme_name: str):
@@ -30,3 +30,10 @@ def build_theme(theme_name: str):
         command,
         cwd=cwd
     )
+
+def list_themes():
+    if not THEMES_DIR.exists():
+        THEMES_DIR.mkdir(parents=True)
+
+    themes = [f.stem for f in THEMES_DIR.glob('*.css')]
+    return themes
