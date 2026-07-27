@@ -58,6 +58,15 @@ DEFAULT_SETTINGS_CATEGORY = [
                 category_name="site_settings"
             ),
             SettingItem(
+                key="website_logo",
+                name="Website Logo",
+                value="",
+                field=FileField("Website Logo", validators=[FileAllowed(['png', 'jpg', 'jpeg', 'ico'])] , description="Upload a logo for your site. This will be displayed in the header.", render_kw={
+                    "class": "border border-blue-200 w-full rounded-lg file:bg-blue-800 file:text-white file:px-2.5 file:py-2 file:mr-4 hover:file:bg-blue-700 transition file:text-xs text-blue-800 text-xs ease duration-200"
+                }),
+                category_name="site_settings"
+            ),
+            SettingItem(
                 key="site_description",
                 name="Site Description",
                 value="A scalable Flask dashboard application.",
