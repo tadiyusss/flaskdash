@@ -25,6 +25,9 @@ def settings():
                     value = '1' if field.data else '0'
                 elif isinstance(field, FileField):
                     if field.data:
+                        if not os.path.exists('media'):
+                            os.makedirs('media')
+                            
                         filename = secure_filename(field.data.filename)
                         unique_filename = f"{uuid.uuid4().hex}_{filename}"
                         upload_path = os.path.join('media', unique_filename)
