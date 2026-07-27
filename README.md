@@ -69,6 +69,13 @@ git clone https://github.com/tadiyusss/flaskdash
 cd flaskdash
 ```
 
+### Install and Build Node Dependencies
+
+```
+npm install
+npm run build
+```
+
 ### Create Virtual Environment
 
 ```bash
