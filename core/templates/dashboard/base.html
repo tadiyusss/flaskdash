@@ -30,6 +30,11 @@
     :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
 >
 	<div class="flex items-center gap-3 px-3 mb-6">
+        {% if g.settings['website_logo'] %}
+            <img src="{{ url_for('media.serve_media', filename=g.settings['website_logo']) }}" alt="Website Logo" class="w-8 h-8 rounded object-cover">
+        {% else %}
+            <img src="{{ url_for('static', filename='images/default-logo.png') }}" alt="Website Logo" class="w-8 h-8 rounded object-cover">
+        {% endif %}
 		<span class="brand text-lg text-blue-800">{{ g.settings['site_title'] }}</span>
         <button @click="sidebarOpen = false" class="ml-auto md:hidden border border-gray-200 p-2 rounded-lg hover:bg-gray-100 transition">
             <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
