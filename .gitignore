@@ -20,3 +20,4 @@ core/static/images/*
 temp/
 run_mysql.py
 *_test.py
+!core/stubs/extensions
