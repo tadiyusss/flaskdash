@@ -1,9 +1,10 @@
-from .users import create_admin, delete_user
-from .extensions import create_extension, delete_extension
+from .themes import themes_group
+from .users import users_group
+from .extensions import extensions_group
 
 DEFAULT_COMMANDS = [
-    create_admin,
-    delete_user,
-    create_extension,
-    delete_extension
+    extensions_group,
+    users_group,
+    themes_group,
 ]
+

@@ -30,7 +30,13 @@ def render_stub(stub_file_location, context):
     template = env.get_template(stub_file_location)
     return template.render(context)
 
-@click.command('delete-extension', help='Delete an existing extension by name.')
+@click.group('extensions', help='Manage extensions.')
+def extensions_group():
+    """
+    Group of commands for managing extensions.
+    """
+
+@extensions_group.command('delete', help='Delete an existing extension by name.')
 @click.option('--name', prompt='Extension Name', help='The name of the extension to delete.')
 def delete_extension(name):
     """
@@ -63,7 +69,8 @@ def delete_extension(name):
     extension_path.rmdir()
 
     click.echo(f"Extension '{name}' deleted successfully.")
-@click.command('create-extension', help='Open interactive menu to create a new extension.')
+
+@extensions_group.command('create', help='Open interactive menu to create a new extension.')
 @click.option('--name', prompt='Extension Name', help='The name of the new extension.')
 @click.option('--author', prompt='Author Name', help='The name of the author.')
 def create_extension(name, author):
