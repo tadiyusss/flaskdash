@@ -128,10 +128,17 @@ python -c "import secrets; print(secrets.token_hex(32))"
 SECRET_KEY="GENERATED_SECRET_KEY"
 ```
 
-### Run Setup
+### Run Migrations
 
 ```bash
-python setup.py
+flask --app run.py db migrate
+flask --app run.py db upgrade
+```
+
+### Create Administrator Account
+
+```bash
+flask --app run.py create-admin
 ```
 
 ## Extension Setup Guide
