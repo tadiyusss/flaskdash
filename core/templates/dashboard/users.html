@@ -2,38 +2,37 @@
 {% block title %}{{ g.settings['site_title'] }} - Users{% endblock %}
 {% block main %}
 
-<div class="max-w-4xl mx-auto">
+<div class="fd-dashboard-page-sm">
+    <div class="fd-card">
 
-    <div class="card overflow-hidden">
-
-        <div class="px-6 py-4 border-b border-blue-600/[0.08] flex items-center justify-between gap-4">
+        <div class="fd-card-header fd-card-header-w-btn">
             <div>
-                <h3 class="text-sm font-semibold text-blue-800">Manage Users</h3>
-                <p class="text-xs text-blue-800/45 mt-0.5">Add, create, and manage user information.</p>
+                <h3 class="fd-card-title">Manage Users</h3>
+                <p class="fd-card-subtitle">Add, create, and manage user information.</p>
             </div>
-            <a href="{{ url_for('core.create_user') }}" class="btn btn-primary">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <a href="{{ url_for('core.create_user') }}" class="fd-btn fd-btn-secondary fd-btn-sm fd-btn-w-icon">
+                <svg class="fd-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
                 </svg>
                 Create User
             </a>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="w-full text-xs">
+        <div class="fd-table-container">
+            <table class="fd-table">
                 <thead>
-                    <tr class="border-b border-blue-600/[0.08] bg-blue-50/40">
-                        <th class="text-left px-6 py-3 text-blue-800/50 font-semibold ">Username</th>
+                    <tr class="fd-table-header">
+                        <th>Username</th>
                         {% if g.settings['allow_first_name_last_name'] == "1" %}
-                        <th class="text-left px-4 py-3 text-blue-800/50 font-semibold ">Name</th>
+                        <th>Name</th>
                         {% endif %}
-                        <th class="text-left px-4 py-3 text-blue-800/50 font-semibold ">Email</th>
-                        <th class="text-left px-4 py-3 text-blue-800/50 font-semibold ">Actions</th>
+                        <th>Email</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-blue-600/[0.05]">
+                <tbody class="fd-table-body">
                     {% for user in users %}
-                    <tr class="hover:bg-blue-50/40 transition-colors duration-100">
+                    <tr class="fd-table-row">
                         <td class="px-6 py-3.5">
                             <div class="flex items-center gap-3">
                                 <img src="{{ url_for('static', filename='images/profiles/' + user.profile_image) }}"

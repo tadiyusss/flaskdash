@@ -10,22 +10,22 @@ from wtforms.validators import Regexp
 class EditNameForm(FlaskForm):
     username = StringField('Username',
         validators=[DataRequired("Username is required."), Length(min=2, max=20), validate_my_username_unique],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
 
     email = EmailField('Email',
         validators=[DataRequired("Email is required."), Email(), validate_my_email_unique],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
 
     firstname = StringField('First Name', 
         validators=[Regexp(r'^[a-zA-Z]+$', message="First name must contain only letters.")],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
 
     lastname = StringField('Last Name',
         validators=[Regexp(r'^[a-zA-Z]+$', message="Last name must contain only letters.")],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
 
     submit = SubmitField('Save Changes',
@@ -41,12 +41,12 @@ class EditProfileForm(FlaskForm):
 class EditPasswordForm(FlaskForm):
     current_password = StringField('Current Password',
         validators=[DataRequired("Current password is required.")],
-        render_kw={"class": "text-input", "type": "password"}
+        render_kw={"class": "fd-input", "type": "password"}
     )
 
     new_password = StringField('New Password',
         validators=[DataRequired("New password is required."), Length(min=6, message="Password must be at least 6 characters long.")],
-        render_kw={"class": "text-input", "type": "password"}
+        render_kw={"class": "fd-input", "type": "password"}
     )
 
     submit = SubmitField('Change Password',

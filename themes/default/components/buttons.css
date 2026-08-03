@@ -1,7 +1,7 @@
 /* Buttons */
 
 .fd-btn{
-    @apply inline-flex items-center justify-center font-medium transition duration-100 py-2;
+    @apply inline-flex items-center justify-center font-medium transition duration-100 py-2 px-4 cursor-pointer;
 }
 
 .fd-btn-primary{
@@ -12,7 +12,22 @@
     @apply bg-gray-600 text-white rounded hover:bg-gray-700 transition duration-100;
 }
 
+.fd-btn-outline{
+    @apply bg-transparent border border-gray-200 text-gray-600 rounded hover:bg-gray-200 transition duration-100;
+}
+
+.fd-btn-w-icon{
+    @apply flex items-center gap-2;
+}
+
+.fd-btn-icon{
+    @apply w-3.5 h-3.5;
+}
+
 /* Button Sizes */
+.fd-btn-xs{
+    @apply text-xs py-1 px-2;
+}
 
 .fd-btn-sm{
     @apply text-sm py-1 px-2;

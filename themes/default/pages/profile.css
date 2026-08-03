@@ -1,0 +1,3 @@
+.fd-profile-form {
+    @apply flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5;
+}

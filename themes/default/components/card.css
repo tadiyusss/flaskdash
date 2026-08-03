@@ -1,0 +1,29 @@
+
+
+.fd-card {
+    @apply border border-gray-200 rounded-lg shadow-sm;
+}
+
+.fd-card-header {
+    @apply bg-zinc-800 p-4 rounded-t-lg;
+}
+
+.fd-card-header-w-btn {
+    @apply flex items-center justify-between gap-4;
+}
+
+.fd-card-body {
+    @apply px-4 py-6;
+}
+
+.fd-card-buttons {
+    @apply flex items-center gap-2 pt-2
+}
+
+.fd-card-title {
+    @apply text-sm font-semibold text-white;
+}
+
+.fd-card-subtitle {
+    @apply text-xs text-gray-400 mt-0.5;
+}

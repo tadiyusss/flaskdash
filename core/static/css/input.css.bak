@@ -60,14 +60,6 @@
     @apply block text-xs font-medium text-blue-800 mb-1.5;
 }
 
-.analytics-icon{
-    @apply size-5 text-white;
-}
-
-.md-analytics-icon{
-    @apply w-5 h-5 text-blue-700;
-}
-
 .normal-action-btn{
     @apply size-4 transition text-blue-800/50 hover:text-blue-800;
 }

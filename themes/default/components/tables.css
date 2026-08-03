@@ -1,0 +1,23 @@
+.fd-table-container {
+    @apply overflow-x-auto;
+}
+
+.fd-table {
+    @apply w-full text-xs;
+}
+
+.fd-table-header {
+    @apply border-b border-gray-200 bg-gray-100;
+}
+
+.fd-table-header th {
+    @apply text-left px-6 py-3 text-gray-500 font-medium;
+}
+
+.fd-table-body {
+    @apply divide-y divide-gray-100;
+}
+
+.fd-table-row{
+    @apply hover:bg-gray-50 transition-colors duration-100
+}

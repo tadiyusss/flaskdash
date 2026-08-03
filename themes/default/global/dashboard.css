@@ -49,3 +49,11 @@
 .fd-dashboard-page {
     @apply w-full max-w-7xl my-4 mx-auto space-y-4;
 }
+
+.fd-dashboard-page-sm {
+    @apply w-full max-w-3xl my-4 mx-auto space-y-4;
+}
+
+.fd-dashboard-page-xs {
+    @apply w-full max-w-2xl my-4 mx-auto space-y-4;
+}

@@ -2,45 +2,21 @@
 @config "../../tailwind.config.js";
 
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
 @import './components/buttons.css';
 @import './components/toast.css';
+@import './components/card.css';
+@import './components/form.css';
+@import './components/tables.css';
 
 @import './global/dashboard.css';
 
 @import './pages/analytics.css';
 @import './pages/authentication.css';
+@import './pages/settings.css';
+@import './pages/profile.css';
 
-
-/* User Inputs */
-
-.fd-form-label{
-    @apply block text-sm font-medium text-gray-700;
-}
-
-.fd-input-group-field {
-    @apply w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-gray-800 text-sm placeholder:text-gray-400 bg-white transition;
-}
-
-.fd-input-group-field:focus {
-    @apply focus:ring-2 focus:outline-none focus:ring-gray-600/10;
-}
-
-.fd-input-group {
-    @apply relative;
-}
-
-.fd-input-icon {
-    @apply absolute left-3 top-1/2 -translate-y-1/2 text-gray-800/30;
-}
 
 .fd-icon {
     @apply w-4 h-4 text-gray-400;
-}
-
-.fd-input:focus{
-    @apply focus:ring-2 focus:outline-none focus:ring-gray-600/10;
-}
-
-.fd-input {
-    @apply w-full px-3 py-2.5 border border-gray-300 rounded-lg text-gray-800 text-sm placeholder:text-gray-400 bg-white transition;
 }

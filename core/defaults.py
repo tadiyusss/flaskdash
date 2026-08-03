@@ -21,21 +21,21 @@ DEFAULT_ANALYTICS_GRID = [
                 title="Total Users",
                 value_function=lambda: get_total_users(),
                 roles=["Administrator"],
-                icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='analytics-icon'><path d='M7 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM14.5 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM1.615 16.428a1.224 1.224 0 0 1-.569-1.175 6.002 6.002 0 0 1 11.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 0 1 7 18a9.953 9.953 0 0 1-5.385-1.572ZM14.5 16h-.106c.07-.297.088-.611.048-.933a7.47 7.47 0 0 0-1.588-3.755 4.502 4.502 0 0 1 5.874 2.636.818.818 0 0 1-.36.98A7.465 7.465 0 0 1 14.5 16Z' /></svg>",
+                icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='fd-analytics-card-icon'><path d='M7 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM14.5 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM1.615 16.428a1.224 1.224 0 0 1-.569-1.175 6.002 6.002 0 0 1 11.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 0 1 7 18a9.953 9.953 0 0 1-5.385-1.572ZM14.5 16h-.106c.07-.297.088-.611.048-.933a7.47 7.47 0 0 0-1.588-3.755 4.502 4.502 0 0 1 5.874 2.636.818.818 0 0 1-.36.98A7.465 7.465 0 0 1 14.5 16Z' /></svg>",
                 subtitle="Total number of registered users in the system.",
             ),
             MediumAnalyticsCardData(
                 title="Active Users",
                 value_function=lambda: get_active_users(),
                 roles=["Administrator"],
-                icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='analytics-icon'><path d='M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM1.49 15.326a.78.78 0 0 1-.358-.442 3 3 0 0 1 4.308-3.516 6.484 6.484 0 0 0-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 0 1-2.07-.655ZM16.44 15.98a4.97 4.97 0 0 0 2.07-.654.78.78 0 0 0 .357-.442 3 3 0 0 0-4.308-3.517 6.484 6.484 0 0 1 1.907 3.96 2.32 2.32 0 0 1-.026.654ZM18 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM5.304 16.19a.844.844 0 0 1-.277-.71 5 5 0 0 1 9.947 0 .843.843 0 0 1-.277.71A6.975 6.975 0 0 1 10 18a6.974 6.974 0 0 1-4.696-1.81Z' /></svg>",
+                icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='fd-analytics-card-icon'><path d='M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM1.49 15.326a.78.78 0 0 1-.358-.442 3 3 0 0 1 4.308-3.516 6.484 6.484 0 0 0-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 0 1-2.07-.655ZM16.44 15.98a4.97 4.97 0 0 0 2.07-.654.78.78 0 0 0 .357-.442 3 3 0 0 0-4.308-3.517 6.484 6.484 0 0 1 1.907 3.96 2.32 2.32 0 0 1-.026.654ZM18 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM5.304 16.19a.844.844 0 0 1-.277-.71 5 5 0 0 1 9.947 0 .843.843 0 0 1-.277.71A6.975 6.975 0 0 1 10 18a6.974 6.974 0 0 1-4.696-1.81Z' /></svg>",
                 subtitle="Number of users who have logged in within the last 7 days.",
             ),
             MediumAnalyticsCardData(
                 title="Uploads Storage Usage",
                 value_function=lambda: get_uploads_storage_usage(),
                 roles=["Administrator"],
-                icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='analytics-icon'><path d='M3.75 3A1.75 1.75 0 0 0 2 4.75v3.26a3.235 3.235 0 0 1 1.75-.51h12.5c.644 0 1.245.188 1.75.51V6.75A1.75 1.75 0 0 0 16.25 5h-4.836a.25.25 0 0 1-.177-.073L9.823 3.513A1.75 1.75 0 0 0 8.586 3H3.75ZM3.75 9A1.75 1.75 0 0 0 2 10.75v4.5c0 .966.784 1.75 1.75 1.75h12.5A1.75 1.75 0 0 0 18 15.25v-4.5A1.75 1.75 0 0 0 16.25 9H3.75Z' /></svg>",
+                icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='fd-analytics-card-icon'><path d='M3.75 3A1.75 1.75 0 0 0 2 4.75v3.26a3.235 3.235 0 0 1 1.75-.51h12.5c.644 0 1.245.188 1.75.51V6.75A1.75 1.75 0 0 0 16.25 5h-4.836a.25.25 0 0 1-.177-.073L9.823 3.513A1.75 1.75 0 0 0 8.586 3H3.75ZM3.75 9A1.75 1.75 0 0 0 2 10.75v4.5c0 .966.784 1.75 1.75 1.75h12.5A1.75 1.75 0 0 0 18 15.25v-4.5A1.75 1.75 0 0 0 16.25 9H3.75Z' /></svg>",
                 subtitle="Total storage used by uploaded files in the system.",
             )
         ],
@@ -53,7 +53,7 @@ DEFAULT_SETTINGS_CATEGORY = [
                 key="site_title",
                 name="Site Title",
                 value="FlaskDash",
-                field=StringField("Site Title", validators=[DataRequired(), Length(max=100)], render_kw={"class": "text-input"}, description="The title of your site, displayed in the header."),
+                field=StringField("Site Title", validators=[DataRequired(), Length(max=100)], render_kw={"class": "fd-input"}, description="The title of your site, displayed in the header."),
                 category_name="site_settings"
             ),
             SettingItem(
@@ -61,7 +61,7 @@ DEFAULT_SETTINGS_CATEGORY = [
                 name="Favicon Icon",
                 value="",
                 field=FileField("Favicon Icon", validators=[FileAllowed(['png', 'jpg', 'jpeg', 'ico'])] , description="Upload a favicon icon for your site. This will be displayed in the browser tab.", render_kw={
-                    "class": "border border-blue-200 w-full rounded-lg file:bg-blue-800 file:text-white file:px-2.5 file:py-2 file:mr-4 hover:file:bg-blue-700 transition file:text-xs text-blue-800 text-xs ease duration-200"
+                    "class": "fd-file-input"
                 }),
                 category_name="site_settings"
             ),
@@ -70,7 +70,7 @@ DEFAULT_SETTINGS_CATEGORY = [
                 name="Website Logo",
                 value="",
                 field=FileField("Website Logo", validators=[FileAllowed(['png', 'jpg', 'jpeg', 'ico'])] , description="Upload a logo for your site. This will be displayed in the header.", render_kw={
-                    "class": "border border-blue-200 w-full rounded-lg file:bg-blue-800 file:text-white file:px-2.5 file:py-2 file:mr-4 hover:file:bg-blue-700 transition file:text-xs text-blue-800 text-xs ease duration-200"
+                    "class": "fd-file-input"
                 }),
                 category_name="site_settings"
             ),
@@ -78,28 +78,28 @@ DEFAULT_SETTINGS_CATEGORY = [
                 key="site_description",
                 name="Site Description",
                 value="A scalable Flask dashboard application.",
-                field=TextAreaField("Site Description", validators=[DataRequired(), Length(max=200)], render_kw={"class": "textarea"}, description="A brief description of your site for SEO purposes."),
+                field=TextAreaField("Site Description", validators=[DataRequired(), Length(max=200)], render_kw={"class": "fd-input"}, description="A brief description of your site for SEO purposes."),
                 category_name="site_settings"
             ),
             SettingItem(
                 key="site_theme",
                 name="Site Theme",
                 value="default",
-                field=SelectField('Site Theme', choices=lambda: [(theme, theme) for theme in list_themes()], render_kw={"class": "select"}, description="Select the theme for your site."),
+                field=SelectField('Site Theme', choices=lambda: [(theme, theme) for theme in list_themes()], render_kw={"class": "fd-input"}, description="Select the theme for your site."),
                 category_name="site_settings"
             ),
             SettingItem(
                 key="allow_registration",
                 name="Allow User Registration",
                 value=False,
-                field=BooleanField("Allow User Registration", description="Enable or disable user registration on the site."),
+                field=BooleanField("Allow User Registration", description="Enable or disable user registration on the site.", render_kw={"class": "fd-checkbox-input"}),
                 category_name="site_settings"
             ),
             SettingItem(
                 key="allow_first_name_last_name",
                 name="Allow First Name and Last Name",
                 value=False,
-                field=BooleanField("Allow First Name and Last Name", description="Enable or disable first name and last name fields in user profiles."),
+                field=BooleanField("Allow First Name and Last Name", description="Enable or disable first name and last name fields in user profiles.", render_kw={"class": "fd-checkbox-input"}),
                 category_name="site_settings"
             ),
             SettingItem(
@@ -109,7 +109,7 @@ DEFAULT_SETTINGS_CATEGORY = [
                 field=SelectField(
                     "Default User Role",
                     choices=lambda: [(role.name, role.name) for role in Role.query.all()],
-                    render_kw={"class": "select"},
+                    render_kw={"class": "fd-input"},
                     description="The default role assigned to new users upon registration."
                 ),
                 category_name="site_settings"
