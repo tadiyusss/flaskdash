@@ -1,10 +1,7 @@
-{% extends "base.html" %}
-{% block title %}{{ g.settings['site_title'] }}  Dashboard{% endblock %}
-{% block content %}
-
-<div
-    class="flex min-h-screen"
-    x-data="{
+{% extends "base.html" %} 
+{% block title %}{{ g.settings['site_title'] }} Dashboard{% endblock %} 
+{% block content %} 
+<div class="fd-layout" x-data="{
         sidebarOpen: window.innerWidth >= 768,
         init() {
             this.handleResize = () => {
@@ -12,81 +9,82 @@
             };
             window.addEventListener('resize', this.handleResize);
         }
-    }"
->
-
-<div
-    x-show="sidebarOpen"
-    x-cloak
-    @click="sidebarOpen = false"
-    class="fixed inset-0 bg-black/30 z-20 md:hidden"
-></div>
-
-<aside
-    class="w-screen md:w-[240px] min-h-screen flex-shrink-0 bg-white border-r border-blue-600/10 flex flex-col py-5 px-3 fixed top-0 left-0 h-full z-30 shadow-sm transition-transform duration-300 ease-in-out"
-    :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
->
-	<div class="flex items-center gap-3 px-3 mb-6">
-        {% if g.settings['website_logo'] %}
-            <img src="{{ url_for('media.serve_media', filename=g.settings['website_logo']) }}" alt="Website Logo" class="w-8 h-8 rounded object-cover">
-        {% else %}
-            <img src="{{ url_for('static', filename='images/default-logo.png') }}" alt="Website Logo" class="w-8 h-8 rounded object-cover">
-        {% endif %}
-		<span class="brand text-lg text-blue-800">{{ g.settings['site_title'] }}</span>
-        <button @click="sidebarOpen = false" class="ml-auto md:hidden border border-gray-200 p-2 rounded-lg hover:bg-gray-100 transition">
-            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
-	</div>
-
-    {% for category in get_sidebar() %}
-    <div class="section-label">{{category.name}}</div>
-        {% for item in category.items %}
-        <nav class="flex flex-col gap-0.5">
-            <a href="{{ url_for(item.route) }}" class="nav-item">
-                {{ item.icon|safe }} 
-                {{ item.name }}
-            </a>
-        </nav>
-        {% endfor %}
-    {% endfor %}
-</aside>
-
-<main class="flex-1 min-h-screen min-w-0 w-full overflow-x-hidden" :class="sidebarOpen ? 'md:ml-[240px]' : 'ml-0'">
-    <header class="sticky top-0 z-20 bg-white/90 backdrop-blur border-b border-blue-600/10 px-8 py-4 flex items-center justify-between">
-		<div class="flex items-center gap-3">
-			<button @click="sidebarOpen = !sidebarOpen" class="btn btn-ghost p-2 rounded-lg">
-				<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-					<path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
+    }">
+	<div x-show="sidebarOpen" x-cloak @click="sidebarOpen = false" class="fd-sidebar-overlay"></div>
+	<aside class="fd-sidebar" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+		<div class="fd-brand"> 
+            {% if g.settings['website_logo'] %} 
+            <img src="{{ url_for('media.serve_media', filename=g.settings['website_logo']) }}" alt="Website Logo" class="fd-brand-logo"> 
+            {% else %} 
+            <img src="{{ url_for('static', filename='images/default-logo.png') }}" alt="Website Logo" class="fd-brand-logo"> 
+            {% endif %} 
+            <span class="fd-brand-title">
+				{{ g.settings['site_title'] }}
+			</span>
+			<button @click="sidebarOpen = false" class="fd-sidebar-close-btn">
+				<svg class="fd-sidebar-close-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+					<path stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
 				</svg>
 			</button>
-			<div>
-				<h1 class="text-base font-semibold text-blue-800"></h1>
-			</div>
 		</div>
-	</header>
-    <div class="p-4 min-w-0 overflow-x-hidden">
-        {% block main %}{% endblock %}
-    </div>
-</main>
-
+		<!-- Sidebar Navigation --> 
+        {% for category in get_sidebar() %} 
+        <section class="fd-sidebar-section">
+			<div class="fd-sidebar-section-title">
+				{{ category.name }}
+			</div>
+			<nav class="fd-sidebar-nav"> 
+                {% for item in category.items %} 
+                <a href="{{ url_for(item.route) }}" class="fd-sidebar-link">
+					{{ item.icon|safe }}
+					{{ item.name }}
+				</a> 
+                {% endfor %} 
+            </nav>
+		</section> 
+        {% endfor %}
+	</aside>
+	<!-- Main Content -->
+	<main class="fd-main-content flex-1 min-h-screen min-w-0 w-full overflow-x-hidden" :class="sidebarOpen ? 'md:ml-[240px]' : 'ml-0'">
+		<!-- Header -->
+		<header class="fd-header sticky top-0 z-20 bg-white/90 backdrop-blur border-b border-blue-600/10 px-8 py-4 flex items-center justify-between">
+			<div class="fd-header-start flex items-center gap-3">
+				<button @click="sidebarOpen = !sidebarOpen" class="fd-sidebar-toggle btn btn-ghost p-2 rounded-lg">
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+						<path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
+					</svg>
+				</button>
+				<div class="fd-page-heading">
+					<h1 class="fd-page-title text-base font-semibold text-blue-800"></h1>
+				</div>
+			</div>
+			<div class="fd-header-end"> 
+                {% block header %}{% endblock %} 
+            </div>
+		</header>
+		<!-- Dashboard Content -->
+		<div class="fd-content p-4 min-w-0 overflow-x-hidden">
+			<div class="fd-page"> 
+                {% block main %}{% endblock %} 
+            </div>
+		</div>
+	</main>
 </div>
 
-<div class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div
-                    class="flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-xl border text-sm font-medium bg-white border-blue-200 text-blue-700 pointer-events-auto"
-                >
-                    <span>{{ message }}</span>
-                    <button onclick="this.parentElement.remove()" class="ml-2 text-current opacity-40 hover:opacity-80 transition">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-</div>
+<div class="fd-toast-container fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"> 
+    {% with messages = get_flashed_messages(with_categories=true) %} 
+        {% if messages %} 
+            {% for category, message in messages %} 
+            <div class="fd-toast flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-xl border text-sm font-medium bg-white border-blue-200 text-blue-700 pointer-events-auto">
+		        <span class="fd-toast-message">{{ message }}</span>
+		        <button onclick="this.parentElement.remove()" class="fd-toast-close ml-2 text-current opacity-40 hover:opacity-80 transition">
+		        	<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+		        		<path stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
+		        	</svg>
+		        </button>
+	        </div> 
+            {% endfor %} 
+        {% endif %} 
+    {% endwith %} 
+</div> 
 {% endblock %}
