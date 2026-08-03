@@ -2,10 +2,13 @@
 @config "../../tailwind.config.js";
 
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-@import './buttons.css';
-@import './authentication.css';
-@import './toast.css';
-@import './dashboard.css';
+@import './components/buttons.css';
+@import './components/toast.css';
+
+@import './global/dashboard.css';
+
+@import './pages/analytics.css';
+@import './pages/authentication.css';
 
 
 /* User Inputs */

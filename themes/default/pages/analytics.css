@@ -1,0 +1,67 @@
+.fd-analytics-section {
+
+}
+
+.fd-analytics-section-header {
+    @apply flex items-center gap-3 mb-4;
+}
+
+.fd-analytics-section-accent {
+    @apply w-1 h-4 bg-gray-600;
+}
+
+.fd-analytics-section-title {
+    @apply text-xl font-medium text-gray-800;
+}
+
+.fd-analytics-card-sm {
+    @apply border border-gray-200 rounded-lg p-4 flex items-center gap-4 shadow-sm hover:bg-gray-50 transition-colors duration-200;
+}
+
+.fd-analytics-card-md {
+    @apply border border-gray-200 rounded-lg p-5 shadow-sm hover:bg-gray-50 transition-colors duration-200;
+}
+
+.fd-analytics-card-lg {
+    @apply border border-gray-200 rounded-lg p-6 shadow-sm hover:bg-gray-50 transition-colors duration-200;
+}
+
+.fd-analytics-card-header {
+    @apply flex items-start justify-between mb-4;
+}
+
+.fd-analytics-card-icon {
+    @apply w-10 h-10 rounded-xl bg-gray-100 p-2.5 border border-gray-200 text-gray-500 flex items-center justify-center shrink-0;
+}
+
+.fd-analytics-card-value {
+    @apply text-lg font-bold text-zinc-800;
+}
+
+.fd-analytics-card-title {
+    @apply  text-xs text-zinc-800/50 font-medium;
+}
+
+.fd-analytics-card-subtitle{
+    @apply text-xs text-zinc-800/35 mt-1.5;
+}
+
+.fd-analytics-card-badge {
+    @apply flex items-center gap-1 text-gray-500;
+}
+
+.fd-analytics-card-badge-increase {
+    @apply w-3 h-3 text-green-500;
+}
+
+.fd-analytics-card-badge-decrease {
+    @apply w-3 h-3 text-red-500;
+}
+
+.fd-analytics-card-progress {
+  @apply h-1.5 overflow-hidden rounded-full bg-gray-100;
+}
+
+.fd-analytics-card-progress-fill {
+  @apply h-full transition-[width] duration-[1s] ease-[ease] rounded-full bg-zinc-800;
+}
