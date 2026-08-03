@@ -1,106 +1,106 @@
-{% extends "base.html" %}
-
-{% block title %}{{ g.settings['site_title'] }} - Login{% endblock %}
-
-{% block content %}
-<div class="fd-authentication-bg">
-
-    <div class="max-w-md mx-auto my-32" x-data="{
-        show: false,
-    }">
-        <div class="mb-8 text-center">
-            <h1 class="fd-title">{{ g.settings['site_title'] }}</h1>
-            <p class="fd-description">{{ g.settings['site_description'] }}</p>
+{% extends "base.html" %} 
+{% block title %}{{ g.settings['site_title'] }} - Login{% endblock %} 
+{% block content %} 
+<div class="auth-layout">
+	<div class="auth-container" x-data="{ show: false }">
+		<header class="auth-header">
+			<h1 class="auth-title">{{ g.settings['site_title'] }}</h1>
+			<p class="auth-description">{{ g.settings['site_description'] }}</p>
+		</header>
+		<div class="auth-flash-messages"> 
+        {% with messages = get_flashed_messages(with_categories=true) %} 
+            {% if messages %} 
+                {% for category, message in messages %} 
+                    {% if category == 'success' %} 
+                    <div x-transition class="fd-toast fd-toast-success">
+			            <span class="auth-flash-message">{{ message }}</span>
+		            </div> 
+                    {% elif category == 'error' %} 
+                    <div x-transition class="fd-toast fd-toast-error">
+			            <span class="auth-flash-message">{{ message }}</span>
+		            </div> 
+                    {% else %} 
+                    <div x-transition class="fd-toast fd-toast-warning">
+			            <span class="auth-flash-message">{{ message }}</span>
+		            </div> 
+                    {% endif %} 
+                {% endfor %} 
+            {% endif %} 
+        {% endwith %} 
         </div>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    {% if category == 'success' %}
-                        <div x-transition class="mb-5 flex items-start gap-3 bg-green-50 border border-green-200 text-green-700 text-sm rounded-lg px-4 py-3">
-                            <span>{{ message }}</span>
-                        </div>
-                    {% elif category == 'error' %}
-                        <div x-transition class="fd-toast-error mb-3">
-                            <span>{{ message }}</span>
-                        </div>
-                    {% else %}
-                        <div x-transition class="mb-5 flex items-start gap-3 bg-yellow-50 border border-yellow-200 text-yellow-700 text-sm rounded-lg px-4 py-3">
-                            <span>{{ message }}</span>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        <div class="fd-card">
-            <div class="fd-card-header">
-                <h2 class="fd-card-header-heading">Welcome back</h2>
-                <p class="fd-card-header-description">Sign in to access your dashboard</p>
-            </div>
-            <div class="px-6 py-6">
-                <form method="POST">
-                    {{ form.hidden_tag() }}
-                    {% if form.errors %}
-                    <p class="mb-3 text-red-700 font-medium">Please fix the following errors:</p>
-                        {% for field, errors in form.errors.items() %}
-                            {% for error in errors %}
-                                <div x-transition class="mb-2 flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3">
-                                    <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <path stroke-linecap="round" d="M12 8v4m0 4h.01" />
-                                    </svg>
-                                    <span>{{ error }}</span>
-                                </div>
-                            {% endfor %}
+		<section class="auth-card">
+			<div class="auth-card-header">
+				<h2 class="auth-card-title">Welcome back</h2>
+				<p class="auth-card-description">Sign in to access your dashboard </p>
+			</div>
+			<div class="auth-card-body">
+				<form method="POST" class="auth-form">
+					{{ form.hidden_tag() }} 
+                    {% if form.errors %} 
+                    <div class="auth-form-errors">
+						<p class="auth-form-errors-title"> Please fix the following errors: </p> 
+                        {% for field, errors in form.errors.items() %} 
+                            {% for error in errors %} 
+                            <div x-transition class="auth-error">
+                                <svg class="auth-error-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path stroke-linecap="round" d="M12 8v4m0 4h.01" />
+                                </svg>
+                                <span class="auth-error-message">
+                                    {{ error }}
+                                </span>
+                            </div> 
+                            {% endfor %} 
                         {% endfor %}
-                    {% endif %}
-                    <div class="mb-5">
-                        {{ form.email.label(class="fd-form-label") }}
-                        <div class="relative">
-                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-800/30">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                            </span>
-                            {{ form.email }}
-                        </div>
-                    </div>
-
-                    <div class="mb-2">
-                        <div class="flex justify-between items-center">
-                            {{ form.password.label(class="fd-form-label") }}
-                            <a href="{{ url_for('core.forgot_password') }}" class="fd-form-label">Forgot password?</a>
-                        </div>
-                        <div class="relative">
-                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-800/30">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <rect x="3" y="11" width="18" height="11" rx="2" />
-                                    <path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4" />
-                                </svg>
-                            </span>
-                            {{ form.password }}
-                            <button type="button" @click="show = !show" class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-800/35 hover:text-blue-800 transition">
-                                <svg x-show="!show" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                                <svg x-show="show" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m2.46-2.286A9.96 9.96 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="fd-btn-secondary fd-btn-md w-full">
-                        <span>Sign in</span>
-                    </button>
-                </form>
-                </div>
-            </div>
-            <!-- Footer -->
-            {% if g.settings['allow_registration'] == "1" %}
-            <p class="text-center text-sm text-blue-800/45 mt-6">Don't have an account? <a href="{{ url_for('core.register') }}" class="text-blue-700 font-semibold hover:underline hover:text-blue-900 transition">Create one free</a></p>
-            {% endif %}
-            <p class="text-center text-xs text-blue-800/30 mt-4">© 2026 {{ g.settings['site_title'] }}</p>
-      </div>
-</div>
+					</div> 
+                    {% endif %} 
+                    <div class="auth-form-group">
+						{{ form.email.label(class="fd-form-label") }}
+						<div class="auth-input-group">
+							<span class="auth-input-icon">
+								<svg class="auth-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+									<path stroke-linecap="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+								</svg>
+							</span>
+							{{ form.email }}
+						</div>
+					</div>
+					<div class="auth-form-group">
+						<div class="auth-form-header">
+							{{ form.password.label(class="fd-form-label") }}
+							<a href="{{ url_for('core.forgot_password') }}" class="auth-forgot-password-link"> Forgot password? </a>
+						</div>
+						<div class="auth-input-group">
+							<span class="auth-input-icon">
+								<svg class="auth-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+									<rect x="3" y="11" width="18" height="11" rx="2" />
+									<path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4" />
+								</svg>
+							</span>
+							{{ form.password }}
+							<button type="button" @click="show = !show" class="auth-password-toggle">
+								<svg x-show="!show" class="auth-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+									<path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+									<path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+								</svg>
+								<svg x-show="show" class="auth-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+									<path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m2.46-2.286A9.96 9.96 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18" />
+								</svg>
+							</button>
+						</div>
+					</div>
+					<button type="submit" class="fd-btn fd-btn-secondary fd-btn-block">
+						<span>Sign in</span>
+					</button>
+				</form>
+			</div>
+		</section> 
+        {% if g.settings['allow_registration'] == "1" %} 
+        <footer class="auth-footer">
+			<p class="auth-register-text"> Don't have an account? <a href="{{ url_for('core.register') }}" class="auth-register-link"> Create one free </a></p>
+			<p class="auth-copyright"> © 2026 {{ g.settings['site_title'] }}</p>
+		</footer> 
+        {% endif %}
+	</div>
+</div> 
 {% endblock %}

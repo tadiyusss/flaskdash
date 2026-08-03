@@ -1,133 +1,90 @@
-{% extends "base.html" %}
-
-{% block title %}{{ g.settings['site_title'] }} - Register{% endblock %}
-
-{% block head %}
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/authentication.css') }}">
-{% endblock %}
-
-{% block content %}
-<div class="grid-bg min-h-screen flex items-center justify-center py-12 px-4">
-	<div class="fade-in w-full max-w-md" x-data="{
-        password: '',
-        confirm: '',
-        show: false,
-        showC: false,
-        get strength() {
-            let s = 0;
-            if (this.password.length >= 8) s++;
-            if (/[A-Z]/.test(this.password)) s++;
-            if (/[0-9]/.test(this.password)) s++;
-            if (/[^A-Za-z0-9]/.test(this.password)) s++;
-            return s;
-        },
-        get strengthLabel() {
-            return ['','Weak Password','Fair Password','Good Password','Strong Password'][this.strength];
-        },
-        get strengthColor() {
-            return ['','#ef4444','#f59e0b','#3b82f6','#22c55e'][this.strength];
-        },
-
-    }">
-		<div class="mb-8 text-center">
-            <h1 class="brand text-2xl text-blue-800 tracking-tight">{{ g.settings['site_title'] }}</h1>
-            <p class="text-blue-800/50 text-sm mt-1 font-medium">{{ g.settings['site_description'] }}</p>
-        </div>
-
-		<div class="bg-white rounded-2xl card-shadow border border-blue-600/20 overflow-hidden">
-			<div class="px-8 pt-8 pb-6 border-b border-blue-600/10">
-				<h2 class="text-xl font-semibold text-blue-800">Create your account</h2>
-				<p class="text-blue-800/50 text-sm mt-1">Create your account and get started.</p>
+{% extends "base.html" %} 
+{% block title %}{{ g.settings['site_title'] }} - Register{% endblock %} 
+{% block content %} 
+<div class="auth-layout">
+	<div class="auth-container" x-data="{
+            password: '',
+            confirm: '',
+            show: false,
+            showC: false,
+            get strength() {
+                let s = 0;
+                if (this.password.length >= 8) s++;
+                if (/[A-Z]/.test(this.password)) s++;
+                if (/[0-9]/.test(this.password)) s++;
+                if (/[^A-Za-z0-9]/.test(this.password)) s++;
+                return s;
+            },
+            get strengthLabel() {
+                return ['','Weak Password','Fair Password','Good Password','Strong Password'][this.strength];
+            },
+            get strengthColor() {
+                return ['','#ef4444','#f59e0b','#3b82f6','#22c55e'][this.strength];
+            }
+         }">
+		<header class="auth-header">
+			<h1 class="auth-title">{{ g.settings['site_title'] }}</h1>
+			<p class="auth-description">{{ g.settings['site_description'] }}</p>
+		</header>
+		<section class="auth-card fd-card">
+			<div class="auth-card-header fd-card-header">
+				<h2 class="auth-card-title fd-card-header-heading"> Create your account </h2>
+				<p class="auth-card-description fd-card-header-description"> Create your account and get started. </p>
 			</div>
-			<div class="px-8 py-7">
-				<form method="POST">
-                    {{ form.hidden_tag() }}
-					<div class="grid grid-cols-1 gap-4 mb-5">
-						{% if g.settings['allow_first_name_last_name'] == "1" %}
-						<div>
-                            {{ form.firstname.label(class="block text-sm font-medium text-blue-800 mb-1.5") }}
-                            {{ form.firstname }}
-                            {% if form.errors.firstname %}
-                                <p class="text-red-500 text-xs mt-1">{{ form.errors.firstname[0] }}</p>
-                            {% endif %}
+			<div class="auth-card-body">
+				<form method="POST" class="auth-form">
+					{{ form.hidden_tag() }}
+					<div class="auth-form-grid"> 
+						{% if g.settings['allow_first_name_last_name'] == "1" %} 
+						<div class="auth-form-field">
+							{{ form.firstname.label(class="fd-form-label") }}
+							{{ form.firstname }} 
+
+							{% if form.errors.firstname %} 
+							<p class="auth-form-error">{{ form.errors.firstname[0] }}</p> 
+							{% endif %}
 						</div>
-						<div>
-                            {{ form.lastname.label(class="block text-sm font-medium text-blue-800 mb-1.5") }}
-                            {{ form.lastname }}
-                            {% if form.errors.lastname %}
-                                <p class="text-red-500 text-xs mt-1">{{ form.errors.lastname[0] }}</p>
-                            {% endif %}
-						</div>
-						{% endif %}
-                        <div>
-                            {{ form.username.label(class="block text-sm font-medium text-blue-800 mb-1.5") }}
-                            {{ form.username }}
-                            {% if form.errors.username %}
-                                <p class="text-red-500 text-xs mt-1">{{ form.errors.username[0] }}</p>
-                            {% endif %}
+						<div class="auth-form-field">
+							{{ form.lastname.label(class="fd-form-label") }}
+							{{ form.lastname }} 
+							{% if form.errors.lastname %} 
+							<p class="auth-form-error">{{ form.errors.lastname[0] }}</p> 
+							{% endif %}
+						</div> 
+						{% endif %} 
+						<div class="auth-form-field">
+							{{ form.username.label(class="fd-form-label") }}
+							{{ form.username }} 
+							{% if form.errors.username %} 
+							<p class="auth-form-error">{{ form.errors.username[0] }}</p> 
+							{% endif %}
 						</div>
 					</div>
-
-
-					<div class="mb-5">
-                        {{ form.email.label(class="block text-sm font-medium text-blue-800 mb-1.5") }}
-						<div class="relative">
-							<span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-800/30">
-								<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+					<div class="auth-form-group">
+						{{ form.email.label(class="fd-form-label") }}
+						<div class="auth-input-group">
+							<span class="auth-input-icon">
+								<svg class="auth-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 									<path stroke-linecap="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
 								</svg>
 							</span>
 							{{ form.email }}
-						</div>
-                        {% if form.errors.email %}
-							<p class="text-red-500 text-xs mt-1">{{ form.errors.email[0] }}</p>
+						</div> 
+						{% if form.errors.email %} 
+						<p class="auth-form-error">{{ form.errors.email[0] }}</p> 
 						{% endif %}
 					</div>
-					<!-- Password -->
-					<div class="mb-5">
-						{{ form.password.label(class="block text-sm font-medium text-blue-800 mb-1.5") }}
-						<div class="relative">
-							<span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-800/30">
-								<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+					<div class="auth-form-group">
+						{{ form.password.label(class="fd-form-label") }}
+						<div class="auth-input-group">
+							<span class="auth-input-icon">
+								<svg class="auth-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 									<rect x="3" y="11" width="18" height="11" rx="2" />
 									<path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4" />
 								</svg>
 							</span>
-                            {{ form.password }}
-							<button type="button" @click="show = !show" class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-800/35 hover:text-blue-800 transition">
-								<svg x-show="!show" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-									<path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-									<path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-								</svg>
-								<svg x-show="show" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-									<path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m2.46-2.286A9.96 9.96 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18" />
-								</svg>
-							</button>
-						</div>
-						<!-- Strength meter -->
-						<div x-show="password.length > 0" class="mt-2">
-							<div class="flex gap-1 mb-1">
-								<template x-for="i in 4">
-									<div class="h-1 flex-1 rounded-full bg-blue-100 overflow-hidden">
-										<div class="strength-bar h-full rounded-full" :style="`width: ${i <= strength ? 100 : 0}%; background: ${strengthColor}`">
-										</div>
-									</div>
-								</template>
-							</div>
-							<p class="text-xs" :style="`color: ${strengthColor}`" x-text="strengthLabel"></p>
-						</div>
-						<p x-show="errors.password" class="text-red-500 text-xs mt-1" x-text="errors.password"></p>
-					</div>
-					<div class="mb-5">
-						{{ form.retype_password.label(class="block text-sm font-medium text-blue-800 mb-1.5") }}
-						<div class="relative">
-							<span class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-800/30">
-								<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-									<path stroke-linecap="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-								</svg>
-							</span>
-                            {{ form.retype_password }}
-							<button type="button" @click="showC = !showC" class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-800/35 hover:text-blue-800 transition">
+							{{ form.password }}
+							<button type="button" @click="show = !show" class="auth-password-toggle">
 								<svg x-show="!showC" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 									<path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
 									<path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -137,19 +94,52 @@
 								</svg>
 							</button>
 						</div>
-                        {% if form.errors.retype_password %}
-						    <p class="text-red-500 text-xs mt-1">{{ form.errors.retype_password[0] }}</p>
+						<div x-show="password.length > 0" class="auth-password-strength">
+							<div class="auth-password-strength-bars">
+								<template x-for="i in 4">
+									<div class="auth-password-strength-bar">
+										<div class="auth-password-strength-fill" :style="`width:${i<=strength?100:0}%;background:${strengthColor}`">
+										</div>
+									</div>
+								</template>
+							</div>
+							<p class="auth-password-strength-label" :style="`color:${strengthColor}`" x-text="strengthLabel"></p>
+						</div>
+					</div>
+					<div class="auth-form-group">
+						{{ form.retype_password.label(class="fd-form-label") }}
+						<div class="auth-input-group">
+							<span class="auth-input-icon">
+								<svg class="auth-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+									<path stroke-linecap="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+								</svg>
+							</span>
+							{{ form.retype_password }}
+							<button type="button" @click="showC = !showC" class="auth-password-toggle">
+								<svg x-show="!showC" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+									<path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+									<path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+								</svg>
+								<svg x-show="showC" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+									<path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m2.46-2.286A9.96 9.96 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18" />
+								</svg>
+							</button>
+						</div> 
+						{% if form.errors.retype_password %} 
+						<p class="auth-form-error">
+							{{ form.errors.retype_password[0] }}
+						</p> 
 						{% endif %}
 					</div>
-					<button type="submit" class="btn-primary w-full text-white font-semibold text-sm py-2.5 rounded-lg flex items-center justify-center gap-2 disabled:opacity-60">
+					<button type="submit" class="fd-btn fd-btn-secondary fd-btn-block">
 						<span>Create account</span>
 					</button>
 				</form>
 			</div>
-		</div>
-		<!-- Footer -->
-		<p class="text-center text-sm text-blue-800/45 mt-6"> Already have an account? <a href="{{ url_for('core.login') }}" class="text-blue-700 font-semibold hover:underline hover:text-blue-900 transition">Sign in</a></p>
-		<p class="text-center text-xs text-blue-800/30 mt-4">© 2026 {{ g.settings['site_title'] }}</p>
+		</section>
+		<footer class="auth-footer">
+			<p class="auth-footer-text"> Already have an account? <a href="{{ url_for('core.login') }}" class="auth-footer-link"> Sign in </a></p>
+			<p class="auth-copyright"> © 2026 {{ g.settings['site_title'] }}</p>
+		</footer>
 	</div>
-</div>
-{% endblock %}
+</div> {% endblock %}

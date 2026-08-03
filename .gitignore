@@ -23,3 +23,4 @@ run_mysql.py
 !core/stubs/extensions
 media/
 core/static/css/themes/*
+/test_*

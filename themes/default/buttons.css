@@ -1,0 +1,31 @@
+/* Buttons */
+
+.fd-btn{
+    @apply inline-flex items-center justify-center font-medium transition duration-100 py-2;
+}
+
+.fd-btn-primary{
+    @apply bg-blue-800 text-white rounded hover:bg-blue-900 transition duration-100;
+}
+
+.fd-btn-secondary{
+    @apply bg-gray-600 text-white rounded hover:bg-gray-700 transition duration-100;
+}
+
+/* Button Sizes */
+
+.fd-btn-sm{
+    @apply text-sm py-1 px-2;
+}
+
+.fd-btn-md{
+    @apply text-base py-2 px-4;
+}
+
+.fd-btn-lg{
+    @apply text-lg py-3 px-6;
+}
+
+.fd-btn-block{
+    @apply w-full;
+}

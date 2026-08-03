@@ -7,14 +7,14 @@ class LoginForm(FlaskForm):
     email = EmailField('Email Address', 
         validators=[DataRequired(message="Email is required"), Email(message="Enter a valid email")],
         render_kw={
-            "class": "fd-input",
+            "class": "fd-input-group-field",
             "placeholder": "you@company.com"
         },
     )
     password = PasswordField('Password', 
         validators=[DataRequired(message="Password is required")],
         render_kw={
-            "class": "fd-input fd-input-sm",
+            "class": "fd-input-group-field fd-input-group-field-sm",
             "placeholder": "Your password",
             ":type": "show ? 'text' : 'password'"
         }
@@ -24,7 +24,7 @@ class RegisterForm(FlaskForm):
     firstname = StringField('First Name',
         validators=[DataRequired(message="First name is required"), Length(min=2, max=30)],
         render_kw={
-            "class": "w-full px-3 py-2.5 border rounded-lg text-blue-800 text-sm placeholder:text-blue-800/25 bg-white focus:ring-2 transition border-blue-600/30 focus:border-blue-600 focus:ring-blue-600/10",
+            "class": "fd-input",
             "placeholder": "John"
         }
     )
@@ -32,7 +32,7 @@ class RegisterForm(FlaskForm):
     lastname = StringField('Last Name',
         validators=[DataRequired(message="Last name is required"), Length(min=2, max=30)],
         render_kw={
-            "class": "w-full px-3 py-2.5 border rounded-lg text-blue-800 text-sm placeholder:text-blue-800/25 bg-white focus:ring-2 transition border-blue-600/30 focus:border-blue-600 focus:ring-blue-600/10",
+            "class": "fd-input",
             "placeholder": "Doe"
         }
     )
@@ -40,21 +40,21 @@ class RegisterForm(FlaskForm):
     username = StringField('Username', 
         validators=[DataRequired(message="Username is required"), Length(min=2, max=20), validate_username_unique], 
         render_kw={
-            "class": "w-full px-3 py-2.5 border rounded-lg text-blue-800 text-sm placeholder:text-blue-800/25 bg-white focus:ring-2 transition border-blue-600/30 focus:border-blue-600 focus:ring-blue-600/10",
+            "class": "fd-input",
             "placeholder": "johndoe"
         }
     )
     email = StringField('Email Address', 
         validators=[DataRequired(message="Email is required"), Email(message="Enter a valid email"), validate_email_unique],
         render_kw={
-            "class": "border-blue-600/30 focus:border-blue-600 focus:ring-blue-600/10 w-full pl-10 pr-4 py-2.5 border rounded-lg text-blue-800 text-sm placeholder:text-blue-800/25 bg-white focus:ring-2 transition",
+            "class": "fd-input-group-field",
             "placeholder": "you@company.com"
         }
     )
     password = PasswordField('Password', 
         validators=[DataRequired(message="Password is required"), Length(min=6),validate_password_length, validate_password_uppercase_letter, validate_password_lowercase_letter, validate_password_digit],
         render_kw={
-            "class": "border-blue-600/30 focus:border-blue-600 focus:ring-blue-600/10 w-full pl-10 pr-10 py-2.5 border rounded-lg text-blue-800 text-sm placeholder:text-blue-800/25 bg-white focus:ring-2 transition",
+            "class": "fd-input-group-field",
             "placeholder": "••••••••",
             ":type": "show ? 'text' : 'password'",
             "x-model": "password"
@@ -63,7 +63,7 @@ class RegisterForm(FlaskForm):
     retype_password = PasswordField('Confirm Password', 
         validators=[DataRequired(message="Please confirm your password"), Length(min=6)],
         render_kw={
-            "class": "border-blue-600/30 focus:border-blue-600 focus:ring-blue-600/10 w-full pl-10 pr-10 py-2.5 border rounded-lg text-blue-800 text-sm placeholder:text-blue-800/25 bg-white focus:ring-2 transition",
+            "class": "fd-input-group-field",
             "placeholder": "••••••••",
             ":type": "showC ? 'text' : 'password'",
             "x-model": "confirm"
@@ -77,7 +77,7 @@ class ForgotPasswordForm(FlaskForm):
     email = EmailField('Email Address', 
         validators=[DataRequired(message="Email is required"), Email(message="Enter a valid email")],
         render_kw={
-            "class": "w-full pl-10 pr-4 py-2.5 border border-blue-600/30 rounded-lg text-blue-800 text-sm placeholder:text-blue-800/25 bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-600/10 transition",
+            "class": "fd-input-group-field",
             "placeholder": "you@company.com"
         }
     )
@@ -86,7 +86,7 @@ class ResetPasswordForm(FlaskForm):
     password = PasswordField('New Password', 
         validators=[DataRequired(message="Password is required"), Length(min=6), validate_password_length, validate_password_uppercase_letter, validate_password_lowercase_letter, validate_password_digit],
         render_kw={
-            "class": "w-full pl-10 pr-10 py-2.5 border border-blue-600/30 rounded-lg text-blue-800 text-sm placeholder:text-blue-800/25 bg-white focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 transition",
+            "class": "fd-input-group-field",
             "placeholder": "••••••••",
             ":type": "showNew ? 'text' : 'password'"
         }
@@ -94,7 +94,7 @@ class ResetPasswordForm(FlaskForm):
     retype_password = PasswordField('Confirm New Password', 
         validators=[DataRequired(message="Please confirm your password"), Length(min=6)],
         render_kw={
-            "class": "w-full pl-10 pr-10 py-2.5 border border-blue-600/30 rounded-lg text-blue-800 text-sm placeholder:text-blue-800/25 bg-white focus:ring-2 focus:ring-blue-600/10 focus:border-blue-600 transition",
+            "class": "fd-input-group-field",
             "placeholder": "••••••••",
             ":type": "showConfirm ? 'text' : 'password'"
         }

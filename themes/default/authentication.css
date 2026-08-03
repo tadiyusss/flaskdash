@@ -1,0 +1,147 @@
+.auth-layout {
+    @apply bg-white min-h-screen;
+}
+
+.auth-card-title {
+    @apply text-xl font-medium;
+}
+
+.auth-card-description {
+    @apply text-gray-500 text-sm mt-1;
+}
+
+.auth-container {
+    @apply max-w-md mx-auto py-32 space-y-8;
+}
+
+.auth-header {
+    @apply text-center;
+}
+
+.auth-title {
+    @apply text-2xl font-medium;
+}
+
+.auth-description {
+    @apply text-gray-500 text-sm mt-1;
+}
+
+.auth-card {
+    @apply border border-gray-100 shadow-lg rounded-lg;
+}
+
+.auth-card-header {
+    @apply bg-gray-200 p-4 rounded-t-lg;
+}
+
+.auth-card-body {
+    @apply p-4 bg-white rounded-b-lg;
+}
+
+.auth-input-group {
+    @apply relative;
+}
+
+.auth-input-icon {
+    @apply absolute left-3 top-1/2 -translate-y-1/2 text-gray-800/30;
+}
+
+.auth-icon {
+    @apply w-4 h-4 text-gray-400;
+}
+
+.auth-password-toggle {
+    @apply absolute right-3 top-1/2 -translate-y-1/2 text-gray-800/35 hover:text-gray-800 transition;
+}
+
+.auth-form-header {
+    @apply flex justify-between items-center;
+}
+
+.auth-form {
+    @apply space-y-4;
+}
+
+.auth-forgot-password-link{
+    @apply text-sm text-gray-500 hover:text-gray-800 transition;
+}
+
+.auth-footer {
+    @apply text-center;
+}
+
+.auth-register-text {
+    @apply text-sm text-gray-500;
+}
+
+.auth-register-link {
+    @apply text-gray-800 hover:text-gray-900 transition underline;
+}
+
+.auth-copyright {
+    @apply text-center text-xs text-gray-800/30 mt-4;
+}
+
+.auth-footer-text {
+    @apply text-sm text-gray-500;
+}
+
+.auth-footer-link {
+    @apply text-gray-800 hover:text-gray-900 transition underline;
+}
+
+.auth-form-field {
+
+}
+
+.auth-form-grid {
+
+}
+
+.auth-password-strength {
+
+}
+
+.auth-password-strength-bar {
+
+}
+
+.auth-password-strength-bars {
+
+}
+
+.auth-password-strength-label {
+
+}
+
+.auth-error {
+
+}
+
+.auth-error-icon {
+
+}
+
+.auth-error-message {
+
+}
+
+.auth-flash-message {
+
+}
+
+.auth-flash-messages {
+
+}
+
+.auth-form-errors {
+
+}
+
+.auth-form-errors-title {
+
+}
+
+.auth-form-group {
+    
+}
