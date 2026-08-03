@@ -6,11 +6,11 @@
     @apply w-full text-xs;
 }
 
-.fd-table-header {
+.fd-table-header-row {
     @apply border-b border-gray-200 bg-gray-100;
 }
 
-.fd-table-header th {
+.fd-table-header-row th {
     @apply text-left px-6 py-3 text-gray-500 font-medium;
 }
 
@@ -18,6 +18,50 @@
     @apply divide-y divide-gray-100;
 }
 
-.fd-table-row{
+.fd-table-row {
     @apply hover:bg-gray-50 transition-colors duration-100
+}
+
+.fd-table-col-primary {
+    @apply font-semibold text-gray-800
+}
+
+.fd-table-col {
+    @apply text-gray-600 text-xs;
+}
+
+.fd-table-col-xs {
+    @apply px-6 py-1;
+}
+
+.fd-table-col-sm {
+    @apply px-6 py-2;
+}
+
+.fd-table-col-md {
+    @apply px-6 py-3.5;
+}
+
+.fd-table-col-lg {
+    @apply px-6 py-4;
+}
+
+.fd-table-action-btn {
+    @apply w-4 h-4 text-zinc-700 hover:text-zinc-800 transition-colors duration-100;
+}
+
+.fd-table-action-btn-danger {
+    @apply text-red-700 hover:text-red-900 transition-colors duration-100;
+}
+
+.fd-table-no-data {
+    @apply text-gray-500 text-sm py-4 text-center;
+}
+
+.fd-table-icon-container {
+    @apply w-7 h-7 rounded-lg bg-gray-50 border border-gray-600/15 flex items-center justify-center shrink-0
+}
+
+.fd-table-icon {
+    @apply w-3.5 h-3.5 text-gray-600;
 }

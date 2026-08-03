@@ -12,6 +12,10 @@
     @apply bg-gray-600 text-white rounded hover:bg-gray-700 transition duration-100;
 }
 
+.fd-btn-danger {
+    @apply bg-rose-800 text-white rounded hover:bg-rose-900 transition duration-100;
+}
+
 .fd-btn-outline{
     @apply bg-transparent border border-gray-200 text-gray-600 rounded hover:bg-gray-200 transition duration-100;
 }

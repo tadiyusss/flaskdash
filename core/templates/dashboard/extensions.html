@@ -1,43 +1,41 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Extensions{% endblock %}
 {% block main %}
-<div class="max-w-4xl mx-auto">
-	<div class="card overflow-hidden">
-		<div class="px-6 py-4 border-b border-blue-600/[0.08] flex items-center justify-between gap-4">
-			<div>
-				<h3 class="text-sm font-semibold text-blue-800">Manage Extensions</h3>
-				<p class="text-xs text-blue-800/45 mt-0.5">Customize and enhance system extensions to improve functionality.</p>
-			</div>
+<div class="fd-dashboard-page-md">
+	<div class="fd-card">
+		<div class="fd-card-header">
+			<h3 class="fd-card-title">Manage Extensions</h3>
+			<p class="fd-card-subtitle">Customize and enhance system extensions to improve functionality.</p>
 		</div>
-		<div class="overflow-x-auto">
-			<table class="w-full text-xs">
+		<div class="fd-table-container">
+			<table class="fd-table">
 				<thead>
-					<tr class="border-b border-blue-600/[0.08] bg-blue-50/40">
-						<th class="text-left px-6 py-3 text-blue-800/50 font-semibold uppercase tracking-wider">Name</th>
-						<th class="text-left px-4 py-3 text-blue-800/50 font-semibold uppercase tracking-wider">Description</th>
-						<th class="text-left px-4 py-3 text-blue-800/50 font-semibold uppercase tracking-wider">Actions</th>
+					<tr class="fd-table-header-row">
+						<th>Name</th>
+						<th>Description</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
-				<tbody class="divide-y divide-blue-600/[0.05]"> 
+				<tbody class="fd-table-body"> 
                     {% if extensions %} 
                         {% for extension in extensions %} 
-                        <tr class="hover:bg-blue-50/40 transition-colors duration-100">
-                            <td class="px-6 py-3.5">
+                        <tr class="fd-table-row">
+                            <td class="fd-table-col-md fd-table-col-primary">
                                 <div class="flex items-center gap-2.5">
-                                    <div class="w-7 h-7 rounded-lg bg-blue-50 border border-blue-600/15 flex items-center justify-center shrink-0">
-                                        <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <div class="fd-table-icon-container">
+                                        <svg class="fd-table-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M14 2h6m0 0v6m0-6L10 14" />
                                         </svg>
                                     </div>
-                                    <span class="font-semibold text-blue-800">{{ extension['name'] }}</span>
+                                    <span>{{ extension['name'] }}</span>
                                 </div>
                             </td>
-                            <td class="px-4 py-3.5 text-blue-800/55 leading-relaxed max-w-sm">
+                            <td class="fd-table-col-md">
                                 <p class="line-clamp-2">{{ extension['description'] }}</p>
                             </td>
-                            <td class="px-4 py-3.5">
+                            <td class="fd-table-col-md">
                                 <a href="{{ url_for('core.manage_extensions', slug=extension['slug']) }}">
-                                    <svg class="normal-action-btn" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <svg class="fd-table-action-btn" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                         <circle cx="12" cy="12" r="3" />
                                     </svg> 

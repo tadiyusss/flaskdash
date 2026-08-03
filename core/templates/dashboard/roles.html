@@ -1,49 +1,55 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Roles{% endblock %}
 {% block main %}
-<div class="max-w-4xl mx-auto" x-data="{modal_open: false}">
-	<div class="card overflow-hidden">
-		<div class="px-6 py-4 border-b border-blue-600/[0.08] flex items-center justify-between gap-4">
+<div class="fd-dashboard-page-sm" x-data="{modal_open: false}">
+	<div class="fd-card">
+		<div class="fd-card-header fd-card-header-w-btn">
 			<div>
-				<h3 class="text-sm font-semibold text-blue-800">Manage Roles</h3>
-				<p class="text-xs text-blue-800/45 mt-0.5">Add, create, and manage roles.</p>
+				<h3 class="fd-card-title">Manage Roles</h3>
+				<p class="fd-card-subtitle">Add, create, and manage roles.</p>
 			</div>
-			<button @click="modal_open = true" class="btn btn-primary">
+			<button @click="modal_open = true" class="fd-btn fd-btn-secondary fd-btn-sm fd-btn-w-icon">
 				<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-				</svg> Create Role </button>
+				</svg> Create Role 
+			</button>
 		</div>
-		<div class="overflow-x-auto">
-			<table class="w-full text-xs">
+		<div class="fd-table-container">
+			<table class="fd-table">
 				<thead>
-					<tr class="border-b border-blue-600/[0.08] bg-blue-50/40">
-						<th class="text-left px-6 py-3 text-blue-800/50 font-semibold uppercase tracking-wider">Name</th>
-						<th class="text-left px-4 py-3 text-blue-800/50 font-semibold uppercase tracking-wider">Description</th>
-						<th class="text-left px-4 py-3 text-blue-800/50 font-semibold uppercase tracking-wider">Actions</th>
+					<tr class="fd-table-header-row">
+						<th>Name</th>
+						<th>Description</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
-				<tbody class="divide-y divide-blue-600/[0.05]"> {% for role in roles %} <tr class="hover:bg-blue-50/40 transition-colors duration-100">
-						<td class="px-6 py-3.5">
-							<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-800/60">
-								<span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+				<tbody class="fd-table-body"> 
+					{% for role in roles %} 
+					<tr class="fd-table-row">
+						<td class="fd-table-col-md fd-table-col-primary">
+							<span class="fd-badge fd-badge-secondary">
 								{{ role.name }}
 							</span>
 						</td>
-						<td class="px-4 py-3.5 text-blue-800/55">{{ role.description }}</td>
-						<td class="px-4 py-3.5">
+						<td class="fd-table-col-md fd-table-col">{{ role.description }}</td>
+						<td class="fd-table-col-md fd-table-col">
                             {% if role.name in default_roles %}
-                            <p class="text-xs text-blue-800/55">You are not allowed to delete default roles.</p>
+                            <p class="">You are not allowed to delete default roles.</p>
                             {% else %}
                             <a href="{{ url_for('core.delete_role', role_uid=role.uid) }}">
-								<svg class="danger-action-btn" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+								<svg class="fd-table-action-btn fd-table-action-btn-danger" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 									<path stroke-linecap="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
 								</svg>
                             </a>
                             {% endif %}
 						</td>
-					</tr> {% else %} <tr>
-						<td colspan="3" class="px-6 py-10 text-center text-blue-800/35 text-xs">No roles found.</td>
-					</tr> {% endfor %} </tbody>
+					</tr> 
+					{% else %} 
+					<tr>
+						<td colspan="3" class="fd-table-no-data">No roles found.</td>
+					</tr> 
+					{% endfor %} 
+				</tbody>
 			</table>
 		</div>
 	</div>

@@ -1,0 +1,8 @@
+.fd-table-user-profile {
+    @apply flex items-center gap-3;
+}
+
+.fd-table-user-image {
+    @apply w-8 h-8 rounded-full object-cover shrink-0;
+    box-shadow: 0 0 0 2px rgba(31, 34, 43, 0.15);
+}

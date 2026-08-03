@@ -7,12 +7,12 @@ from core.models.users import Role, User
 class CreateRoleForm(FlaskForm):
     name = StringField('Role Name',
         validators=[DataRequired("Role name is required."), Length(min=2, max=50), validate_role_name_unique],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
 
     description = TextAreaField('Description',
         validators=[DataRequired("Description is required."), Length(max=200)],
-        render_kw={"class": "text-input", "rows": 3}
+        render_kw={"class": "fd-input", "rows": 3}
     )
 
     submit = SubmitField('Create Role',
@@ -22,31 +22,31 @@ class CreateRoleForm(FlaskForm):
 class CreateUserForm(FlaskForm):
     username = StringField('Username', 
         validators=[DataRequired(), Length(min=2, max=20), validate_username_unique], 
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
     email = StringField('Email', 
         validators=[DataRequired(), Email(), validate_email_unique],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
 
     firstname = StringField('First Name', 
         validators=[DataRequired(), Length(min=2, max=32), Regexp(r'^[a-zA-Z]+$', message="First name must contain only letters.")],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
 
     lastname = StringField('Last Name',
         validators=[DataRequired(), Length(min=2, max=32), Regexp(r'^[a-zA-Z]+$', message="Last name must contain only letters.")],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
 
     password = PasswordField('Password', 
         validators=[DataRequired(), validate_password_length, validate_password_uppercase_letter, validate_password_lowercase_letter, validate_password_digit],
-        render_kw={"class": "text-input"},
+        render_kw={"class": "fd-input"},
     )
 
     role = SelectField('Role',
         validators=[DataRequired()],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
 
 def build_manage_user_role_form(user: User):
@@ -69,26 +69,26 @@ def build_manage_user_role_form(user: User):
 class ManageUserPasswordForm(FlaskForm):
     new_password = PasswordField('New Password',
         validators=[DataRequired(), Length(min=6)],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
 
 class ManageNameForm(FlaskForm):
     username = StringField('Username',
         validators=[DataRequired("Username is required."), Length(min=2, max=20)],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
 
     email = EmailField('Email',
         validators=[DataRequired("Email is required."), Email()],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
 
     firstname = StringField('First Name', 
         validators=[Regexp(r'^[a-zA-Z]+$', message="First name must contain only letters.")],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )
 
     lastname = StringField('Last Name',
         validators=[Regexp(r'^[a-zA-Z]+$', message="Last name must contain only letters.")],
-        render_kw={"class": "text-input"}
+        render_kw={"class": "fd-input"}
     )

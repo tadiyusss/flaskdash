@@ -21,7 +21,7 @@
         <div class="fd-table-container">
             <table class="fd-table">
                 <thead>
-                    <tr class="fd-table-header">
+                    <tr class="fd-table-header-row">
                         <th>Username</th>
                         {% if g.settings['allow_first_name_last_name'] == "1" %}
                         <th>Name</th>
@@ -33,25 +33,21 @@
                 <tbody class="fd-table-body">
                     {% for user in users %}
                     <tr class="fd-table-row">
-                        <td class="px-6 py-3.5">
-                            <div class="flex items-center gap-3">
-                                <img src="{{ url_for('static', filename='images/profiles/' + user.profile_image) }}"
-                                     class="w-8 h-8 rounded-full object-cover shrink-0"
-                                     style="box-shadow: 0 0 0 2px rgba(37,99,235,0.15);"
-                                     alt="User Avatar"/>
-                                <span class="font-semibold text-blue-800">{{ user.username }}</span>
+                        <td class="fd-table-col-md fd-table-col-primary">
+                            <div class="fd-table-user-profile">
+                                <img src="{{ url_for('static', filename='images/profiles/' + user.profile_image) }}" class="fd-table-user-image" alt="User Avatar"/>
+                                <span>{{ user.username }}</span>
                             </div>
                         </td>
                         {% if g.settings['allow_first_name_last_name'] == "1" %}
-                        <td class="px-4 py-3.5 text-blue-800/60">
+                        <td class="fd-table-col-md fd-table-col">
                             {{ user.firstname or "" }} {{ user.lastname or "" }}
                         </td>
                         {% endif %}
-                        <td class="px-4 py-3.5 text-blue-800/60">{{ user.email }}</td>
-                        <td class="px-4 py-3.5">
-                            <a href="{{ url_for('core.manage_user', user_uid=user.uid) }}"
-                               class="{{ 'opacity-50 pointer-events-none' if user.uid == current_user.uid }}">
-                                <svg class="normal-action-btn" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <td class="fd-table-col-md fd-table-col">{{ user.email }}</td>
+                        <td class="fd-table-col-md fd-table-col">
+                            <a href="{{ url_for('core.manage_user', user_uid=user.uid) }}">
+                                <svg class="fd-table-action-btn" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                 </svg>
                             </a>
