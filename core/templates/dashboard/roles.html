@@ -1,7 +1,7 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Roles{% endblock %}
 {% block main %}
-<div class="fd-dashboard-page-sm" x-data="{modal_open: true}">
+<div class="fd-dashboard-page-sm" x-data="{modal_open: false}">
 	<div class="fd-card">
 		<div class="fd-card-header fd-card-header-w-btn">
 			<div>
@@ -56,7 +56,7 @@
 	<form method="POST" x-show="modal_open" x-transition class="fd-modal-container">
 		<div @click="modal_open = false" class="fd-modal-backdrop"></div>
 		<div @click.stop class="fd-modal">
-			<div class="fd-modal-header">
+			<div class="fd-modal-header ">
 				<div>
 					<h3 class="fd-modal-title">Create Role</h3>
 					<p class="fd-modal-subtitle">Define a new role and its description.</p>
