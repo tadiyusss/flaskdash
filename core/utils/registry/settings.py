@@ -19,6 +19,9 @@ def register_category(setting_category: SettingCategory) -> bool:
         )
         db.session.add(category)
         db.session.commit()
+
+    for setting in setting_category.settings:
+        register_setting(setting)
     
     _registered_settings.append(setting_category)
     return True
@@ -29,7 +32,7 @@ def register_setting(setting_item: SettingItem) -> bool:
     """
 
     exists = Setting.query.filter_by(key=setting_item.key).first()
-    is_registered = False
+
     if not exists:
         setting = Setting(
             name=setting_item.name,
@@ -40,14 +43,6 @@ def register_setting(setting_item: SettingItem) -> bool:
         db.session.add(setting)
         db.session.commit()
 
-    for registered in _registered_settings:
-        if registered.name == setting_item.category_name:
-            registered.settings.append(setting_item)
-            is_registered = True
-            break
-
-    if not is_registered:
-        raise ValueError(f"Category '{setting_item.category_name}' not found for setting '{setting_item.key}'.")
     return True
 
 def get_registered_settings():
