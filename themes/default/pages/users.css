@@ -26,3 +26,23 @@
 .fd-create-user-form-grid {
     @apply grid grid-cols-1 gap-4;
 }
+
+.fd-role-checkbox-grid {
+    @apply grid grid-cols-1 gap-2.5;
+}
+
+.fd-role-checkbox-label {
+    @apply flex items-start gap-3 p-3.5 rounded-lg border border-blue-600/[0.13] bg-blue-50/40 cursor-pointer hover:border-blue-600/30 hover:bg-blue-50/70 transition-all;
+}
+
+.fd-role-checkbox-header {
+    @apply flex items-center gap-2 mb-0.5;
+}
+
+.fd-role-checkbox-title {
+    @apply text-sm font-semibold text-blue-800;
+}
+
+.fd-role-checkbox-description {
+    @apply text-xs text-blue-800/45;
+}

@@ -69,7 +69,7 @@ def build_manage_user_role_form(user: User):
 class ManageUserPasswordForm(FlaskForm):
     new_password = PasswordField('New Password',
         validators=[DataRequired(), Length(min=6)],
-        render_kw={"class": "fd-input-group-field"}
+        render_kw={"class": "fd-input"}
     )
 
 class ManageNameForm(FlaskForm):

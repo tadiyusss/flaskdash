@@ -1,3 +1,16 @@
 .fd-profile-form {
     @apply flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5;
 }
+
+.fd-change-profile-image-wrapper {
+    @apply relative inline-flex;
+}
+
+.fd-change-profile-image-label {
+    @apply cursor-pointer inline-flex overflow-hidden rounded-full;
+}
+
+.fd-change-profile-image-overlay {
+    @apply absolute inset-0 rounded-full bg-blue-800/40 opacity-0 transition flex items-center justify-center;
+    pointer-events: none;
+}

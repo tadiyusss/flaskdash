@@ -67,11 +67,11 @@
                     </div>
                 </div>
             </form>
-            <form method="POST" action="{{ url_for('core.profile_edit_name') }}" class="space-y-4">
+            <form method="POST" action="{{ url_for('core.profile_edit_name') }}" class="fd-form-stack">
 
                 {{ edit_name_form.hidden_tag() }}
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="fd-form-grid">
                     <div>
                         {{ edit_name_form.username.label(class="fd-form-label") }}
                         {{ edit_name_form.username(value=current_user.username or "", placeholder="your_username") }}
@@ -91,7 +91,7 @@
                     </div>
                     {% endif %}
                 </div>
-                <div class="flex items-center gap-2 pt-1">
+                <div class="fd-card-buttons">
                     {{ edit_name_form.submit(class="fd-btn fd-btn-secondary fd-btn-sm") }}
                 </div>
             </form>
@@ -123,15 +123,15 @@
         <div class="fd-card-body">
             <form method="POST"
                   action="{{ url_for('core.profile_edit_password') }}"
-                  class="space-y-4">
+                  class="fd-form-stack">
     
                 {{ edit_password_form.hidden_tag() }}
     
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    
+                <div class="fd-form-grid">
+
                     <div>
                         {{ edit_password_form.current_password.label(class="fd-form-label") }}
-                        <div class="relative">
+                        <div class="fd-input-group">
                             {{ edit_password_form.current_password(
                                 x_model="current",
                                 type="password",
@@ -140,12 +140,12 @@
                             ) }}
                             <button type="button"
                                     @click="showCurrent = !showCurrent; document.getElementById('current_password_field').type = showCurrent ? 'text' : 'password'"
-                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-800/35 hover:text-blue-800 transition">
-                                <svg x-show="!showCurrent" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    class="fd-password-toggle">
+                                <svg x-show="!showCurrent" class="fd-icon-xs" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     <path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                 </svg>
-                                <svg x-show="showCurrent" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <svg x-show="showCurrent" class="fd-icon-xs" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m2.46-2.286A9.96 9.96 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18"/>
                                 </svg>
                             </button>
@@ -154,7 +154,7 @@
     
                     <div>
                         {{ edit_password_form.new_password.label(class="fd-form-label") }}
-                        <div class="relative">
+                        <div class="fd-input-group">
                             {{ edit_password_form.new_password(
                                 x_model="newPass",
                                 type="password",
@@ -163,22 +163,22 @@
                             ) }}
                             <button type="button"
                                     @click="showNew = !showNew; document.getElementById('new_password_field').type = showNew ? 'text' : 'password'"
-                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-800/35 hover:text-blue-800 transition">
-                                <svg x-show="!showNew" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    class="fd-password-toggle">
+                                <svg x-show="!showNew" class="fd-icon-xs" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     <path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                 </svg>
-                                <svg x-show="showNew" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <svg x-show="showNew" class="fd-icon-xs" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m2.46-2.286A9.96 9.96 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18"/>
                                 </svg>
                             </button>
                         </div>
                         <div x-show="newPass.length > 0" x-transition>
-                            <div class="h-[5px] bg-blue-100 rounded-full overflow-hidden mt-1.5">
-                                <div class="h-full rounded-full transition-all duration-300"
+                            <div class="fd-password-strength-track">
+                                <div class="fd-password-strength-bar"
                                      :style="`width:${strength * 25}%; background:${strengthColor}`"></div>
                             </div>
-                            <p class="text-xs mt-1 font-medium" :style="`color:${strengthColor}`" x-text="strengthLabel + ' password'"></p>
+                            <p class="fd-password-strength-text" :style="`color:${strengthColor}`" x-text="strengthLabel + ' password'"></p>
                         </div>
                     </div>
     

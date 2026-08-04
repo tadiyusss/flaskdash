@@ -9,7 +9,7 @@
 		</div>
 		<form method="POST" class="fd-card-body">
 			{{ form.hidden_tag() }}
-			<div class="fd-create-user-form-grid"> 
+			<div class="fd-form-stack"> 
                 {% for field in form %} 
                     {% if field.name != "csrf_token" %} 
 						<div>
@@ -24,7 +24,7 @@
 							{% endif %}
                         </div> 
                     {% endif %} 
-                {% endfor %} 
+                {% endfor %}
             </div>
 			<div class="fd-card-buttons">
 				<button type="submit" class="fd-btn fd-btn-w-icon fd-btn-secondary fd-btn-sm">

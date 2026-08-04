@@ -7,75 +7,83 @@
 			<h3 class="fd-card-title">Manage User</h3>
 			<p class="fd-card-subtitle">Manage and update user details, and roles.</p>
 		</div>
-		<form method="POST" enctype="multipart/form-data" class="fd-card-body" x-data="{
-                profile_image_preview: '{{ url_for('static', filename='images/profiles/' + selected_user.profile_image) }}',
-                imagePreview() {
-                    const file = document.getElementById('profile_image').files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (e) => { this.profile_image_preview = e.target.result; };
-                        reader.readAsDataURL(file);
-                    } else {
-                        this.profile_image_preview = '{{ url_for('static', filename='images/profiles/default.png') }}';
-                    }
-                }
-              }">
-			{{ edit_profile_form.hidden_tag() }}
-			<div class="fd-change-profile-image-container">
-				<div class="fd-change-profile-image-group">
-					<div class="fd-change-profile-image-wrapper">
-						<label for="{{ edit_profile_form.profile_image.id }}" class="fd-change-profile-image-label">
-							<img class="fd-change-profile-image-preview" :src="profile_image_preview" id="profile_image_preview" alt="Profile Image" />
-							<div class="fd-change-profile-image-overlay">
-								<svg class="fd-change-profile-image-upload-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-									<path stroke-linecap="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-									<circle cx="12" cy="13" r="3" />
-								</svg>
-							</div>
-						</label>
-						{{ edit_profile_form.profile_image(id="profile_image", **{"@change": "imagePreview()"}) }}
+		<div class="fd-card-body">
+			<form method="POST" enctype="multipart/form-data" x-data="{
+					profile_image_preview: '{{ url_for('static', filename='images/profiles/' + selected_user.profile_image) }}',
+					imagePreview() {
+						const file = document.getElementById('profile_image').files[0];
+						if (file) {
+							const reader = new FileReader();
+							reader.onload = (e) => { this.profile_image_preview = e.target.result; };
+							reader.readAsDataURL(file);
+						} else {
+							this.profile_image_preview = '{{ url_for('static', filename='images/profiles/default.png') }}';
+						}
+					}
+				}">
+				{{ edit_profile_form.hidden_tag() }}
+				<div class="fd-change-profile-image-container">
+					<div class="fd-change-profile-image-group">
+						<div class="fd-change-profile-image-wrapper">
+							<label for="{{ edit_profile_form.profile_image.id }}" class="fd-change-profile-image-label">
+								<img class="fd-change-profile-image-preview" :src="profile_image_preview" id="profile_image_preview" alt="Profile Image" />
+								<div class="fd-change-profile-image-overlay">
+									<svg class="fd-change-profile-image-upload-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+										<path stroke-linecap="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+										<circle cx="12" cy="13" r="3" />
+									</svg>
+								</div>
+							</label>
+							{{ edit_profile_form.profile_image(id="profile_image", **{"@change": "imagePreview()"}) }}
+						</div>
+						<div>
+							<p class="fd-change-profile-image-name-placeholder">
+								{% if g.settings['allow_first_name_last_name'] == "1" %}
+                                    {{ selected_user.firstname or '' }} {{ selected_user.lastname or '' }}
+                                {% else %}
+                                    {{ selected_user.username or '' }}
+                                {% endif %}
+							</p>
+							<p class="fd-change-profile-image-email-placeholder">{{ selected_user.email }}</p>
+							<label for="{{ edit_profile_form.profile_image.id }}" class="fd-change-profile-image-upload-button">
+								<svg class="fd-icon-sm" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+									<path stroke-linecap="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+								</svg> Change photo 
+							</label>
+						</div>
+					</div>
+					<div class="fd-card-buttons">
+						<button class="fd-btn fd-btn-secondary fd-btn-sm" name="edit_profile_form">Save Image</button>
+					</div>
+				</div>
+			</form>
+			<form method="POST" class="fd-form-stack">
+				{{ name_form.hidden_tag() }}
+				<div class="fd-form-grid">
+					<div>
+						{{ name_form.username.label(class="fd-form-label") }}
+						{{ name_form.username(value=selected_user.username or "", placeholder="username") }}
 					</div>
 					<div>
-						<p class="fd-change-profile-image-name-placeholder">{{ selected_user.firstname or '' }} {{ selected_user.lastname or '' }}</p>
-						<p class="fd-change-profile-image-email-placeholder">{{ selected_user.email }}</p>
-						<label for="{{ edit_profile_form.profile_image.id }}" class="fd-change-profile-image-upload-button">
-							<svg class="fd-icon-sm" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-								<path stroke-linecap="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-							</svg> Change photo 
-						</label>
+						{{ name_form.email.label(class="fd-form-label") }}
+						{{ name_form.email(value=selected_user.email or "", placeholder="user@company.com") }}
 					</div>
+					{% if g.settings['allow_first_name_last_name'] == "1" %}
+					<div>
+						{{ name_form.firstname.label(class="fd-form-label") }}
+						{{ name_form.firstname(value=selected_user.firstname or "", placeholder="Jane") }}
+					</div>
+					<div>
+						{{ name_form.lastname.label(class="fd-form-label") }}
+						{{ name_form.lastname(value=selected_user.lastname or "", placeholder="Doe") }}
+					</div>
+					{% endif %}
 				</div>
 				<div class="fd-card-buttons">
-					<button class="fd-btn fd-btn-secondary fd-btn-sm" name="edit_profile_form">Save Image</button>
+					<button class="fd-btn fd-btn-secondary fd-btn-sm" name="name_form">Save Changes</button>
 				</div>
-			</div>
-		</form>
-		<form method="POST" class="fd-card-body">
-			{{ name_form.hidden_tag() }}
-			<div class="fd-manage-user-form-grid">
-				<div>
-					{{ name_form.username.label(class="fd-form-label") }}
-					{{ name_form.username(value=selected_user.username or "", placeholder="username") }}
-				</div>
-				<div>
-					{{ name_form.email.label(class="fd-form-label") }}
-					{{ name_form.email(value=selected_user.email or "", placeholder="user@company.com") }}
-				</div>
-				{% if g.settings['allow_first_name_last_name'] == "1" %}
-				<div>
-					{{ name_form.firstname.label(class="fd-form-label") }}
-					{{ name_form.firstname(value=selected_user.firstname or "", placeholder="Jane") }}
-				</div>
-				<div>
-					{{ name_form.lastname.label(class="fd-form-label") }}
-					{{ name_form.lastname(value=selected_user.lastname or "", placeholder="Doe") }}
-				</div>
-				{% endif %}
-			</div>
-			<div class="fd-card-buttons">
-				<button class="fd-btn fd-btn-secondary fd-btn-sm" name="name_form">Save Changes</button>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 	<div class="fd-card" x-data="{
            newPass: '',
@@ -85,18 +93,18 @@
 			<h3 class="fd-card-title">Password</h3>
 			<p class="fd-card-subtitle">Update the selected user's password securely.</p>
 		</div>
-		<form method="POST" class="fd-card-body">
+		<form method="POST" class="fd-card-body fd-form-stack">
 			{{ password_form.hidden_tag() }}
 			<div>
 				{{ password_form.new_password.label(class="fd-form-label") }}
-				<div class="fd-input-group-field">
+				<div class="fd-input-group">
 					{{ password_form.new_password(
                         x_model="newPass",
                         type="password",
                         placeholder="••••••••",
                         id="new_password_field"
                     ) }}
-					<button type="button" @click="showNew = !showNew; document.getElementById('new_password_field').type = showNew ? 'text' : 'password'" class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-800/35 hover:text-blue-800 transition">
+					<button type="button" @click="showNew = !showNew; document.getElementById('new_password_field').type = showNew ? 'text' : 'password'" class="fd-password-toggle">
 						<svg x-show="!showNew" class="fd-icon-xs" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 							<path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
 							<path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -107,10 +115,10 @@
 					</button>
 				</div>
 				<div x-show="newPass.length > 0" x-transition>
-					<div class="h-[5px] bg-blue-100 rounded-full overflow-hidden mt-1.5">
-						<div class="h-full rounded-full transition-all duration-300" :style="`width:${strength * 25}%; background:${strengthColor}`"></div>
+					<div class="fd-password-strength-track">
+						<div class="fd-password-strength-bar" :style="`width:${strength * 25}%; background:${strengthColor}`"></div>
 					</div>
-					<p class="text-xs mt-1 font-medium" :style="`color:${strengthColor}`" x-text="strengthLabel + ' password'"></p>
+					<p class="fd-password-strength-text" :style="`color:${strengthColor}`" x-text="strengthLabel + ' password'"></p>
 				</div>
 			</div>
 			<div class="fd-card-buttons">
@@ -123,18 +131,18 @@
 			<h3 class="fd-card-title">Account Role</h3>
 			<p class="fd-card-subtitle">Update the selected user's role and permissions.</p>
 		</div>
-		<form method="POST" class="fd-card-body">
+		<form method="POST" class="fd-card-body fd-form-stack">
 			{{ role_form.hidden_tag() }}
-			<div class="grid grid-cols-1 gap-2.5"> 
+			<div class="fd-role-checkbox-grid"> 
 				{% for field in role_form %} 
 					{% if field.type == "BooleanField" %} 
-					<label class="flex items-start gap-3 p-3.5 rounded-lg border border-blue-600/[0.13] bg-blue-50/40 cursor-pointer hover:border-blue-600/30 hover:bg-blue-50/70 transition-all">
+					<label class="fd-role-checkbox-label">
 						{{ field(class="mt-0.5 fd-icon-xs rounded accent-blue-600 flex-shrink-0") }}
 						<div>
-							<div class="flex items-center gap-2 mb-0.5">
-								<span class="text-sm font-semibold text-blue-800">{{ field.label.text }}</span>
+							<div class="fd-role-checkbox-header">
+								<span class="fd-role-checkbox-title">{{ field.label.text }}</span>
 							</div>
-							<p class="text-xs text-blue-800/45">{{ field.description }}</p>
+							<p class="fd-role-checkbox-description">{{ field.description }}</p>
 						</div>
 					</label> 
 					{% endif %} 
