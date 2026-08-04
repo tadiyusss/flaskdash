@@ -73,3 +73,15 @@
 .fd-table-col-flex {
     @apply flex items-center space-x-2.5
 }
+
+.fd-table-copy-wrapper {
+    @apply relative w-20 h-6;
+}
+
+.fd-table-copy-button {
+    @apply absolute inset-0 flex items-center justify-center;
+}
+
+.fd-table-copy-success {
+    @apply absolute inset-0 flex items-center justify-center text-gray-700 text-xs font-medium;
+}

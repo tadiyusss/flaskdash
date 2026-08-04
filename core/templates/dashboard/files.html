@@ -1,86 +1,93 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Files{% endblock %}
 {% block main %}
-<div class="max-w-6xl mx-auto">
-	<div class="card overflow-hidden">
-		<div class="px-6 py-4 border-b border-blue-600/[0.08] flex items-center justify-between gap-4 flex-wrap">
+<div class="fd-dashboard-page-sm">
+	<div class="fd-card">
+		<div class="fd-card-header fd-card-header-w-btn">
 			<div>
-				<h3 class="text-sm font-semibold text-blue-800">Manage Uploads</h3>
-				<p class="text-xs text-blue-800/45 mt-0.5">Manage and update uploaded files.</p>
+				<h3 class="fd-card-title">Manage Uploads</h3>
+				<p class="fd-card-subtitle">Manage and update uploaded files.</p>
 			</div>
-			<form method="POST" enctype="multipart/form-data" class="flex items-center gap-2">
+			<form method="POST" enctype="multipart/form-data" class="fd-files-upload-form">
 				{{ form.hidden_tag() }}
-				<div class="relative">
-					{{ form.file(class="block w-full text-xs text-blue-800/50 file:mr-3 file:py-2 file:px-4 file:border-0 file:text-xs file:font-semibold file:bg-blue-800 file:text-white hover:file:bg-blue-700 file:cursor-pointer file:transition border border-blue-600/25 rounded-lg bg-white cursor-pointer") }}
+				<div class="fd-files-upload-input-wrapper">
+					{{ form.file(class="fd-files-file-input") }}
 				</div>
-				{{ form.submit(class="btn btn-primary") }}
+				{{ form.submit(class="fd-btn fd-btn-secondary") }}
 			</form>
 		</div>
-		<div class="overflow-x-auto">
-			<table class="w-full text-xs">
+		<div class="fd-table-container">
+			<table class="fd-table">
 				<thead>
-					<tr class="border-b border-blue-600/[0.08] bg-blue-50/40">
-						<th class="text-left px-6 py-3 text-blue-800/50 font-semibold uppercase tracking-wider">Filename</th>
-						<th class="text-left px-4 py-3 text-blue-800/50 font-semibold uppercase tracking-wider">Date Added</th>
-						<th class="text-left px-4 py-3 text-blue-800/50 font-semibold uppercase tracking-wider">Link</th>
-						<th class="text-left px-4 py-3 text-blue-800/50 font-semibold uppercase tracking-wider">Actions</th>
+					<tr class="fd-table-header-row">
+						<th>Filename</th>
+						<th>Date Added</th>
+						<th>Link</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
-				<tbody class="divide-y divide-blue-600/[0.05]"> {% if files_uploaded %} {% for file in files_uploaded %} <tr class="hover:bg-blue-50/40 transition-colors duration-100">
-						<td class="px-6 py-3.5">
-							<div class="flex items-center gap-2.5">
-								<div class="w-7 h-7 rounded-lg bg-blue-50 border border-blue-600/15 flex items-center justify-center shrink-0">
-									<svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-										<path stroke-linecap="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-									</svg>
+				<tbody class="fd-table-body">
+					{% if files_uploaded %}
+						{% for file in files_uploaded %}
+						<tr class="fd-table-row">
+							<td class="fd-table-col-md fd-table-col-primary">
+								<div class="fd-table-col-flex">
+									<div class="fd-table-icon-container">
+										<svg class="fd-table-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+											<path stroke-linecap="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+										</svg>
+									</div>
+									<span class="fd-table-col">{{ file.uploaded_filename }}</span>
 								</div>
-								<span class="font-medium text-blue-800 truncate max-w-[200px]">{{ file.uploaded_filename }}</span>
-							</div>
-						</td>
-						<td class="px-4 py-3.5 text-blue-800/50">{{ file.upload_date }}</td>
-						<td class="px-4 py-3.5" x-data="{ copied: false }">
-							<div class="relative w-20 h-6">
-								<button class="absolute inset-0 flex items-center justify-center" x-show="!copied"
-									x-transition:enter="transition ease-out duration-300"
-									x-transition:enter-start="opacity-0 scale-95"
-									x-transition:enter-end="opacity-100 scale-100"
-									x-transition:leave="transition ease-in duration-300"
-									x-transition:leave-start="opacity-100 scale-100"
-									x-transition:leave-end="opacity-0 scale-95"
-									@click="
-										navigator.clipboard.writeText('{{ url_for('static', filename='uploads/' + file.absolute_filename, _external=True) }}')
-											.then(() => {
-												copied = true;
-												setTimeout(() => copied = false, 5000);
-											});
-									"
-								>
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="normal-action-btn">
-										<path fill-rule="evenodd" d="M13.887 3.182c.396.037.79.08 1.183.128C16.194 3.45 17 4.414 17 5.517V16.75A2.25 2.25 0 0 1 14.75 19h-9.5A2.25 2.25 0 0 1 3 16.75V5.517c0-1.103.806-2.068 1.93-2.207.393-.048.787-.09 1.183-.128A3.001 3.001 0 0 1 9 1h2c1.373 0 2.531.923 2.887 2.182ZM7.5 4A1.5 1.5 0 0 1 9 2.5h2A1.5 1.5 0 0 1 12.5 4v.5h-5V4Z" clip-rule="evenodd" />
+							</td>
+							<td class="fd-table-col-md fd-table-col">{{ file.upload_date }}</td>
+							<td class="fd-table-col-md fd-table-col" x-data="{ copied: false }">
+								<div class="fd-table-copy-wrapper">
+									<button class="fd-table-copy-button" x-show="!copied"
+										x-transition:enter="transition ease-out duration-300"
+										x-transition:enter-start="opacity-0 scale-95"
+										x-transition:enter-end="opacity-100 scale-100"
+										x-transition:leave="transition ease-in duration-300"
+										x-transition:leave-start="opacity-100 scale-100"
+										x-transition:leave-end="opacity-0 scale-95"
+										@click="
+											navigator.clipboard.writeText('{{ url_for('static', filename='uploads/' + file.absolute_filename, _external=True) }}')
+												.then(() => {
+													copied = true;
+													setTimeout(() => copied = false, 5000);
+												});
+										"
+									>
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="fd-table-action-btn">
+											<path fill-rule="evenodd" d="M13.887 3.182c.396.037.79.08 1.183.128C16.194 3.45 17 4.414 17 5.517V16.75A2.25 2.25 0 0 1 14.75 19h-9.5A2.25 2.25 0 0 1 3 16.75V5.517c0-1.103.806-2.068 1.93-2.207.393-.048.787-.09 1.183-.128A3.001 3.001 0 0 1 9 1h2c1.373 0 2.531.923 2.887 2.182ZM7.5 4A1.5 1.5 0 0 1 9 2.5h2A1.5 1.5 0 0 1 12.5 4v.5h-5V4Z" clip-rule="evenodd" />
+										</svg>
+									</button>
+
+									<p class="fd-table-copy-success" x-show="copied"
+										x-transition:enter="transition ease-out duration-300"
+										x-transition:enter-start="opacity-0 scale-95"
+										x-transition:enter-end="opacity-100 scale-100"
+										x-transition:leave="transition ease-in duration-300"
+										x-transition:leave-start="opacity-100 scale-100"
+										x-transition:leave-end="opacity-0 scale-95"
+									>Copied!</p>
+								</div>
+							</td>
+							<td class="fd-table-col-md fd-table-col">
+								<a href="{{ url_for('core.delete_file', uid=file.uid) }}">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="fd-table-action-btn fd-table-action-btn-danger">
+										<path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z" clip-rule="evenodd" />
 									</svg>
-								</button>
-
-								<p class="absolute inset-0 flex items-center justify-center text-blue-800" x-show="copied"
-									x-transition:enter="transition ease-out duration-300"
-									x-transition:enter-start="opacity-0 scale-95"
-									x-transition:enter-end="opacity-100 scale-100"
-									x-transition:leave="transition ease-in duration-300"
-									x-transition:leave-start="opacity-100 scale-100"
-									x-transition:leave-end="opacity-0 scale-95"
-								>Copied!</p>
-							</div>
-						</td>
-						<td class="px-4 py-3.5">
-							<a href="{{ url_for('core.delete_file', uid=file.uid) }}">
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="danger-action-btn">
-									<path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z" clip-rule="evenodd" />
-								</svg>
-
-							</a>
-						</td>
-					</tr> {% endfor %} {% else %} <tr>
-						<td colspan="4" class="px-6 py-10 text-center text-blue-800/35 text-xs">No file uploads found.</td>
-					</tr> {% endif %} </tbody>
+								</a>
+							</td>
+						</tr>
+						{% endfor %}
+					{% else %}
+						<tr>
+							<td colspan="4" class="fd-table-no-data">No file uploads found.</td>
+						</tr>
+					{% endif %}
+				</tbody>
 			</table>
 		</div>
 	</div>
