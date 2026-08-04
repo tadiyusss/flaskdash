@@ -33,3 +33,33 @@
 .fd-checkbox-input {
     @apply w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-600/10 transition cursor-pointer accent-gray-600 focus:outline-none focus:ring-2;
 }
+
+.fd-change-profile-image-container {
+    @apply flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5;
+}
+
+.fd-change-profile-image-group {
+    @apply flex items-center gap-4;
+}
+
+.fd-change-profile-image-wrapper {
+    @apply relative;
+}
+
+.fd-change-profile-image-label {
+    @apply cursor-pointer block;
+}
+
+.fd-change-profile-image-preview {
+    @apply w-16 h-16 rounded-full object-cover transition group-hover:opacity-80;
+    border: 3px solid #fff; 
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.25), 0 4px 12px rgba(30,64,175,0.12);
+}
+
+.fd-change-profile-image-overlay {
+    @apply absolute inset-0 rounded-full bg-blue-800/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center;
+}
+
+.fd-change-profile-image-upload-icon {
+    @apply w-5 h-5;
+}

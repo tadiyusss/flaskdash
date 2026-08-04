@@ -16,7 +16,7 @@ class CreateRoleForm(FlaskForm):
     )
 
     submit = SubmitField('Create Role',
-        render_kw={"class": "btn"}
+        render_kw={"class": "fd-btn fd-btn-secondary fd-sm"}
     )
 
 class CreateUserForm(FlaskForm):
@@ -69,7 +69,7 @@ def build_manage_user_role_form(user: User):
 class ManageUserPasswordForm(FlaskForm):
     new_password = PasswordField('New Password',
         validators=[DataRequired(), Length(min=6)],
-        render_kw={"class": "fd-input"}
+        render_kw={"class": "fd-input-group-field"}
     )
 
 class ManageNameForm(FlaskForm):

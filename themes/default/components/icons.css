@@ -1,0 +1,19 @@
+.fd-icon-xs {
+    @apply w-4 h-4;
+}
+
+.fd-icon-sm {
+    @apply w-5 h-5;
+}
+
+.fd-icon-md {
+    @apply w-6 h-6;
+}
+
+.fd-icon-lg {
+    @apply w-8 h-8;
+}
+
+.fd-icon-xl {
+    @apply w-10 h-10;
+}

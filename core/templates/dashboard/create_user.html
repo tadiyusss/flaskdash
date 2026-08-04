@@ -1,23 +1,23 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - User{% endblock %}
 {% block main %}
-<div class="max-w-xl mx-auto">
-	<div class="card p-7">
-		<div class="border-b border-blue-600/[0.09] pb-3.5 mb-5">
-			<h3 class="text-sm font-semibold text-blue-800">Create User</h3>
-			<p class="text-xs text-blue-800/45 mt-0.5">Create a brand new user and add them to this site.</p>
+<div class="fd-dashboard-page-xs">
+	<div class="fd-card">
+		<div class="fd-card-header">
+			<h3 class="fd-card-title">Create User</h3>
+			<p class="fd-card-subtitle">Create a brand new user and add them to this site.</p>
 		</div>
-		<form method="POST" class="space-y-4">
+		<form method="POST" class="fd-card-body">
 			{{ form.hidden_tag() }}
-			<div class="grid grid-cols-1 gap-4"> 
+			<div class="fd-create-user-form-grid"> 
                 {% for field in form %} 
                     {% if field.name != "csrf_token" %} 
 						<div>
                             {{ field.label(class="fd-form-label") }}
-                            {{ field(class="text-input") }}
+                            {{ field(class="fd-input") }}
 							{% if field.errors %}
 								{% for error in field.errors %}
-									<div class="text-red-600 text-xs mt-1">
+									<div class="fd-error-message">
 										{{ error }}
 									</div>
 								{% endfor %}
@@ -26,14 +26,14 @@
                     {% endif %} 
                 {% endfor %} 
             </div>
-			<div class="flex items-center gap-2 pt-1">
-				<button type="submit" class="btn btn-primary">
-					<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+			<div class="fd-card-buttons">
+				<button type="submit" class="fd-btn fd-btn-w-icon fd-btn-secondary fd-btn-sm">
+					<svg class="fd-icon-xs" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
 					</svg> 
                     Create User 
                 </button>
-				<button type="reset" class="btn btn-outline">Reset</button>
+				<button type="reset" class="fd-btn fd-btn-outline fd-btn-sm">Reset</button>
 			</div>
 		</form>
 	</div>
