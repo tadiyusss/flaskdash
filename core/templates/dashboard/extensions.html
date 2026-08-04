@@ -21,7 +21,7 @@
                         {% for extension in extensions %} 
                         <tr class="fd-table-row">
                             <td class="fd-table-col-md fd-table-col-primary">
-                                <div class="flex items-center gap-2.5">
+                                <div class="fd-table-col-flex">
                                     <div class="fd-table-icon-container">
                                         <svg class="fd-table-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M14 2h6m0 0v6m0-6L10 14" />
@@ -31,7 +31,7 @@
                                 </div>
                             </td>
                             <td class="fd-table-col-md">
-                                <p class="line-clamp-2">{{ extension['description'] }}</p>
+                                <p class="fd-table-cut-text">{{ extension['description'] }}</p>
                             </td>
                             <td class="fd-table-col-md">
                                 <a href="{{ url_for('core.manage_extensions', slug=extension['slug']) }}">
@@ -45,7 +45,7 @@
                         {% endfor %} 
                     {% else %} 
                         <tr>
-                            <td colspan="3" class="px-6 py-10 text-center text-blue-800/35 text-xs">No extensions found.</td>
+                            <td colspan="3" class="fd-table-no-data">No extensions found.</td>
                         </tr> 
                     {% endif %} 
                 </tbody>

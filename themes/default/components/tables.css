@@ -30,6 +30,10 @@
     @apply text-gray-600 text-xs;
 }
 
+.fd-table-cut-text{
+    @apply line-clamp-2;
+}
+
 .fd-table-col-xs {
     @apply px-6 py-1;
 }
