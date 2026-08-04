@@ -1,7 +1,7 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Roles{% endblock %}
 {% block main %}
-<div class="fd-dashboard-page-sm" x-data="{modal_open: false}">
+<div class="fd-dashboard-page-sm" x-data="{modal_open: true}">
 	<div class="fd-card">
 		<div class="fd-card-header fd-card-header-w-btn">
 			<div>
@@ -9,7 +9,7 @@
 				<p class="fd-card-subtitle">Add, create, and manage roles.</p>
 			</div>
 			<button @click="modal_open = true" class="fd-btn fd-btn-secondary fd-btn-sm fd-btn-w-icon">
-				<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+				<svg class="fd-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
 				</svg> Create Role 
 			</button>
@@ -53,21 +53,21 @@
 			</table>
 		</div>
 	</div>
-	<form method="POST" x-show="modal_open" x-transition class="fixed inset-0 flex items-center justify-center z-50">
-		<div @click="modal_open = false" class="absolute inset-0 bg-blue-950/40 backdrop-blur-sm"></div>
-		<div @click.stop class="relative card w-full max-w-md z-50 overflow-hidden" style="box-shadow: 0 24px 64px rgba(30,64,175,0.18);">
-			<div class="px-6 py-5 border-b border-blue-600/[0.09] flex items-center justify-between">
+	<form method="POST" x-show="modal_open" x-transition class="fd-modal-container">
+		<div @click="modal_open = false" class="fd-modal-backdrop"></div>
+		<div @click.stop class="fd-modal">
+			<div class="fd-modal-header">
 				<div>
-					<h3 class="text-sm font-semibold text-blue-800">Create Role</h3>
-					<p class="text-xs text-blue-800/45 mt-0.5">Define a new role and its description.</p>
+					<h3 class="fd-modal-title">Create Role</h3>
+					<p class="fd-modal-subtitle">Define a new role and its description.</p>
 				</div>
-				<button type="button" @click="modal_open = false" class="text-blue-800/30 hover:text-blue-800 transition">
-					<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+				<button type="button" @click="modal_open = false" class="fd-btn-close">
+					<svg class="fd-icon-sm" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
 					</svg>
 				</button>
 			</div>
-			<div class="px-6 py-5 space-y-4">
+			<div class="fd-modal-body">
 				{{ form.hidden_tag() }}
 				<div>
 					{{ form.name.label(class="fd-form-label") }}
@@ -78,9 +78,9 @@
 					{{ form.description(placeholder="What can this role do?") }}
 				</div>
 			</div>
-			<div class="px-6 py-4 border-t border-blue-600/[0.09] flex items-center gap-2">
-				{{ form.submit(class="btn btn-primary") }}
-				<button type="button" @click="modal_open = false" class="btn btn-outline">Cancel</button>
+			<div class="fd-modal-footer">
+				{{ form.submit(class="fd-btn fd-btn-secondary fd-btn-sm") }}
+				<button type="button" @click="modal_open = false" class="fd-btn fd-btn-outline fd-btn-sm">Cancel</button>
 			</div>
 		</div>
 	</form>

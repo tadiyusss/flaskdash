@@ -1,0 +1,31 @@
+.fd-modal-container {
+    @apply fixed inset-0 flex items-center justify-center z-50;
+}
+
+.fd-modal-backdrop {
+    @apply absolute inset-0 bg-zinc-950/20;
+}
+
+.fd-modal {
+    @apply relative w-full max-w-md z-50 overflow-hidden;
+}
+
+.fd-modal-header {
+    @apply bg-zinc-800 p-4 rounded-t-lg flex items-center justify-between;
+}
+
+.fd-modal-title {
+    @apply text-sm font-semibold text-white;
+}
+
+.fd-modal-subtitle {
+    @apply text-xs text-zinc-100 mt-0.5;
+}
+
+.fd-modal-body {
+    @apply bg-white p-4;
+}
+
+.fd-modal-footer {
+    @apply bg-white p-4 flex items-center space-x-2 rounded-b-lg border-t border-zinc-100;
+}

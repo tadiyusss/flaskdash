@@ -48,3 +48,7 @@
 .fd-btn-block{
     @apply w-full;
 }
+
+.fd-btn-close {
+    @apply w-4 h-4 text-zinc-500;
+}
