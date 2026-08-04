@@ -32,7 +32,7 @@
 }
 
 .fd-role-checkbox-label {
-    @apply flex items-start gap-3 p-3.5 rounded-lg border border-blue-600/[0.13] bg-blue-50/40 cursor-pointer hover:border-blue-600/30 hover:bg-blue-50/70 transition-all;
+    @apply flex items-start gap-3 p-3.5 rounded-lg border border-gray-600/[0.13] bg-gray-50/40 cursor-pointer hover:border-gray-600/30 hover:bg-gray-50/70 transition-all;
 }
 
 .fd-role-checkbox-header {
@@ -40,9 +40,9 @@
 }
 
 .fd-role-checkbox-title {
-    @apply text-sm font-semibold text-blue-800;
+    @apply text-sm font-semibold text-gray-800;
 }
 
 .fd-role-checkbox-description {
-    @apply text-xs text-blue-800/45;
+    @apply text-xs text-gray-400;
 }

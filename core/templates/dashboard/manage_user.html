@@ -137,7 +137,7 @@
 				{% for field in role_form %} 
 					{% if field.type == "BooleanField" %} 
 					<label class="fd-role-checkbox-label">
-						{{ field(class="mt-0.5 fd-icon-xs rounded accent-blue-600 flex-shrink-0") }}
+						{{ field(class="fd-checkbox-input") }}
 						<div>
 							<div class="fd-role-checkbox-header">
 								<span class="fd-role-checkbox-title">{{ field.label.text }}</span>

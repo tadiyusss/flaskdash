@@ -11,7 +11,7 @@
             </h2>
         </header>
         <div
-            class="fd-analytics-grid grid grid-cols-{{ grid.calculate_responsive_spans().default }} sm:grid-cols-{{ grid.calculate_responsive_spans().sm }} md:grid-cols-{{ grid.calculate_responsive_spans().md }} lg:grid-cols-{{ grid.calculate_responsive_spans().lg }} xl:grid-cols-{{ grid.calculate_responsive_spans().xl }} gap-4">
+            class="fd-analytics-grid">
             {% for item in grid.contents %}
                 {% if item.__class__.__name__ == "SmallAnalyticsCardData" %}
                 <article class="fd-analytics-card-sm">
@@ -77,7 +77,7 @@
                         {{ item.title }}
                     </p>
                     <p class="fd-analytics-card-subtitle">{{ item.subtitle }}</p>
-                    <div class="fd-analytics-card-progress bg-red-500">
+                    <div class="fd-analytics-card-progress">
                         <div class="fd-analytics-card-progress-fill" style="width: {{ item.progress }}%"></div>
                     </div>
                 </article> 
