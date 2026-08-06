@@ -1,5 +1,5 @@
 .fd-toast{
-    @apply flex items-start gap-3 border text-sm rounded-lg px-4 py-3 border-gray-500 bg-gray-600 text-gray-200;
+    @apply flex items-center justify-between gap-3 border text-sm rounded-lg px-4 py-3 border-gray-500 bg-gray-600 text-gray-200;
 }
 
 .fd-toast-success{
@@ -12,4 +12,12 @@
 
 .fd-toast-warning{
     @apply flex items-start gap-3 border text-sm rounded-lg px-4 py-3 border-yellow-500 bg-yellow-600 text-yellow-50;
+}
+
+.fd-toast-message{
+    @apply max-w-2xl;
+}
+
+.fd-toast-close {
+    @apply hover:cursor-pointer text-gray-300;
 }

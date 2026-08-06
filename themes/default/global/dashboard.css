@@ -65,3 +65,11 @@
 .fd-error-message {
     @apply text-red-600 text-xs mt-1;
 }
+
+.fd-toast-notification-container {
+    @apply fixed bottom-6 right-6 z-100 flex flex-col gap-3;
+}
+
+.fd-toast-notification-container > * {
+    @apply pointer-events-auto;
+}

@@ -45,17 +45,17 @@
         {% endfor %}
 	</aside>
 	<!-- Main Content -->
-	<main class="fd-main-content flex-1 min-h-screen min-w-0 w-full overflow-x-hidden" :class="sidebarOpen ? 'md:ml-[240px]' : 'ml-0'">
+	<main class="fd-main-content" :class="sidebarOpen ? 'md:ml-[240px]' : 'ml-0'">
 		<!-- Header -->
-		<header class="fd-header sticky top-0 z-20 bg-white/90 backdrop-blur border-b border-blue-600/10 px-8 py-4 flex items-center justify-between">
-			<div class="fd-header-start flex items-center gap-3">
-				<button @click="sidebarOpen = !sidebarOpen" class="fd-sidebar-toggle btn btn-ghost p-2 rounded-lg">
-					<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+		<header class="fd-header">
+			<div class="fd-header-start">
+				<button @click="sidebarOpen = !sidebarOpen" class="fd-btn-close">
+					<svg class="fd-icon-sm" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 						<path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
 					</svg>
 				</button>
 				<div class="fd-page-heading">
-					<h1 class="fd-page-title text-base font-semibold text-blue-800"></h1>
+					<h1 class="fd-page-title">{% block page_title %}{% endblock %}</h1>
 				</div>
 			</div>
 			<div class="fd-header-end"> 
@@ -63,7 +63,7 @@
             </div>
 		</header>
 		<!-- Dashboard Content -->
-		<div class="fd-content p-4 min-w-0 overflow-x-hidden">
+		<div class="fd-content">
 			<div class="fd-page"> 
                 {% block main %}{% endblock %} 
             </div>
@@ -71,14 +71,14 @@
 	</main>
 </div>
 
-<div class="fd-toast-container fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"> 
-    {% with messages = get_flashed_messages(with_categories=true) %} 
+<div class="fd-toast-notification-container"> 
+	{% with messages = get_flashed_messages(with_categories=true) %} 
         {% if messages %} 
             {% for category, message in messages %} 
-            <div class="fd-toast flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-xl border text-sm font-medium bg-white border-blue-200 text-blue-700 pointer-events-auto">
+            <div class="fd-toast">
 		        <span class="fd-toast-message">{{ message }}</span>
-		        <button onclick="this.parentElement.remove()" class="fd-toast-close ml-2 text-current opacity-40 hover:opacity-80 transition">
-		        	<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+		        <button onclick="this.parentElement.remove()" class="fd-toast-close">
+		        	<svg class="fd-icon-xs" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
 		        		<path stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
 		        	</svg>
 		        </button>

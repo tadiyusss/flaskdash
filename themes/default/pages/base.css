@@ -1,0 +1,28 @@
+.fd-main-content {
+    @apply flex-1 min-h-screen min-w-0 w-full overflow-x-hidden;
+}
+
+.fd-header {
+    @apply  sticky top-0 z-20 bg-white/90 backdrop-blur border-b border-blue-600/10 px-8 py-4 flex items-center justify-between;
+}
+
+.fd-header-start {
+    @apply flex items-center gap-3;
+}
+
+.fd-page-heading {
+    
+}
+
+.fd-header-end {
+    
+}
+
+.fd-page-title {
+    @apply text-base font-medium text-gray-800
+}
+
+.fd-content {
+    @apply p-4 min-w-0 overflow-x-hidden;
+}
+

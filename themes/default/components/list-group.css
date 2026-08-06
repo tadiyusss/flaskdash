@@ -1,0 +1,11 @@
+.fd-list-group-item {
+    @apply w-full px-4 py-2 border-b border-gray-200 rounded-t-lg space-y-2;
+}
+
+.fd-list-group-item-header {
+    @apply font-medium text-sm text-gray-800;
+}
+
+.fd-list-group-item-value {
+    @apply text-sm text-gray-500;
+}

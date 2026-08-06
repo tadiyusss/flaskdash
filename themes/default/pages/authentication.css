@@ -1,147 +1,147 @@
-.auth-layout {
+.fd-auth-layout {
     @apply bg-white min-h-screen;
 }
 
-.auth-card-title {
+.fd-auth-card-title {
     @apply text-xl font-medium;
 }
 
-.auth-card-description {
+.fd-auth-card-description {
     @apply text-gray-500 text-sm mt-1;
 }
 
-.auth-container {
+.fd-auth-container {
     @apply max-w-md mx-auto py-32 space-y-8;
 }
 
-.auth-header {
+.fd-auth-header {
     @apply text-center;
 }
 
-.auth-title {
+.fd-auth-title {
     @apply text-2xl font-medium;
 }
 
-.auth-description {
+.fd-auth-description {
     @apply text-gray-500 text-sm mt-1;
 }
 
-.auth-card {
+.fd-auth-card {
     @apply border border-gray-100 shadow-lg rounded-lg;
 }
 
-.auth-card-header {
+.fd-auth-card-header {
     @apply bg-gray-200 p-4 rounded-t-lg;
 }
 
-.auth-card-body {
+.fd-auth-card-body {
     @apply p-4 bg-white rounded-b-lg;
 }
 
-.auth-input-group {
+.fd-auth-input-group {
     @apply relative;
 }
 
-.auth-input-icon {
+.fd-auth-input-icon {
     @apply absolute left-3 top-1/2 -translate-y-1/2 text-gray-800/30;
 }
 
-.auth-icon {
+.fd-auth-icon {
     @apply w-4 h-4 text-gray-400;
 }
 
-.auth-password-toggle {
+.fd-auth-password-toggle {
     @apply absolute right-3 top-1/2 -translate-y-1/2 text-gray-800/35 hover:text-gray-800 transition;
 }
 
-.auth-form-header {
+.fd-auth-form-header {
     @apply flex justify-between items-center;
 }
 
-.auth-form {
+.fd-auth-form {
     @apply space-y-4;
 }
 
-.auth-forgot-password-link{
+.fd-auth-forgot-password-link{
     @apply text-sm text-gray-500 hover:text-gray-800 transition;
 }
 
-.auth-footer {
+.fd-auth-footer {
     @apply text-center;
 }
 
-.auth-register-text {
+.fd-auth-register-text {
     @apply text-sm text-gray-500;
 }
 
-.auth-register-link {
+.fd-auth-register-link {
     @apply text-gray-800 hover:text-gray-900 transition underline;
 }
 
-.auth-copyright {
+.fd-auth-copyright {
     @apply text-center text-xs text-gray-800/30 mt-4;
 }
 
-.auth-footer-text {
+.fd-auth-footer-text {
     @apply text-sm text-gray-500;
 }
 
-.auth-footer-link {
+.fd-auth-footer-link {
     @apply text-gray-800 hover:text-gray-900 transition underline;
 }
 
-.auth-form-field {
+.fd-auth-form-field {
 
 }
 
-.auth-form-grid {
+.fd-auth-form-grid {
 
 }
 
-.auth-password-strength {
+.fd-auth-password-strength {
 
 }
 
-.auth-password-strength-bar {
+.fd-auth-password-strength-bar {
 
 }
 
-.auth-password-strength-bars {
+.fd-auth-password-strength-bars {
 
 }
 
-.auth-password-strength-label {
+.fd-auth-password-strength-label {
 
 }
 
-.auth-error {
+.fd-auth-error {
 
 }
 
-.auth-error-icon {
+.fd-auth-error-icon {
 
 }
 
-.auth-error-message {
+.fd-auth-error-message {
 
 }
 
-.auth-flash-message {
+.fd-auth-flash-message {
 
 }
 
-.auth-flash-messages {
+.fd-auth-flash-messages {
 
 }
 
-.auth-form-errors {
+.fd-auth-form-errors {
 
 }
 
-.auth-form-errors-title {
+.fd-auth-form-errors-title {
 
 }
 
-.auth-form-group {
+.fd-auth-form-group {
     
 }
