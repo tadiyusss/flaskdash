@@ -1,0 +1,27 @@
+{% extends "dashboard/base.html" %}
+{% block title %}{{ g.settings['site_title'] }} - View Theme{% endblock %}
+{% block main %}
+<div class="fd-dashboard-page-md">
+	<div class="fd-card">
+		<div class="fd-card-header">
+			<div>
+                <h3 class="fd-card-title">{{ theme_info.name }}</h3>
+                <p class="fd-card-subtitle">{{ theme_info.description }}</p>
+			</div>
+		</div>
+		<div class="fd-card-body">
+			{% for info in theme_info %}
+			<div class="fd-list-group-item">
+				<p class="fd-list-group-item-header">{{ info }}</p>	
+				{% if theme_info[info] is iterable and theme_info[info] is not string %}
+					<p class="fd-list-group-item-value">{{ theme_info[info]|join(", ") }}</p>
+				{% else %}
+				<p class="fd-list-group-item-value">{{ theme_info[info] }}</p>
+				{% endif %}
+			</div>
+			{% endfor %}	
+		</div>
+	</div>
+	
+</div>
+{% endblock %}
