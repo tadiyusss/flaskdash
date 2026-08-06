@@ -10,6 +10,7 @@ from core.utils.dashboard import DashboardItem, DashboardCategory
 from pathlib import Path
 
 THEMES_DIR = Path(__file__).parent.parent / 'themes'
+THEMES_OUTPUT_DIR = Path(__file__).parent.parent / 'static' / 'css' / 'themes'
 
 from core.utils.themes import list_themes
 
