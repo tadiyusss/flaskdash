@@ -24,3 +24,4 @@ run_mysql.py
 media/
 core/static/css/themes/*
 /test_*
+!/tests/*.py
