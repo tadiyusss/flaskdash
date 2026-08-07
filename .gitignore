@@ -25,3 +25,4 @@ media/
 core/static/css/themes/*
 /test_*
 !/tests/*.py
+notes/

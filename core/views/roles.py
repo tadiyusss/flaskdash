@@ -3,13 +3,14 @@ from core.forms.users import CreateRoleForm
 from flask_login import login_required, current_user
 from flask import render_template, redirect, url_for, flash
 from core.extensions import db
-from core.utils.decorators import role_required
+from core.utils.decorators import role_required, developer_mode_required
 from core.defaults import DEFAULT_ROLES
 from core.route import core
 
 
 @core.route('/roles', methods=['GET', 'POST'])
 @role_required('Administrator')
+@developer_mode_required()
 @login_required
 def roles():
     roles = Role.query.all()
@@ -34,6 +35,7 @@ def roles():
 @core.route('/roles/<string:role_uid>/delete')
 @role_required('Administrator')
 @login_required
+@developer_mode_required()
 def delete_role(role_uid):
     role = Role.query.filter_by(uid=role_uid).first_or_404()
     if role.name in [r.name for r in DEFAULT_ROLES]:

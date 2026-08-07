@@ -1,6 +1,7 @@
 from core.defaults import DEFAULT_SIDEBAR_ITEMS
 from core.utils.dashboard import DashboardCategory, DashboardItem
 from core.models.users import User
+from flask import g
 
 _registered_sidebar_items = list(DEFAULT_SIDEBAR_ITEMS)  
 
@@ -41,6 +42,8 @@ def get_sidebar_items_for_user(user: User):
         if category.is_role_allowed(user.user_roles):
             visible_items = []
             for item in category.items:
+                if g.settings['developer_mode'] == '0' and item.developer_mode:
+                    continue
                 if item.is_role_allowed(user.user_roles):
                     visible_items.append(item)
             if visible_items:

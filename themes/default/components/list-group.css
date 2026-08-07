@@ -3,7 +3,7 @@
 }
 
 .fd-list-group-item-header {
-    @apply font-medium text-sm text-gray-800;
+    @apply font-medium text-sm text-gray-800 capitalize;
 }
 
 .fd-list-group-item-value {

@@ -1,12 +1,13 @@
 from core.models.users import Role
 
 class DashboardItem:
-    def __init__(self, name: str, icon_type: str, icon: str, route: str, roles: list[Role] = None):
+    def __init__(self, name: str, icon_type: str, icon: str, route: str, roles: list[Role] = None, developer_mode = False):
         self.name = name
         self.icon_type = icon_type
         self.icon = icon
         self.route = route
         self.roles = roles or []
+        self.developer_mode = developer_mode
 
     def is_role_allowed(self, roles: list[str]) -> bool:
         if '*' in self.roles:

@@ -1,10 +1,11 @@
 from flask import render_template
 from flask_login import login_required, current_user
-from core.utils.decorators import role_required
+from core.utils.decorators import role_required, developer_mode_required
 from core.utils.registry.extensions import EXTENSIONS_METADATA
 from core.route import core
 
 @core.route('/extensions')
+@developer_mode_required()
 @role_required('Administrator')
 @login_required
 def extensions():
@@ -14,6 +15,7 @@ def extensions():
 @core.route('/extensions/manage/<string:slug>')
 @role_required('Administrator')
 @login_required
+@developer_mode_required()
 def manage_extensions(slug):
     for extension in EXTENSIONS_METADATA:
         if extension['slug'] == slug:

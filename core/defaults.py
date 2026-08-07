@@ -115,6 +115,14 @@ DEFAULT_SETTINGS_CATEGORY = [
                 ),
                 category_name="site_settings"
             )
+            ,
+            SettingItem(
+                key="developer_mode",
+                name="Developer Mode",
+                value=False,
+                field=BooleanField("Allow Developer mode", description="Enable or disable developer mode on dashboard.", render_kw={"class": "fd-checkbox-input"}),
+                category_name="site_settings"
+            )
         ]
     )
 ]
@@ -180,7 +188,8 @@ DEFAULT_SIDEBAR_ITEMS = [
                 icon_type="svg",
                 icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='fd-sidebar-item'><path d='M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM1.49 15.326a.78.78 0 0 1-.358-.442 3 3 0 0 1 4.308-3.516 6.484 6.484 0 0 0-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 0 1-2.07-.655ZM16.44 15.98a4.97 4.97 0 0 0 2.07-.654.78.78 0 0 0 .357-.442 3 3 0 0 0-4.308-3.517 6.484 6.484 0 0 1 1.907 3.96 2.32 2.32 0 0 1-.026.654ZM18 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM5.304 16.19a.844.844 0 0 1-.277-.71 5 5 0 0 1 9.947 0 .843.843 0 0 1-.277.71A6.975 6.975 0 0 1 10 18a6.974 6.974 0 0 1-4.696-1.81Z' /></svg>",
                 route="core.roles",
-                roles=["Administrator"]
+                roles=["Administrator"],
+                developer_mode=True
             ),
 
             DashboardItem(
@@ -196,7 +205,8 @@ DEFAULT_SIDEBAR_ITEMS = [
                 icon_type="svg",
                 icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='fd-sidebar-item'><path d='M10.362 1.093a.75.75 0 0 0-.724 0L2.523 5.018 10 9.143l7.477-4.125-7.115-3.925ZM18 6.443l-7.25 4v8.25l6.862-3.786A.75.75 0 0 0 18 14.25V6.443ZM9.25 18.693v-8.25l-7.25-4v7.807a.75.75 0 0 0 .388.657l6.862 3.786Z' /></svg>",
                 route="core.extensions",
-                roles=["Administrator"]
+                roles=["Administrator"],
+                developer_mode=True
             ),
 
             DashboardItem(
@@ -204,7 +214,8 @@ DEFAULT_SIDEBAR_ITEMS = [
                 icon_type="svg",
                 icon="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='fd-sidebar-item'><path d='M15.993 1.385a1.87 1.87 0 0 1 2.623 2.622l-4.03 5.27a12.749 12.749 0 0 1-4.237 3.562 4.508 4.508 0 0 0-3.188-3.188 12.75 12.75 0 0 1 3.562-4.236l5.27-4.03ZM6 11a3 3 0 0 0-3 3 .5.5 0 0 1-.72.45.75.75 0 0 0-1.035.931A4.001 4.001 0 0 0 9 14.004V14a3.01 3.01 0 0 0-1.66-2.685A2.99 2.99 0 0 0 6 11Z' /></svg>",
                 route="core.themes",
-                roles=["Administrator"]
+                roles=["Administrator"],
+                developer_mode=True
             ),
 
             DashboardItem(
