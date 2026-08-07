@@ -62,6 +62,14 @@
     @apply w-full max-w-4xl my-4 mx-auto space-y-4;
 }
 
+.fd-dashboard-page-lg {
+    @apply w-full max-w-6xl my-4 mx-auto space-y-4
+}
+
+.fd-dashboard-page-xl {
+    @apply w-full max-w-7xl my-4 mx-auto space-y-4;
+}
+
 .fd-error-message {
     @apply text-red-600 text-xs mt-1;
 }
