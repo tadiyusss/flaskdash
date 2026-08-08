@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from wtforms import SubmitField
 from core.models.settings import Setting
 from core.models.settings import SettingCategory as SettingCategoryModel
 from core.utils.registry.settings import get_registered_settings
@@ -13,7 +14,7 @@ def create_settings_form(category: SettingCategory):
     """
 
     class DynamicSettingsForm(FlaskForm):
-        pass
+        submit = SubmitField('Save Changes', name=category.name + '_submit', render_kw={"class": "fd-btn fd-btn-secondary fd-btn-sm"})
 
     for setting in category.settings:
         field = setting.field

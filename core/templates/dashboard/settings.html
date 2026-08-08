@@ -13,7 +13,7 @@
             {% for field in forms[loop.index0] %} 
                 {% if field.name == "csrf_token" %} 
 					{{ field(class="hidden") }}
-				{% else %}
+				{% elif field.type != "SubmitField" %}
 					<div class="fd-settings-row">
 						<div>
 							<label for="{{ field.id }}" class="fd-settings-title">{{ field.label.text }}</label>
@@ -31,11 +31,7 @@
                 {% endif %} 
             {% endfor %} 
             <div class="fd-card-buttons">
-				<button type="submit" class="fd-btn fd-btn-secondary fd-btn-sm fd-btn-w-icon">
-					<svg class="fd-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-					</svg> Save Changes 
-				</button>
+				{{ forms[loop.index0].submit }}
 				<button type="reset" class="fd-btn fd-btn-outline fd-btn-sm">Reset</button>
 			</div>
 		</form>
