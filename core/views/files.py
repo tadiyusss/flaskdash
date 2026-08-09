@@ -10,8 +10,8 @@ import uuid
 from core.route import core
 
 @core.route('/files/<string:uid>/delete', methods=['GET'])
-@role_required('Administrator')
 @login_required
+@role_required('Administrator')
 def delete_file(uid):
     file_upload = FileUpload.query.filter_by(uid=uid).first_or_404()
 
@@ -32,8 +32,8 @@ def delete_file(uid):
     return redirect(url_for('core.files'))
 
 @core.route('/files', methods=['GET', 'POST'])
-@role_required('Administrator')
 @login_required
+@role_required('Administrator')
 def files():
     form = FileUploadForm()
         

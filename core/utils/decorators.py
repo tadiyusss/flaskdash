@@ -40,3 +40,24 @@ def role_required(role):
             return f(*args, **kwargs)
         return decorated_function
     return wrapper
+
+def roles_required(roles: list):
+    """
+    Decorator to check if the current user has at least one of the required roles.
+    
+    :usage: @roles_required([role1, role2, ...])
+    :param roles: A list of roles required to access the decorated view.
+    :raises: 403 Forbidden if the user does not have any of the required roles or is not authenticated.
+    
+    """
+
+    def wrapper(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if not current_user.is_authenticated:
+                abort(403)
+            if not any(current_user.has_role(role) for role in roles):
+                abort(403)
+            return f(*args, **kwargs)
+        return decorated_function
+    return wrapper
