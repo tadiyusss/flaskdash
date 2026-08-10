@@ -13,7 +13,7 @@
     "dev": "npm-run-all --parallel dev:themes dev:js",
     "build:themes": "node ./build-themes.js --minify",
     "build:js": "esbuild core/static/js/entry.js --bundle --format=iife --minify --outfile=core/static/js/app.js",
-    "build": "npm-run-all build:css build:themes build:js"
+    "build": "npm-run-all build:themes build:js"
   },
   "repository": {
     "type": "git",
