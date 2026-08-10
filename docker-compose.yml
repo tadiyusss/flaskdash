@@ -1,0 +1,16 @@
+services:
+  flaskdash:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flaskdash
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./extensions:/app/extensions
+      - ./core/static/uploads:/app/core/static/uploads
+      - ./themes:/app/themes
+      
