@@ -23,8 +23,15 @@
             }
          }">
 		<header class="fd-auth-header">
-			<h1 class="fd-auth-title">{{ g.settings['site_title'] }}</h1>
-			<p class="fd-auth-description">{{ g.settings['site_description'] }}</p>
+			{% if g.settings['website_logo'] %}
+			<img src="{{ url_for('media.serve_media', filename=g.settings['website_logo']) }}" class="fd-auth-website-logo" alt="" srcset="">
+			{% else %}
+			<img src="{{ url_for('static', filename='images/default-logo.png') }}" class="fd-auth-website-logo" alt="" srcset="">
+			{% endif %}
+			<div class="">
+				<h1 class="fd-auth-title">{{ g.settings['site_title'] }}</h1>
+				<p class="fd-auth-description">{{ g.settings['site_description'] }}</p>
+			</div>
 		</header>
 		<section class="fd-auth-card fd-card">
 			<div class="fd-auth-card-header fd-card-header">
