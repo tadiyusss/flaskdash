@@ -22,33 +22,51 @@ def settings():
         if form.submit.name in request.form:
             if form.validate_on_submit():
                 for field in form:
+                    # Skip submit button
+                    if field.name == 'submit':
+                        continue
+                    
+                    value = None
+                    
                     if isinstance(field, BooleanField):
                         value = '1' if field.data else '0'
                     elif isinstance(field, FileField):
-                        if field.data:
+
+                        if field.data and getattr(field.data, 'filename', ''):
                             if not os.path.exists('media'):
                                 os.makedirs('media')
-                                
+                            
                             filename = secure_filename(field.data.filename)
                             unique_filename = f"{uuid.uuid4().hex}_{filename}"
                             upload_path = os.path.join('media', unique_filename)
                             field.data.save(upload_path)
                             value = unique_filename
+                        else:
+
+                            setting = Setting.query.filter_by(key=field.name).first()
+                            if setting:
+                                value = setting.value
+                            continue  
                     else:
                         value = field.data
 
-                    setting = Setting.query.filter_by(key=field.name).first()
-                    if setting and setting.value != value:
-                        setting.value = value
-                        db.session.commit()
-                        flash(f"Setting '{setting.name}' updated successfully.", 'global-success')
+                    if value is not None:
+                        setting = Setting.query.filter_by(key=field.name).first()
+                        if setting and setting.value != value:
+                            setting.value = value
+                            db.session.commit()
+                            flash(f"Setting '{setting.name}' updated successfully.", 'global-success')
 
     for form in forms:
         for field in form:
+            if field.name == 'submit':
+                continue
+                
             setting_value = Setting.query.filter_by(key=field.name).first()
             if setting_value:
                 if isinstance(field, BooleanField):
                     field.data = setting_value.value == '1'
                 else:
                     field.data = setting_value.value
+                    
     return render_template('dashboard/settings.html', user=current_user, forms=forms, categories=setting_categories)
