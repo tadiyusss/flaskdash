@@ -4,8 +4,15 @@
 <div class="fd-auth-layout">
 	<div class="fd-auth-container" x-data="{ show: false }">
 		<header class="fd-auth-header">
-			<h1 class="fd-auth-title">{{ g.settings['site_title'] }}</h1>
-			<p class="fd-auth-description">{{ g.settings['site_description'] }}</p>
+			{% if g.settings['website_logo'] %}
+			<img src="{{ url_for('media.serve_media', filename=g.settings['website_logo']) }}" class="fd-auth-website-logo" alt="" srcset="">
+			{% else %}
+			<img src="{{ url_for('static', filename='images/default-logo.png') }}" class="fd-auth-website-logo" alt="" srcset="">
+			{% endif %}
+			<div class="">
+				<h1 class="fd-auth-title">{{ g.settings['site_title'] }}</h1>
+				<p class="fd-auth-description">{{ g.settings['site_description'] }}</p>
+			</div>
 		</header>
 		<div class="fd-auth-flash-messages"> 
         {% with messages = get_flashed_messages(with_categories=true) %} 
