@@ -1,12 +1,4 @@
 services:
-  frontend-build:
-    image: node:22-alpine
-    working_dir: /app
-    volumes:
-      - .:/app
-      - /app/node_modules
-    command: sh -c "npm ci && npm run build"
-
   flaskdash:
     build:
       context: .
@@ -24,3 +16,10 @@ services:
     depends_on:
       frontend-build:
         condition: service_completed_successfully
+  frontend-build:
+    image: node:22-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: sh -c "npm ci && npm run build"
