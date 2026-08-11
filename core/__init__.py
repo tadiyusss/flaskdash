@@ -9,6 +9,7 @@ from core.initializations.roles import register_default_roles
 from core.initializations.extensions import include_all_extensions
 from core.initializations.settings import register_default_settings
 from core.initializations.commands import register_default_commands
+import os
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -30,6 +31,8 @@ def create_app(config_class=Config):
     app.register_blueprint(core, url_prefix='/dashboard')
     app.register_blueprint(media)
     app.register_blueprint(system)
+
+    os.makedirs('media/', exist_ok=True)
 
     with app.app_context():
         db.create_all()

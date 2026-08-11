@@ -70,6 +70,10 @@
     @apply w-full max-w-7xl my-4 mx-auto space-y-4;
 }
 
+.fd-dashboard-page-full {
+    @apply w-full my-4 mx-auto space-y-4;
+}
+
 .fd-error-message {
     @apply text-red-600 text-xs mt-1;
 }
