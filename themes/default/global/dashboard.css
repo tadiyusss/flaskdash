@@ -19,7 +19,7 @@
 }
 
 .fd-brand-title {
-    @apply text-lg text-gray-100;
+    @apply text-sm text-gray-100;
 }
 
 .fd-sidebar-close-btn {
