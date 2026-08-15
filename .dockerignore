@@ -27,3 +27,4 @@ media/
 notes/
 extensions/
 core/static/uploads/*
+.ruff_cache/

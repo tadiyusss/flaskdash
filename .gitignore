@@ -27,3 +27,4 @@ core/static/css/themes/*
 /test_*
 !/tests/*.py
 notes/
+.ruff_cache/
