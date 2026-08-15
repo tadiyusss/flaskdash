@@ -1,7 +1,7 @@
 /* Buttons */
 
 .fd-btn{
-    @apply inline-flex items-center justify-center font-medium transition duration-100 py-2 px-4 cursor-pointer;
+    @apply inline-flex items-center justify-center font-medium transition duration-100 py-2 px-4 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
 .fd-btn-primary{
