@@ -13,6 +13,7 @@ services:
       - ./extensions:/app/extensions
       - ./core/static/uploads:/app/core/static/uploads
       - ./themes:/app/themes
+      - ./media:/app/media
     depends_on:
       frontend-build:
         condition: service_completed_successfully
