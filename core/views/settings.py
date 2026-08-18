@@ -35,7 +35,13 @@ def settings():
                         if field.data and getattr(field.data, 'filename', ''):
                             if not os.path.exists('media'):
                                 os.makedirs('media')
-                            
+                                
+                            setting = Setting.query.filter_by(key=field.name).first()
+                            if setting and setting.value:
+                                old_file_path = os.path.join('media', setting.value)
+                                if os.path.exists(old_file_path):
+                                    os.remove(old_file_path)
+
                             filename = secure_filename(field.data.filename)
                             unique_filename = f"{uuid.uuid4().hex}_{filename}"
                             upload_path = os.path.join('media', unique_filename)
