@@ -11,7 +11,6 @@ def developer_mode_required():
     def wrapper(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
-            print(f"Developer mode setting: {g.settings['developer_mode']}")
             if g.settings['developer_mode'] == '0':
                 abort(403)
             return f(*args, **kwargs)
