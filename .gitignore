@@ -28,3 +28,4 @@ core/static/css/themes/*
 !/tests/*.py
 notes/
 .ruff_cache/
+.vscode/
