@@ -31,3 +31,5 @@ pytest==9.1.1
 Faker==40.36.0
 gunicorn==26.0.0
 ruff==0.16.3
+gevent==26.8.0
+gevent-websocket==0.10.1

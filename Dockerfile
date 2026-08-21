@@ -13,5 +13,5 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "run:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "-k", "geventwebsocket.gunicorn.workers.GeventWebSocketWorker", "-w", "1", "run:app"]
 
