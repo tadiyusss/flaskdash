@@ -45,6 +45,15 @@ def handle_upgrade_extension(extension):
     upgrade_extension_database(extension)    
     click.echo(f"Migrations for extension '{extension}' completed successfully.")
 
+@extensions_group.command('upgrade-all', help='Run migrations for all extensions.')
+def handle_upgrade_all_extensions():
+    for extension_path in EXTENSIONS_LOCATION.iterdir():
+        if extension_path.is_dir():
+            extension_name = extension_path.name
+            click.echo(f"Running migrations for extension: {extension_name}")
+            upgrade_extension_database(extension_name)
+    click.echo("Migrations for all extensions completed successfully.")
+
 @extensions_group.command('delete', help='Delete an existing extension by name.')
 @click.option('--name', prompt='Extension Name', help='The name of the extension to delete.')
 def delete_extension(name):

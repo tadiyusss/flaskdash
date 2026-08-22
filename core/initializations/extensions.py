@@ -28,7 +28,6 @@ def check_if_env_file_patched(extension_name):
 
 def include_all_extensions(app):
     for extension in list_extensions():
-        upgrade_extension_database(extension)
         register_extension(extension)
         include_extension(app, extension)
         handle_extension_migrations(extension, app)
