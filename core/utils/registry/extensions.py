@@ -3,8 +3,9 @@ This module registers and manages metadata of extensions.
 """
 import importlib
 import os 
+from pathlib import Path
 
-EXTENSIONS_LOCATION = os.path.join(os.path.dirname(__file__), "../../../extensions/")
+EXTENSIONS_LOCATION = Path(__file__).parent.parent.parent.parent / "extensions"
 EXTENSIONS_METADATA = []
 
 if not os.path.exists(EXTENSIONS_LOCATION):

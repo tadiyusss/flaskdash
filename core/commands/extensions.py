@@ -1,6 +1,8 @@
 import click
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
+from core.utils.extensions import upgrade_extension_database
+from core.utils.registry.extensions import EXTENSIONS_LOCATION
 
 STUB_FILE_PATH = (
     Path(__file__).parent.parent
@@ -8,10 +10,6 @@ STUB_FILE_PATH = (
     / 'extensions'
 )
 
-EXTENSIONS_PATH = (
-    Path(__file__).parent.parent.parent 
-    / 'extensions'
-)
 
 def snake_case(text):
     return text.lower().replace(' ', '_')
@@ -36,6 +34,17 @@ def extensions_group():
     Group of commands for managing extensions.
     """
 
+@extensions_group.command('upgrade', help='Run migrations for a specific extension.')
+@click.option('--extension', prompt='Extension Name', help='The name of the extension to migrate.')
+def handle_upgrade_extension(extension):
+    """
+    Run migrations for a specific extension.
+    :name: The name of the extension to migrate.
+    """
+
+    upgrade_extension_database(extension)    
+    click.echo(f"Migrations for extension '{extension}' completed successfully.")
+
 @extensions_group.command('delete', help='Delete an existing extension by name.')
 @click.option('--name', prompt='Extension Name', help='The name of the extension to delete.')
 def delete_extension(name):
@@ -52,7 +61,7 @@ def delete_extension(name):
     extension_slug_name = slug_case(name)
     extension_snake_name = snake_case(name)
 
-    extension_path = EXTENSIONS_PATH / extension_snake_name
+    extension_path = EXTENSIONS_LOCATION / extension_snake_name
 
     if not extension_path.exists():
         click.echo(f"Extension '{name}' not found.")
@@ -86,7 +95,7 @@ def create_extension(name, author):
     }
 
 
-    new_extension_path = EXTENSIONS_PATH / context['extension_snake_name']
+    new_extension_path = EXTENSIONS_LOCATION / context['extension_snake_name']
     new_extension_path.mkdir(parents=True, exist_ok=True)
 
     for path in STUB_FILE_PATH.rglob('*'):

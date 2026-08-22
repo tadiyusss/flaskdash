@@ -7,6 +7,7 @@ from alembic.script import ScriptDirectory
 from alembic.runtime.migration import MigrationContext
 from alembic.autogenerate import compare_metadata
 from core.utils.registry.extensions import list_extensions, register_extension
+from core.utils.extensions import upgrade_extension_database
 from core.extensions import db
 
 logger = logging.getLogger(__name__)
@@ -27,6 +28,7 @@ def check_if_env_file_patched(extension_name):
 
 def include_all_extensions(app):
     for extension in list_extensions():
+        upgrade_extension_database(extension)
         register_extension(extension)
         include_extension(app, extension)
         handle_extension_migrations(extension, app)
