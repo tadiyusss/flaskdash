@@ -12,7 +12,7 @@
     }">
 	<div x-show="sidebarOpen" x-cloak @click="sidebarOpen = false" class="fd-sidebar-overlay"></div>
 	<aside class="fd-sidebar" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
-		<div class="fd-brand"> 
+		<a href="{{ url_for('core.dashboard') }}" class="fd-brand"> 
             {% if g.settings['website_logo'] %} 
             <img src="{{ url_for('media.serve_media', filename=g.settings['website_logo']) }}" alt="Website Logo" class="fd-brand-logo"> 
             {% else %} 
@@ -26,7 +26,7 @@
 					<path stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
 				</svg>
 			</button>
-		</div>
+		</a>
 		<!-- Sidebar Navigation --> 
         {% for category in get_sidebar() %} 
         <section class="fd-sidebar-section">

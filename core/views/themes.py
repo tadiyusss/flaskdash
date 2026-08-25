@@ -1,10 +1,7 @@
 from flask import render_template, abort
 from flask_login import login_required
-from core.extensions import db
 from core.utils.decorators import developer_mode_required, role_required
 from core.route import core
-import os
-from core.defaults import THEMES_DIR
 from core.utils.themes import list_themes, get_theme_info
 
 @core.route('/themes', methods=['GET'])

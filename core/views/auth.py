@@ -1,5 +1,5 @@
 from flask_login import login_required, login_user, logout_user, current_user
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request
 from core.route import core
 from core.forms.auth import LoginForm, RegisterForm, ForgotPasswordForm, ResetPasswordForm
 from core.extensions import db
@@ -91,7 +91,7 @@ def forgot_password():
         if user:
             try:
                 send_password_reset_email(user)
-            except Exception as e:
+            except Exception:
                 flash('Failed to send email. Please try again later.', 'error')
                 return redirect(url_for('core.forgot_password'))            
         flash('Password reset instructions have been sent to your email.', 'success')        

@@ -1,5 +1,4 @@
 from core import create_app
-import os
 
 app, socketio = create_app()
 

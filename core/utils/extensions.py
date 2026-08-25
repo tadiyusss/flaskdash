@@ -1,5 +1,4 @@
-from flask_migrate import Migrate, upgrade, check
-from pathlib import Path
+from flask_migrate import upgrade
 from core.utils.registry.extensions import EXTENSIONS_LOCATION
 
 def _validate_extension_migrations(extension_name):

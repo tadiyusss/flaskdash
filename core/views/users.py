@@ -1,7 +1,7 @@
-from flask_login import login_required, login_user, logout_user, current_user
+from flask_login import login_required, current_user
 from flask import render_template, redirect, url_for, flash, request
 from core.models.users import User, Role
-from core.forms.users import CreateUserForm, ManageUserPasswordForm, ManageNameForm, CreateRoleForm, build_manage_user_role_form
+from core.forms.users import CreateUserForm, ManageUserPasswordForm, ManageNameForm, build_manage_user_role_form
 from core.forms.profile import EditProfileForm
 from core.extensions import db
 import os
@@ -10,7 +10,6 @@ from flask import g
 from werkzeug.utils import secure_filename
 from core.utils.decorators import role_required
 from core.route import core
-from core.defaults import DEFAULT_ROLES
 
 @core.route('/users/create', methods=['GET', 'POST'])
 @role_required('Administrator')

@@ -4,7 +4,7 @@ from .extensions import db, login_manager, migrate, socketio
 from .route import core, media, system
 from .models.users import User
 from .context import init_context
-from config import *
+from config import Config
 from core.initializations.roles import register_default_roles
 from core.initializations.extensions import include_all_extensions
 from core.initializations.settings import register_default_settings

@@ -1,0 +1,12 @@
+target-version = "py312"
+
+exclude = [
+    "**/migrations/**",
+]
+
+[lint]
+select = ["F"]
+
+[format]    
+# Use tabs instead of 4 space indentation.
+indent-style = "tab"

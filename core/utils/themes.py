@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 import subprocess
-import sys
 from core.defaults import THEMES_DIR, THEMES_OUTPUT_DIR
 import json
 
