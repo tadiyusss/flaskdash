@@ -45,9 +45,9 @@ def create_user():
         new_user.set_roles([form.role.data])
         flash('User created successfully.', 'global-success')
         return redirect(url_for('core.users'))
-    else:
-        for error in form.errors.values():
-            flash(error[0], 'global-error')
+
+    for error in form.errors.values():
+        flash(error[0], 'global-error')
 
     return render_template('dashboard/create_user.html', user=current_user, form=form)
 
@@ -79,7 +79,7 @@ def delete_user(user_uid):
 @core.route('/users/manage/<string:user_uid>', methods=['GET', 'POST'])
 @role_required('Administrator')
 @login_required
-def manage_user(user_uid):
+def manage_user(user_uid: str)-> str:
         
     if current_user.uid == user_uid:
         flash('You cannot manage your own account in this page. Please use the profile page', 'global-error')

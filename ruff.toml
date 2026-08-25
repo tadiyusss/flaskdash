@@ -2,11 +2,12 @@ target-version = "py312"
 
 exclude = [
     "**/migrations/**",
+    "venv/"
 ]
 
 [lint]
-select = ["F"]
+select = ["F", "C4", "S", "N", "A", "ARG", "RET"]
 
-[format]    
-# Use tabs instead of 4 space indentation.
+[format]
 indent-style = "tab"
+quote-style = "double"

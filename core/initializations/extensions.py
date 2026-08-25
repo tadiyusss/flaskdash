@@ -1,13 +1,7 @@
 import importlib
 import logging
-from flask_migrate import upgrade, init, migrate, stamp
 from pathlib import Path
-from alembic.config import Config as AlembicConfig
-from alembic.script import ScriptDirectory
-from alembic.runtime.migration import MigrationContext
-from alembic.autogenerate import compare_metadata
 from core.utils.registry.extensions import list_extensions, register_extension
-from core.utils.extensions import upgrade_extension_database
 from core.extensions import db
 
 logger = logging.getLogger(__name__)
