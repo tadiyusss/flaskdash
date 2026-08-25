@@ -3,7 +3,7 @@ from wtforms import StringField, BooleanField, TextAreaField, SelectField, FileF
 from flask_wtf.file import FileAllowed
 from wtforms.validators import DataRequired, Length
 from core.models.users import Role
-from core.utils.analytics import Grid, MediumAnalyticsCardData
+from core.utils.analytics import Grid, SmallAnalyticsCardData, MediumAnalyticsCardData, LargeAnalyticsCardData
 from core.utils.settings import SettingCategory, SettingItem
 from core.utils.roles import Role as RoleData
 from core.utils.dashboard import DashboardItem, DashboardCategory

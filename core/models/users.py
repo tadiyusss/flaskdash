@@ -3,6 +3,7 @@ from core.extensions import db
 from flask_login import UserMixin
 import uuid
 import os
+import enum
 
 
 class Role(db.Model):

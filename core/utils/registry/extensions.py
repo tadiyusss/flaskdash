@@ -14,8 +14,8 @@ if not os.path.exists(EXTENSIONS_LOCATION):
 def get_extension_metadata(extension_name):
     metadata_file = os.path.join(EXTENSIONS_LOCATION, extension_name, "metadata.py")
     if os.path.exists(metadata_file):
-        return importlib.import_module(f"extensions.{extension_name}.metadata")
-    return None
+        metadata_module = importlib.import_module(f"extensions.{extension_name}.metadata")
+        return metadata_module
     
 def list_extensions():
     extensions = []

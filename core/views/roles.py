@@ -26,8 +26,9 @@ def roles():
         db.session.commit()
         flash('Role created successfully.', 'global-success')
         return redirect(url_for('core.roles'))
-    for error in form.errors.values():
-        flash(error[0], 'global-error')
+    else:
+        for error in form.errors.values():
+            flash(error[0], 'global-error')
 
     return render_template('dashboard/roles.html', user=current_user, roles=roles, form=form, default_roles=default_roles)
     

@@ -1,5 +1,5 @@
 from core.defaults import DEFAULT_SETTINGS_CATEGORY
-from core.utils.registry.settings import register_category
+from core.utils.registry.settings import register_setting, register_category
 
         
 def register_default_settings():

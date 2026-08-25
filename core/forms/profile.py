@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, EmailField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms import StringField, SubmitField, EmailField, HiddenField
+from wtforms.validators import DataRequired, Email, Length, ValidationError
 from .validators import validate_my_email_unique, validate_my_username_unique
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from . import ALLOWED_IMAGE_EXTENSIONS

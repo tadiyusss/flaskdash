@@ -24,7 +24,8 @@ def login():
             db.session.add(login_history)
             db.session.commit()
             return redirect(url_for('core.dashboard'))
-        flash('Invalid email or password.', 'error')
+        else:
+            flash('Invalid email or password.', 'error')
     else:
         if form.errors:
             for field, errors in form.errors.items():
@@ -112,8 +113,9 @@ def reset_password(token):
                 user.set_password(form.password.data)
                 flash('Your password has been reset. You can now log in.', 'success')
                 return redirect(url_for('core.login'))
-            flash('User not found.', 'error')
-            return redirect(url_for('core.forgot_password'))
+            else:
+                flash('User not found.', 'error')
+                return redirect(url_for('core.forgot_password'))
     return render_template('auth/reset-password.html', token=token, form=form)
 
 @core.route('/logout')

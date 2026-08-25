@@ -23,5 +23,4 @@ def get_uploads_storage_usage():
         if total_size < 1024:
             return f"{total_size:.2f} {unit}"
         total_size /= 1024
-    return f"{total_size:.2f} PB"
     

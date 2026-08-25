@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField, EmailField, TextAreaField, BooleanField
-from core.forms.validators import validate_username_unique, validate_email_unique, validate_role_name_unique, validate_password_length, validate_password_uppercase_letter, validate_password_lowercase_letter, validate_password_digit
+from core.forms.validators import validate_username_unique, validate_email_unique, validate_role_name_unique, validate_password_length, validate_password_uppercase_letter, validate_password_lowercase_letter, validate_password_digit, validate_my_username_unique, validate_my_email_unique
 from wtforms.validators import DataRequired, Email, Length, Regexp
 from core.models.users import Role, User
 
