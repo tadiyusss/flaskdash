@@ -108,6 +108,9 @@ class Grid:
         if not self.roles:
             return False
 
+        if "*" in self.roles:
+            return True
+
         for role in self.roles:
             if user.has_role(role):
                 return True

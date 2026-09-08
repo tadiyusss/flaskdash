@@ -40,7 +40,7 @@ DEFAULT_ANALYTICS_GRID = [
                 subtitle="Total storage used by uploaded files in the system.",
             )
         ],
-        roles=["Administrator"],
+        roles=["*"],
     )
 ]
 

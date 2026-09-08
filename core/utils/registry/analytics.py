@@ -24,6 +24,4 @@ def get_analytics_items(user):
             grid.filter_contents_for_user(user)
             if len(grid.contents) > 0:
                 items.append(grid)
-
-
     return items
