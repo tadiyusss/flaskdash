@@ -1,9 +1,9 @@
-from core.utils.analytics_functions import *
+from core.utils.analytics_functions import get_total_users, get_active_users, get_uploads_storage_usage
 from wtforms import StringField, BooleanField, TextAreaField, SelectField, FileField
 from flask_wtf.file import FileAllowed
 from wtforms.validators import DataRequired, Length
 from core.models.users import Role
-from core.utils.analytics import Grid, SmallAnalyticsCardData, MediumAnalyticsCardData, LargeAnalyticsCardData
+from core.utils.analytics import Grid, MediumAnalyticsCardData
 from core.utils.settings import SettingCategory, SettingItem
 from core.utils.roles import Role as RoleData
 from core.utils.dashboard import DashboardItem, DashboardCategory

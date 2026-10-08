@@ -2,6 +2,9 @@ target-version = "py312"
 
 exclude = [
     "**/migrations/**",
+    "core/route.py",
+    "**/__init__.py",
+    "extensions/**"
 ]
 
 [lint]

@@ -67,7 +67,6 @@ def delete_extension(name):
         click.echo("Deletion cancelled.")
         return
 
-    extension_slug_name = slug_case(name)
     extension_snake_name = snake_case(name)
 
     extension_path = EXTENSIONS_LOCATION / extension_snake_name
@@ -100,7 +99,7 @@ def create_extension(name, author):
         'extension_name': name,
         'extension_slug_name': slug_case(name),
         'extension_snake_name': snake_case(name),
-        'author_name': author
+        'author': author
     }
 
 

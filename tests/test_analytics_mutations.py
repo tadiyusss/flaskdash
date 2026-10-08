@@ -1,5 +1,3 @@
-import pytest
-from core.models.users import User
 from core.utils.registry.analytics import get_analytics_items
 
 def test_analytics_mutations(admin_user, normal_user):

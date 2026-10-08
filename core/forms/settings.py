@@ -2,8 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import SubmitField
 from core.models.settings import Setting
 from core.models.settings import SettingCategory as SettingCategoryModel
-from core.utils.registry.settings import get_registered_settings
-from core.utils.settings import SettingCategory, SettingItem
+from core.utils.settings import SettingCategory
 from core.extensions import db
 
 def create_settings_form(category: SettingCategory):

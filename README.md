@@ -36,26 +36,51 @@ Whether you're building a **SaaS**, an **internal management tool**, or a **cust
 ## Project Structure
 
 ```text
-├───.github
-│   └───workflows
-├───core
-│   ├───forms
-│   ├───initializations
-│   ├───models
-│   ├───static
-│   │   ├───css
-│   │   ├───images
-│   │   │   └───profiles
-│   │   └───js
-│   ├───templates
-│   │   ├───auth
-│   │   └───dashboard
-│   ├───utils
-│   │   └───registry
-│   └───views
-├───extensions
-├───migrations
-└───tests
+Directory structure:
+└── flaskdash/
+    ├── README.md
+    ├── build-themes.js
+    ├── config.py
+    ├── docker-compose.yml
+    ├── Dockerfile
+    ├── package.json
+    ├── requirements.txt
+    ├── ruff.toml
+    ├── run.py
+    ├── tailwind.config.js
+    ├── .dockerignore
+    ├── .env.example
+    ├── core/
+    │   ├── __init__.py
+    │   ├── context.py
+    │   ├── defaults.py
+    │   ├── extensions.py
+    │   ├── route.py
+    │   ├── commands/
+    │   ├── forms/
+    │   ├── initializations/
+    │   ├── models/
+    │   ├── static/
+    │   │   ├── css/
+    │   │   └── js/
+    │   ├── stubs/
+    │   │   └── extensions/
+    │   │       ├── forms/
+    │   │       ├── initialization/
+    │   │       ├── models/
+    │   │       ├── routes/
+    │   │       └── templates/
+    │   ├── templates/
+    │   │   ├── auth/
+    │   │   └── dashboard/
+    │   ├── utils/
+    │   │   └── registry/
+    │   └── views/
+    ├── migrations/
+    ├── tests/
+    └── themes/
+        └── default/
+
 ```
 
 ---
@@ -131,14 +156,13 @@ SECRET_KEY="GENERATED_SECRET_KEY"
 ### Run Migrations
 
 ```bash
-flask --app run.py db migrate
-flask --app run.py db upgrade
+flask --app run.py extensions upgrade-all
 ```
 
 ### Create Administrator Account
 
 ```bash
-flask --app run.py create-admin
+flask --app run.py users create-admin
 ```
 
 ## Extension Setup Guide
@@ -207,43 +231,12 @@ The application automatically scans the extensions/ directory and loads extensio
 
 Extensions missing either file will be ignored.
 
-### Extension Initialization Guide (`__init__.py`)
+### Creating a Extension
 
-Every extension **must** include an `init_extension(app, db)` function inside its `__init__.py` file.  
-This function acts as the **entry point** for registering all extension components into the core system.
+Running the command below will automatically generate a blank extension for development. 
 
-### Purpose
-
-The init_extension function is responsible for:
-
-- Initializing database tables (if needed)
-- Registering settings
-- Registering analytics
-- Registering roles
-- Registering sidebar/navigation items
-- Returning the Flask Blueprint
-
-### Example Implementation
-
-```python
-from flask import Blueprint
-from .metadata import TEMPLATE_FOLDER, STATIC_FOLDER
-
-bp = Blueprint(
-    "example_extension",
-    __name__,
-    template_folder=TEMPLATE_FOLDER,
-    static_folder=STATIC_FOLDER,
-    static_url_path="/static/example_extension"
-)
-
-from .routes import route_example
-
-def init_extension(app, db):
-    with app.app_context():
-        # Initialize database tables (if extension uses models)
-        db.create_all()
-    return bp
+```
+flask --app run.py extensions create 
 ```
 
 ## Core Integrations
