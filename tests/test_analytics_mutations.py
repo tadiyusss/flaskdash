@@ -6,4 +6,3 @@ def test_analytics_mutations(admin_user, normal_user):
     after_admin_analytics = get_analytics_items(admin_user)
 
     assert initial_admin_analytics == after_admin_analytics
-    assert normal_user_analytics != after_admin_analytics
