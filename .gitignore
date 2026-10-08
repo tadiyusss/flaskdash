@@ -4,10 +4,7 @@ __pycache__
 .pytest_cache
 env
 instances/
-tests/
 test_dashboard_users.py
-test.py
-setup_test.py
 extensions/
 .env
 venv
@@ -20,12 +17,10 @@ core/static/images/*
 !core/static/images/default-logo.png
 temp/
 run_mysql.py
-*_test.py
+!tests/test_*.py
 !core/stubs/extensions
 media/
 core/static/css/themes/*
-/test_*
-!/tests/*.py
 notes/
 .ruff_cache/
 .vscode/
