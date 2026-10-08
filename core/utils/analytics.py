@@ -122,7 +122,7 @@ class Grid:
         for content in self.contents:
             if content.show_for_user(user):
                 filtered_contents.append(content)
-        self.contents = filtered_contents
+        return filtered_contents
 
     def calculate_responsive_spans(self):
 
