@@ -2,6 +2,7 @@ from core.defaults import DEFAULT_SIDEBAR_ITEMS
 from core.utils.dashboard import DashboardCategory, DashboardItem
 from core.models.users import User
 from flask import g
+from flask import current_app
 
 _registered_sidebar_items = list(DEFAULT_SIDEBAR_ITEMS)  
 
@@ -12,6 +13,7 @@ def register_category(category: DashboardCategory):
     :param roles: A list of roles that can access this category.
     :param items: A list of items belonging to this category.
     """
+    current_app.logger.debug(f"Registering sidebar category: {category.name} with roles: {category.roles}")
     _registered_sidebar_items.append(category)
 
 def register_sidebar_item(item: DashboardItem, category_name: str):
@@ -20,12 +22,14 @@ def register_sidebar_item(item: DashboardItem, category_name: str):
     :param item: The dashboard item to register.
     :param category_name: The name of the category this item belongs to.
     """
-
+    current_app.logger.debug(f"Registering sidebar item: {item.name} under category: {category_name}")
     if not any(category.name == category_name for category in _registered_sidebar_items):
+        current_app.logger.error(f"Category '{category_name}' does not exist. Please register the category first.")
         raise ValueError("Category name does not exist. Please register the category first.")
 
     for category in _registered_sidebar_items:
         if category.name == category_name:
+            current_app.logger.debug(f"Adding item '{item.name}' to category '{category_name}'.")
             category.items.append(item)
 
 def get_sidebar_items_for_user(user: User):

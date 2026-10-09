@@ -24,3 +24,4 @@ core/static/css/themes/*
 notes/
 .ruff_cache/
 .vscode/
+app.log

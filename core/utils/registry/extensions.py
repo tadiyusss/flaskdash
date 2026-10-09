@@ -4,6 +4,7 @@ This module registers and manages metadata of extensions.
 import importlib
 import os 
 from pathlib import Path
+from flask import current_app
 
 EXTENSIONS_LOCATION = Path(__file__).parent.parent.parent.parent / "extensions"
 EXTENSIONS_METADATA = []
@@ -14,6 +15,7 @@ if not os.path.exists(EXTENSIONS_LOCATION):
 def get_extension_metadata(extension_name):
     metadata_file = os.path.join(EXTENSIONS_LOCATION, extension_name, "metadata.py")
     if os.path.exists(metadata_file):
+        current_app.logger.debug(f"Loading metadata for extension: {extension_name}.")
         metadata_module = importlib.import_module(f"extensions.{extension_name}.metadata")
         return metadata_module
     
@@ -25,9 +27,14 @@ def list_extensions():
     return extensions
 
 def is_valid_extension(extension_name):
+    current_app.logger.debug(f"Checking if extension: {extension_name} is valid.")
     init_file = os.path.join(EXTENSIONS_LOCATION, extension_name, "__init__.py")
     metadata_file = os.path.join(EXTENSIONS_LOCATION, extension_name, "metadata.py")
-    return os.path.exists(init_file) and os.path.exists(metadata_file)
+    current_app.logger.debug(f"Checking if init.py for extension: {extension_name} exists.")
+    current_app.logger.debug(f"Checking if metadata.py for extension: {extension_name} exists.")
+    result = os.path.exists(init_file) and os.path.exists(metadata_file)
+    current_app.logger.debug(f"Extension: {extension_name} is {'valid' if result else 'invalid'}.")
+    return result
 
 def register_extension(name):
     metadata = get_extension_metadata(name)

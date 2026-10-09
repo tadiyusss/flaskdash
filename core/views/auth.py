@@ -8,6 +8,7 @@ from flask import g
 from core.models.users import LoginHistory
 from core.utils.email import send_password_reset_email
 from core.utils.tokens import verify_reset_token
+import logging
 
 @core.route('/', methods=['GET', 'POST'])
 def login():
@@ -21,6 +22,7 @@ def login():
             login_user(user)
             # Record login history
             login_history = LoginHistory(user_id=user.id, ip_address=request.remote_addr)
+            logging.info(f"User {user.email} logged in from IP {request.remote_addr}")
             db.session.add(login_history)
             db.session.commit()
             return redirect(url_for('core.dashboard'))

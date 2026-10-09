@@ -10,11 +10,14 @@ from core.initializations.extensions import include_all_extensions
 from core.initializations.settings import register_default_settings
 from core.initializations.commands import register_default_commands
 import os
+from logging.config import dictConfig
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
     init_context(app)
+
+    dictConfig(app.config['LOGGING'])
 
     db.init_app(app)
     login_manager.init_app(app)

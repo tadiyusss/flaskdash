@@ -134,7 +134,7 @@ cp .env.example .env
 After copying .env.example file enter your database details and mail server credentials
 
 ```env
-MYSQL_DATABASE_URL = "mysql+pymysql://USERNAME:PASSWORD@127.0.0.1/DBNAME"
+DATABASE_URL = "mysql+pymysql://USERNAME:PASSWORD@127.0.0.1/DBNAME"
 MAIL_SERVER = 127.0.0.1
 MAIL_PORT = 587
 MAIL_USE_TLS = false

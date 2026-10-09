@@ -1,15 +1,18 @@
 from core.defaults import DEFAULT_ANALYTICS_GRID
 from core.utils.analytics import Grid
 from core.models.users import User
+from flask import current_app
 
 _analytics_grids = list(DEFAULT_ANALYTICS_GRID)
 
 def register_analytics(grid: Grid):
+    current_app.logger.info(f"Registering analytics grid {grid.title}")
     _analytics_grids.append(grid)
     
 def register_analytics_item(item, grid_title):
     for grid in _analytics_grids:
         if grid.title == grid_title:
+            current_app.logger.info(f"Registering analytics item {item.title} in grid {grid_title}")
             grid.contents.append(item)
             break
 

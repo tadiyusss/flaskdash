@@ -16,6 +16,25 @@ class Config:
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME", "")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD", "")
     MAIL_DEFAULT_SENDER = os.environ.get("MAIL_DEFAULT_SENDER", "")
+    LOGGING = {
+        'version': 1,
+        'formatters': {'default': {
+            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+        }},
+        'handlers': {'wsgi': {
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://flask.logging.wsgi_errors_stream',
+            'formatter': 'default'
+        }, 'file': {
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(basedir, 'app.log'),
+            'formatter': 'default'
+        }},
+        'root': {
+            'level': os.environ.get("LOG_LEVEL", "INFO"),
+            'handlers': ['wsgi', 'file']
+        }
+    }
 
 class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
