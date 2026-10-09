@@ -10,8 +10,8 @@ from core.route import core
 
 
 
-@login_required
 @core.route('/profile/edit/password', methods=['POST'])
+@login_required
 def profile_edit_password():
     form = EditPasswordForm()
 
@@ -30,8 +30,8 @@ def profile_edit_password():
 
     return redirect(url_for('core.profile'))
 
-@login_required
 @core.route('/profile/edit/picture', methods=['POST'])
+@login_required
 def profile_edit_picture():
 
     edit_profile_form = EditProfileForm()
@@ -66,8 +66,8 @@ def profile_edit_picture():
     return redirect(url_for('core.profile'))
 
 
-@login_required
 @core.route('/profile/edit/name', methods=['POST'])
+@login_required
 def profile_edit_name():
     form = EditNameForm()
 
