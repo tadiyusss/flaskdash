@@ -21,8 +21,16 @@ def get_analytics_items(user: User):
 
     items = []
     for grid in _analytics_grids:
-        if grid.show_for_user(user):
-            grid.filter_contents_for_user(user)
-            if len(grid.contents) > 0:
-                items.append(grid)
+        if not grid.show_for_user(user):
+            continue
+
+        visible_contents = grid.filter_contents_for_user(user)
+        if visible_contents:
+            items.append(Grid(
+                roles=grid.roles,
+                columns=grid.columns_count,
+                rows=grid.rows_count,
+                title=grid.title,
+                contents=visible_contents,
+            ))
     return items
