@@ -12,7 +12,7 @@ from pathlib import Path
 THEMES_DIR = Path(__file__).parent.parent / 'themes'
 THEMES_OUTPUT_DIR = Path(__file__).parent / 'static' / 'css' / 'themes'
 
-from core.utils.themes import list_themes
+from core.utils.registry.themes import get_all_themes
 
 DEFAULT_ANALYTICS_GRID = [
     Grid(
@@ -86,7 +86,7 @@ DEFAULT_SETTINGS_CATEGORY = [
                 key="site_theme",
                 name="Site Theme",
                 value="default",
-                field=SelectField('Site Theme', choices=lambda: [(theme, theme) for theme in list_themes()], render_kw={"class": "fd-input"}, description="Select the theme for your site."),
+                field=SelectField('Site Theme', choices=lambda: [(theme.name, theme.name) for theme in get_all_themes()], render_kw={"class": "fd-input"}, description="Select the theme for your site."),
                 category_name="site_settings"
             ),
             SettingItem(

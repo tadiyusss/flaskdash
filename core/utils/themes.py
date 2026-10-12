@@ -3,57 +3,62 @@ from pathlib import Path
 import subprocess
 from core.defaults import THEMES_DIR, THEMES_OUTPUT_DIR
 import json
+from flask import current_app
 
-def build_theme(theme_name: str):
-    input_css = THEMES_DIR / theme_name / "input.css"
-    output_css = THEMES_OUTPUT_DIR / f"{theme_name}.css"
-    cwd = Path(__file__).parent.parent.parent
+class Theme:
+    def __init__(self, name: str, path: Path):
+        self.name = name
+        self.path = path
 
-    if os.name == 'nt':
-        tailwind = cwd / "node_modules" / ".bin" / "tailwindcss.cmd"
-    else:
-        tailwind = cwd / "node_modules" / ".bin" / "tailwindcss"
+    def build(self):
+        input_css = self.path / "input.css"
+        output_css = THEMES_OUTPUT_DIR / f"{self.name}.css"
+        cwd = Path(__file__).parent.parent.parent
 
-    output_css.parent.mkdir(parents=True, exist_ok=True)
+        if os.name == 'nt':
+            tailwind = cwd / "node_modules" / ".bin" / "tailwindcss.cmd"
+        else:
+            tailwind = cwd / "node_modules" / ".bin" / "tailwindcss"
 
-    if not input_css.exists():
-        raise FileNotFoundError(f"Theme '{theme_name}' not found in {THEMES_DIR}")
+        output_css.parent.mkdir(parents=True, exist_ok=True)
 
-    command = [
-        str(tailwind),
-        "-i",
-        str(input_css),
-        "-o",
-        str(output_css)
-    ]
+        if not input_css.exists():
+            raise FileNotFoundError(f"Theme '{self.name}' not found in {THEMES_DIR}")
 
-    subprocess.run(
-        command,
-        cwd=cwd
-    )
+        command = [
+            str(tailwind),
+            "-i",
+            str(input_css),
+            "-o",
+            str(output_css)
+        ]
 
-def list_themes():
-    if not THEMES_DIR.exists():
-        THEMES_DIR.mkdir(parents=True)
+        subprocess.run(
+            command,
+            cwd=cwd
+        )
 
-    folders_in_themes_dir = os.listdir(THEMES_DIR)
+    def info(self):
+        theme_info_path = self.path / "theme.json"
+        with open(theme_info_path, 'r') as f:
+            return json.load(f)
 
-    for folder in folders_in_themes_dir:
-        folder_path = THEMES_DIR / folder
-        if folder_path.is_dir():
+    @property
+    def is_valid(self):
+        if not self.path.exists() or not self.path.is_dir():
+            current_app.logger.warning(f"{self.path} is not a valid theme directory")
+            return False
 
-            input_file = folder_path / "input.css"
-            themes_metadata = folder_path / "theme.json"
+        input_file = self.path / "input.css"
+        themes_metadata = self.path / "theme.json"
 
-            if input_file.exists() and themes_metadata.exists():
-                yield folder
+        if not input_file.exists() or not themes_metadata.exists():
+            current_app.logger.warning(f"{self.path} is not a valid theme")
+            return False
+        current_app.logger.debug(f"{self.path} is a valid valid theme directory")
+        return True
 
-def get_theme_info(theme_name):
-    if theme_name not in list_themes():
-        raise FileNotFoundError(f"Theme '{theme_name}' not found in {THEMES_DIR}")
-    
-    theme_info_path = THEMES_DIR / theme_name / "theme.json"
-    with open(theme_info_path, 'r') as f:
-        return json.load(f) 
+    def __repr__(self):
+        return f"<Theme name={self.name} path={self.path}>"
 
 

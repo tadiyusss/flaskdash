@@ -5,18 +5,18 @@
 	<div class="fd-card">
 		<div class="fd-card-header">
 			<div>
-                <h3 class="fd-card-title">{{ theme_info.name }}</h3>
-                <p class="fd-card-subtitle">{{ theme_info.description }}</p>
+                <h3 class="fd-card-title">{{ theme.name }}</h3>
+                <p class="fd-card-subtitle">{{ theme.info().description }}</p>
 			</div>
 		</div>
 		<div class="fd-card-body">
-			{% for info in theme_info %}
+			{% for info in theme.info() %}
 			<div class="fd-list-group-item">
 				<p class="fd-list-group-item-header">{{ info }}</p>	
-				{% if theme_info[info] is iterable and theme_info[info] is not string %}
-					<p class="fd-list-group-item-value">{{ theme_info[info]|join(", ") }}</p>
+				{% if theme.info()[info] is iterable and theme.info()[info] is not string %}
+					<p class="fd-list-group-item-value">{{ theme.info()[info]|join(", ") }}</p>
 				{% else %}
-				<p class="fd-list-group-item-value">{{ theme_info[info] }}</p>
+				<p class="fd-list-group-item-value">{{ theme.info()[info] }}</p>
 				{% endif %}
 			</div>
 			{% endfor %}	
