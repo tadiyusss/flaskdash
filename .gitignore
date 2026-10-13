@@ -5,7 +5,7 @@ __pycache__
 .pytest_cache
 env
 instances/
-test_dashboard_users.py
+test_packages.py
 extensions/
 .env
 venv
