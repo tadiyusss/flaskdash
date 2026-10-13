@@ -10,6 +10,9 @@ class Theme:
         self.name = name
         self.path = path
 
+        if self.is_valid:
+            self.build()
+
     def build(self):
         input_css = self.path / "input.css"
         output_css = THEMES_OUTPUT_DIR / f"{self.name}.css"
