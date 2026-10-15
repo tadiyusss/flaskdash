@@ -21,7 +21,7 @@ def get_all_themes_command():
         click.echo(f"- {theme.name}")
 
 @themes_group.command('build', help='Use the build command to compile and prepare themes for use.')
-@click.option('--theme', prompt='Theme Name (without .css)', help='The name of the theme to build.')
+@click.option('--theme', '-t', prompt='Theme Name (without .css)', help='The name of the theme to build.')
 def build_theme_command(theme):
     """
     Build and prepare themes for use.
@@ -41,7 +41,7 @@ def build_theme_command(theme):
         click.echo(f"Error building theme '{theme}': {e}")
 
 @themes_group.command('view', help="View the information about the selected theme")
-@click.option('--theme', prompt="Theme Name (without .css)", help="The name of the theme to view")
+@click.option('--theme', '-t', prompt="Theme Name (without .css)", help="The name of the theme to view")
 def view_theme_command(theme):
     """
     Show information about the theme selected
