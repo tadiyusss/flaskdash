@@ -3,6 +3,8 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from core.utils.extensions import upgrade_extension_database
 from core.utils.registry.extensions import EXTENSIONS_LOCATION
+from flask_migrate import init, migrate
+from core.initializations.extensions import patch_env_file, check_if_env_file_patched
 
 STUB_FILE_PATH = (
     Path(__file__).parent.parent
@@ -35,7 +37,7 @@ def extensions_group():
     """
 
 @extensions_group.command('upgrade', help='Run migrations for a specific extension.')
-@click.option('--extension', prompt='Extension Name', help='The name of the extension to migrate.')
+@click.option('--extension', '-e', prompt='Extension Name', help='The name of the extension to migrate.')
 def handle_upgrade_extension(extension):
     """
     Run migrations for a specific extension.
@@ -121,4 +123,38 @@ def create_extension(name, author):
 
     click.echo(f"Extension '{name}' created successfully at '{new_extension_path}'.")
     click.echo(f"You may visit http://localhost:8000/{context['extension_slug_name']} to check the extension after running the server.")
+
     
+@extensions_group.command('makemigration', help='Create a migration file for a specific extension.')
+@click.option('--extension', '-e', prompt='Extension Name', help='The name of the extension.')
+@click.option('--message', '-m', help='Short description of the change.')
+def handle_make_migration(extension, message):
+
+    extension_name = snake_case(extension)
+    extension_path = EXTENSIONS_LOCATION / extension_name
+
+    if not extension_path.is_dir():
+        click.echo(f"Extension '{extension}' not found.")
+        return
+
+    migrations_path = extension_path / 'migrations'
+
+    if not migrations_path.exists():
+        init(directory=str(migrations_path))
+        click.echo(f"Initialized migrations for '{extension_name}'.")
+
+    if not check_if_env_file_patched(extension_name):
+        patch_env_file(extension_name)
+
+    versions_path = migrations_path / 'versions'
+    versions_path.mkdir(exist_ok=True)
+    existing = set(versions_path.glob('*.py'))
+
+    migrate(directory=str(migrations_path), message=message)
+
+    created = set(versions_path.glob('*.py')) - existing
+    if created:
+        for file in created:
+            click.echo(f"Migration created: {file}")
+    else:
+        click.echo("No changes detected, no migration file was created.")

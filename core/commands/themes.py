@@ -1,6 +1,5 @@
 import click
 from core.utils.registry.themes import get_all_themes
-from pathlib import Path
 
 @click.group('themes', help='Manage themes.')
 def themes_group():

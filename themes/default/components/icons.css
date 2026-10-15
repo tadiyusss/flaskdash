@@ -1,3 +1,7 @@
+.fd-icon {
+    @apply w-4 h-4 text-gray-400;
+}
+
 .fd-icon-xs {
     @apply w-4 h-4;
 }

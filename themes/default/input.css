@@ -23,7 +23,3 @@
 @import './pages/users.css';
 @import './pages/files.css';
 @import './pages/base.css';
-
-.fd-icon {
-    @apply w-4 h-4 text-gray-400;
-}
