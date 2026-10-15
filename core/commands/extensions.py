@@ -2,9 +2,10 @@ import click
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from core.utils.extensions import upgrade_extension_database
-from core.utils.registry.extensions import EXTENSIONS_LOCATION
+from core.utils.registry.extensions import EXTENSIONS_LOCATION, list_extensions
 from flask_migrate import init, migrate
 from core.initializations.extensions import patch_env_file, check_if_env_file_patched
+from core.utils.dependencies import install_extension_requirements
 
 STUB_FILE_PATH = (
     Path(__file__).parent.parent
@@ -158,3 +159,9 @@ def handle_make_migration(extension, message):
             click.echo(f"Migration created: {file}")
     else:
         click.echo("No changes detected, no migration file was created.")
+
+@extensions_group.command('install-deps', help='Install requirements for all extensions.')
+def handle_install_deps():
+    for ext in list_extensions():
+        ok = install_extension_requirements(ext, EXTENSIONS_LOCATION)
+        click.echo(f"{ext}: {'ok' if ok else 'FAILED'}")

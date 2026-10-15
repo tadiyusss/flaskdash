@@ -1,6 +1,7 @@
 import importlib
 from pathlib import Path
-from core.utils.registry.extensions import list_extensions, register_extension
+from core.utils.dependencies import install_extension_requirements
+from core.utils.registry.extensions import EXTENSIONS_LOCATION, list_extensions, register_extension
 from core.extensions import db
 from flask import current_app
 
@@ -21,10 +22,14 @@ def check_if_env_file_patched(extension_name):
 
 def include_all_extensions(app):
     for extension in list_extensions():
+        if app.config.get("AUTO_INSTALL_EXTENSION_DEPS", True):
+            if not install_extension_requirements(extension, EXTENSIONS_LOCATION):
+                current_app.logger.error("Skipping extension '%s': dependencies could not be installed", extension)
+                continue
+
         register_extension(extension)
         include_extension(app, extension)
         handle_extension_migrations(extension, app)
-
 
 def handle_extension_migrations(extension_name, app):
     migration_path = Path(f"extensions/{extension_name}/migrations")
