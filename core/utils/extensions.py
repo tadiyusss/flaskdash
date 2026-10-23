@@ -1,7 +1,7 @@
-from flask_migrate import upgrade
+from flask_migrate import upgrade, heads, stamp
 from core.utils.registry.extensions import EXTENSIONS_LOCATION
 from flask import current_app
-
+from core.extensions import db
 
 def _validate_extension_migrations(extension_name):
     """
@@ -30,4 +30,16 @@ def upgrade_extension_database(extension_name):
         return
     upgrade(directory=str(migrations_path))
 
+def get_current_db_version(extension_name):
+    """
+    Get the current database version for a specific extension.
+    :param extension_name: The name of the extension to check.
+    :return: Current database version as a string.
+    """
+    migrations_path = _validate_extension_migrations(extension_name)
+    if migrations_path is None:
+        current_app.logger.error(f"Cannot get current database version for extension '{extension_name}' as no migrations were found.")
+        return None
 
+    heads(directory=str(migrations_path))
+    
