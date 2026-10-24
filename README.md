@@ -165,6 +165,47 @@ flask --app run.py extensions upgrade-all
 flask --app run.py users create-admin
 ```
 
+## FlaskDash CLI Commands
+
+The platform ships with a set of custom Flask CLI commands for managing your application.
+
+```
+flask --app run.py <group> <command> [options]
+```
+
+To list the available groups or the commands inside a group, use --help:
+
+```
+flask --app run.py --help
+flask --app run.py extensions --help
+```
+
+### Extensions Commands
+
+Commands for creating, migrating, and managing extensions.
+
+```
+flask --app run.py extensions <command>
+```
+
+| Command | Description |
+|---------|-------------|
+| ``` create ``` | Generate a new extension from the stub template. |
+| ``` delete ``` | Delete an existing extension. |
+| ``` makemigration ``` | Create a migration file for an extension. template. |
+| ``` upgrade ``` | Run migrations for a specific extension. |
+| ``` upgrade-all ``` | Run migrations for all extensions. |
+| ``` current-db ``` | Show the current database version of an extension. |
+| ``` install-deps ``` | Install requirements for all extensions. |
+
+### Create Extension
+
+Opens an interactive prompt and generates a blank extension inside the extensions/ directory using the stub files in core/stubs/extensions/.
+
+```
+flask --app run.py extensions create
+```
+
 ## Extension Setup Guide
 
 Extensions allow developers to add new functionality to the application without modifying the core codebase.
