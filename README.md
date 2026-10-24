@@ -165,46 +165,314 @@ flask --app run.py extensions upgrade-all
 flask --app run.py users create-admin
 ```
 
-## FlaskDash CLI Commands
+## Custom CLI Commands
 
-The platform ships with a set of custom Flask CLI commands for managing your application.
+The platform ships with a set of custom Flask CLI commands for managing extensions, themes, and users. All commands are run through the Flask CLI:
 
-```
+```bash
 flask --app run.py <group> <command> [options]
 ```
 
-To list the available groups or the commands inside a group, use --help:
+To list the available groups or the commands inside a group, use `--help`:
 
-```
+```bash
 flask --app run.py --help
 flask --app run.py extensions --help
 ```
+
+Options marked as **prompted** will ask for input interactively if you don't pass them as flags.
+
+- [Extensions Commands](#extensions-commands)
+- [Themes Commands](#themes-commands)
+- [Users Commands](#users-commands)
+
+---
 
 ### Extensions Commands
 
 Commands for creating, migrating, and managing extensions.
 
-```
+```bash
 flask --app run.py extensions <command>
 ```
 
-| Command | Description |
-|---------|-------------|
-| ``` create ``` | Generate a new extension from the stub template. |
-| ``` delete ``` | Delete an existing extension. |
-| ``` makemigration ``` | Create a migration file for an extension. template. |
-| ``` upgrade ``` | Run migrations for a specific extension. |
-| ``` upgrade-all ``` | Run migrations for all extensions. |
-| ``` current-db ``` | Show the current database version of an extension. |
-| ``` install-deps ``` | Install requirements for all extensions. |
+| Command         | Description                                          |
+| --------------- | ---------------------------------------------------- |
+| `create`        | Generate a new extension from the stub template.     |
+| `delete`        | Delete an existing extension.                        |
+| `makemigration` | Create a migration file for an extension.            |
+| `upgrade`       | Run migrations for a specific extension.             |
+| `upgrade-all`   | Run migrations for all extensions.                   |
+| `current-db`    | Show the current database version of an extension.   |
+| `install-deps`  | Install requirements for all extensions.             |
 
-### Create Extension
+#### Create an Extension
 
-Opens an interactive prompt and generates a blank extension inside the extensions/ directory using the stub files in core/stubs/extensions/.
+Opens an interactive prompt and generates a blank extension inside the `extensions/` directory using the stub files in `core/stubs/extensions/`.
 
-```
+```bash
 flask --app run.py extensions create
 ```
+
+| Option     | Description                    |
+| ---------- | ------------------------------ |
+| `--name`   | Name of the new extension. **(prompted)** |
+| `--author` | Name of the author. **(prompted)**        |
+
+Example:
+
+```bash
+flask --app run.py extensions create --name "My Extension" --author "Developer Name"
+```
+
+The extension name is converted automatically:
+
+| Format      | Example        | Used For                          |
+| ----------- | -------------- | --------------------------------- |
+| Snake case  | `my_extension` | Directory name                    |
+| Slug case   | `my-extension` | Extension slug and URL            |
+
+After creation, visit `http://localhost:8000/my-extension` once the server is running to check the extension.
+
+#### Delete an Extension
+
+Permanently deletes an extension and all of its files. You will be asked to confirm before anything is removed.
+
+```bash
+flask --app run.py extensions delete
+```
+
+| Option   | Description                          |
+| -------- | ------------------------------------ |
+| `--name` | Name of the extension to delete. **(prompted)** |
+
+Example:
+
+```bash
+flask --app run.py extensions delete --name "My Extension"
+```
+
+> **Warning:** This action cannot be undone.
+
+#### Create a Migration
+
+Generates a new migration file for an extension. If the extension does not have a `migrations/` directory yet, it is initialized automatically and the extension's migration `env.py` is patched.
+
+```bash
+flask --app run.py extensions makemigration
+```
+
+| Option                | Description                                    |
+| --------------------- | ---------------------------------------------- |
+| `--extension`, `-e`   | Name of the extension. **(prompted)**          |
+| `--message`, `-m`     | Short description of the change. *(optional)*  |
+
+Example:
+
+```bash
+flask --app run.py extensions makemigration -e "My Extension" -m "add posts table"
+```
+
+If no model changes are detected, no migration file is created.
+
+#### Run Migrations for an Extension
+
+Applies the pending migrations of a single extension.
+
+```bash
+flask --app run.py extensions upgrade
+```
+
+| Option              | Description                           |
+| ------------------- | ------------------------------------- |
+| `--extension`, `-e` | Name of the extension. **(prompted)** |
+
+Example:
+
+```bash
+flask --app run.py extensions upgrade -e my_extension
+```
+
+#### Run Migrations for All Extensions
+
+Loops through every extension directory and applies their pending migrations.
+
+```bash
+flask --app run.py extensions upgrade-all
+```
+
+#### Show Current Database Version
+
+Shows the current migration version of an extension's database.
+
+```bash
+flask --app run.py extensions current-db
+```
+
+| Option              | Description                           |
+| ------------------- | ------------------------------------- |
+| `--extension`, `-e` | Name of the extension. **(prompted)** |
+
+Example:
+
+```bash
+flask --app run.py extensions current-db -e my_extension
+```
+
+#### Install Extension Dependencies
+
+Installs the requirements of every registered extension and prints `ok` or `FAILED` for each one.
+
+```bash
+flask --app run.py extensions install-deps
+```
+
+Example output:
+
+```text
+my_extension: ok
+another_extension: FAILED
+```
+
+___
+
+### Themes Commands
+
+Commands for listing, building, and inspecting themes.
+
+```bash
+flask --app run.py themes <command>
+```
+
+| Command | Description                                  |
+| ------- | -------------------------------------------- |
+| `list`  | List all available themes.                   |
+| `build` | Compile and prepare a theme for use.         |
+| `view`  | View information about a theme.              |
+
+#### List Themes
+
+Prints the name of every available theme.
+
+```bash
+flask --app run.py themes list
+```
+
+Example output:
+
+```text
+Available themes:
+- default
+```
+
+#### Build a Theme
+
+Compiles and prepares the selected theme for use.
+
+```bash
+flask --app run.py themes build
+```
+
+| Option            | Description                                                |
+| ----------------- | ---------------------------------------------------------- |
+| `--theme`, `-t`   | Name of the theme to build, without `.css`. **(prompted)** |
+
+Example:
+
+```bash
+flask --app run.py themes build -t default
+```
+
+If the theme does not exist, `Theme '<name>' not found.` is shown. Any build error is printed to the console.
+
+#### View Theme Information
+
+Shows the details of the selected theme as `key: value` pairs.
+
+```bash
+flask --app run.py themes view
+```
+
+| Option            | Description                                               |
+| ----------------- | --------------------------------------------------------- |
+| `--theme`, `-t`   | Name of the theme to view, without `.css`. **(prompted)** |
+
+Example:
+
+```bash
+flask --app run.py themes view -t default
+```
+
+___
+
+### Users Commands
+
+Commands for managing user accounts.
+
+```bash
+flask --app run.py users <command>
+```
+
+| Command        | Description                          |
+| -------------- | ------------------------------------ |
+| `create-admin` | Create a new administrator user.     |
+| `delete-user`  | Delete a user by username.           |
+
+#### Create an Administrator
+
+Creates a new user and assigns them the `Administrator` role. The password is entered through a hidden prompt and must be typed twice.
+
+```bash
+flask --app run.py users create-admin
+```
+
+| Option        | Description                                  |
+| ------------- | -------------------------------------------- |
+| `--username`  | Username of the administrator. **(prompted)**   |
+| `--firstname` | First name of the administrator. **(prompted)** |
+| `--lastname`  | Last name of the administrator. **(prompted)**  |
+| `--email`     | Email address of the administrator. **(prompted)** |
+
+Example:
+
+```bash
+flask --app run.py users create-admin --username admin --firstname John --lastname Doe --email admin@example.com
+```
+
+You will then be asked for:
+
+```text
+Password (inputs are hidden):
+Retype Password (inputs are hidden):
+```
+
+If the passwords do not match, the command exits without creating the user.
+
+> **Note:** The `Administrator` role must already exist in the database. Run the migrations first (`extensions upgrade-all`).
+
+#### Delete a User
+
+Deletes an existing user by username.
+
+```bash
+flask --app run.py users delete-user
+```
+
+| Option       | Description                                   |
+| ------------ | --------------------------------------------- |
+| `--username` | Username of the user to delete. **(prompted)** |
+
+Example:
+
+```bash
+flask --app run.py users delete-user --username johndoe
+```
+
+If the user does not exist, `User '<username>' not found.` is shown.
+
+> **Warning:** This action cannot be undone and does not ask for confirmation.
+
+___
 
 ## Extension Setup Guide
 
