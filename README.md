@@ -11,6 +11,7 @@ This project is **actively being developed** and will serve as a foundation for 
 - [Project Structure](#project-structure)
 - [Download](#download)
 - [Setup Environemnt](#create-virtual-environment)
+- [CLI Commands](#custom-cli-commands)
 - [Extension Setup](#extension-setup-guide)
 - [Core Integrations](#core-integrations)
 
