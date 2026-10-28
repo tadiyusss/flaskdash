@@ -1,7 +1,6 @@
-from flask_migrate import upgrade, heads, stamp
+from flask_migrate import upgrade, heads
 from core.utils.registry.extensions import EXTENSIONS_LOCATION
 from flask import current_app
-from core.extensions import db
 
 def _validate_extension_migrations(extension_name):
     """
