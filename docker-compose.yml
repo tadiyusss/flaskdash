@@ -6,9 +6,9 @@ services:
     env_file: .env
     environment:
       DATABASE_URL: mysql+pymysql://flaskdash:flaskdash@db:3306/flaskdash
-      BASE_URL: http://localhost:8000
+      BASE_URL: http://localhost:8080
     ports:
-      - "8000:8000"
+      - "8080:8000"
     volumes:
       - ./media:/app/media
       - ./core/static/uploads:/app/core/static/uploads
