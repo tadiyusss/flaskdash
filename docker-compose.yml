@@ -1,26 +1,35 @@
 services:
-  flaskdash:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  web:
+    build: .
     container_name: flaskdash
     restart: unless-stopped
-    env_file:
-      - .env
+    env_file: .env
+    environment:
+      DATABASE_URL: mysql+pymysql://flaskdash:flaskdash@db:3306/flaskdash
+      BASE_URL: http://localhost:8080
     ports:
-      - "5000:5000"
+      - "8080:8000"
     volumes:
-      - ./extensions:/app/extensions
-      - ./core/static/uploads:/app/core/static/uploads
-      - ./themes:/app/themes
       - ./media:/app/media
+      - ./core/static/uploads:/app/core/static/uploads
     depends_on:
-      frontend-build:
-        condition: service_completed_successfully
-  frontend-build:
-    image: node:22-alpine
-    working_dir: /app
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: flaskdash
+      MYSQL_USER: flaskdash
+      MYSQL_PASSWORD: flaskdash
+      MYSQL_ROOT_PASSWORD: rootpass
     volumes:
-      - .:/app
-      - /app/node_modules
-    command: sh -c "npm ci && npm run build"
+      - dbdata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  dbdata:
