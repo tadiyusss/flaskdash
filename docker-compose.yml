@@ -4,9 +4,6 @@ services:
     container_name: flaskdash
     restart: unless-stopped
     env_file: .env
-    environment:
-      DATABASE_URL: mysql+pymysql://flaskdash:flaskdash@db:3306/flaskdash
-      BASE_URL: http://localhost:8080
     ports:
       - "8080:8000"
     volumes:
