@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     env_file: .env
     ports:
-      - "8080:8000"
+      - "8010:8000"
     volumes:
       - ./media:/app/media
       - ./core/static/uploads:/app/core/static/uploads
