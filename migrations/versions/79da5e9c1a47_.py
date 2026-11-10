@@ -35,7 +35,8 @@ def upgrade():
         batch_op.alter_column('value',
                existing_type=mysql.VARCHAR(length=200),
                type_=sa.Text(),
-               existing_nullable=True)
+             existing_nullable=True,
+             nullable=True)
 
     # ### end Alembic commands ###
 
@@ -46,7 +47,8 @@ def downgrade():
         batch_op.alter_column('value',
                existing_type=sa.Text(),
                type_=mysql.VARCHAR(length=200),
-               existing_nullable=True)
+             existing_nullable=True,
+             nullable=True)
 
     op.create_table('alembic_version_upscale',
     sa.Column('version_num', mysql.VARCHAR(length=32), nullable=False),
