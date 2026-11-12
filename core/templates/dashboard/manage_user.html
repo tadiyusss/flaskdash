@@ -9,7 +9,7 @@
 		</div>
 		<div class="fd-card-body">
 			<form method="POST" enctype="multipart/form-data" x-data="{
-					profile_image_preview: '{{ url_for('static', filename='images/profiles/' + selected_user.profile_image) }}',
+					profile_image_preview: `{% if selected_user.profile_image == 'default-avatar.jpg' %}{{ url_for('static', filename='images/profiles/default-avatar.jpg') }}{% else %}{{ url_for('media.serve_media', filename='profiles/' + selected_user.profile_image) }}{% endif %}`,
 					imagePreview() {
 						const file = document.getElementById('profile_image').files[0];
 						if (file) {
@@ -17,7 +17,7 @@
 							reader.onload = (e) => { this.profile_image_preview = e.target.result; };
 							reader.readAsDataURL(file);
 						} else {
-							this.profile_image_preview = '{{ url_for('static', filename='images/profiles/default.png') }}';
+							this.profile_image_preview = `{% if user.profile_image == 'default-avatar.jpg' %}{{ url_for('static', filename='images/profiles/default-avatar.jpg') }}{% else %}{{ url_for('media.serve_media', filename='profiles/' + selected_user.profile_image) }}{% endif %}`;
 						}
 					}
 				}">
