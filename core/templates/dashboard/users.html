@@ -56,13 +56,9 @@
                     {% else %}
                     <tr>
                         {% if g.settings['allow_first_name_last_name'] == "1" %}
-                        <td class="fd-table-col-md fd-table-col" colspan="4">
-                            <p class="text-center text-gray-500">No users found.</p>
-                        </td>
+                        <td class="fd-table-no-data" colspan="4">No users found.</td>
                         {% else %}
-                        <td class="fd-table-col-md fd-table-col" colspan="3">
-                            <p class="text-center text-gray-500">No users found.</p>
-                        </td>
+                        <td class="fd-table-col-md fd-table-col" colspan="3">No users found.</td>
                         {% endif %}
                     </tr>
                     {% endfor %}
