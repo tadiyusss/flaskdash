@@ -18,6 +18,9 @@
 						<div>
 							<label for="{{ field.id }}" class="fd-settings-title">{{ field.label.text }}</label>
 							<p class="fd-settings-description">{{ field.description }}</p>
+							{% if field.type == "FileField" and field.data %}
+							<a href="{{ url_for('media.serve_media', filename=field.data) }}" class="fd-settings-file-preview" target="_blank" rel="noopener noreferrer">Preview File</a>
+							{% endif %}
 							<ul>
 								{% for error in field.errors %}
 								<li class="fd-settings-error">{{ error }}</li>

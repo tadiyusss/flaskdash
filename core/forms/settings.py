@@ -20,6 +20,7 @@ def create_settings_form(category: SettingCategory):
         existing_setting = Setting.query.filter_by(key=setting.key).first()
         if existing_setting:
             field.default = existing_setting.value
+            field.data = existing_setting.value
         else:
 
                 new_setting = Setting(

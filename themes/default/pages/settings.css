@@ -13,3 +13,7 @@
 .fd-settings-error {
     @apply text-xs text-red-600 mt-0.5 leading-relaxed;
 }
+
+.fd-settings-file-preview {
+    @apply text-xs text-gray-600 underline mt-0.5 leading-relaxed cursor-pointer;
+}
