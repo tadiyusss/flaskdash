@@ -1,10 +1,11 @@
 import click
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
-from core.utils.extensions import upgrade_extension_database
-from core.utils.registry.extensions import EXTENSIONS_LOCATION
+from core.utils.extensions import upgrade_extension_database, get_current_db_version
+from core.utils.registry.extensions import EXTENSIONS_LOCATION, list_extensions
 from flask_migrate import init, migrate
 from core.initializations.extensions import patch_env_file, check_if_env_file_patched
+from core.utils.dependencies import install_extension_requirements
 
 STUB_FILE_PATH = (
     Path(__file__).parent.parent
@@ -46,6 +47,15 @@ def handle_upgrade_extension(extension):
 
     upgrade_extension_database(extension)    
     click.echo(f"Migrations for extension '{extension}' completed successfully.")
+
+@extensions_group.command('current-db', help='Show the current database version for a specific extension.')
+@click.option('--extension', '-e', prompt='Extension Name', help='The name of the extension to check.')
+def handle_current_db_extension(extension):
+    """
+    Show the current database version for a specific extension.
+    :name: The name of the extension to check.
+    """
+    get_current_db_version(extension)
 
 @extensions_group.command('upgrade-all', help='Run migrations for all extensions.')
 def handle_upgrade_all_extensions():
@@ -158,3 +168,9 @@ def handle_make_migration(extension, message):
             click.echo(f"Migration created: {file}")
     else:
         click.echo("No changes detected, no migration file was created.")
+
+@extensions_group.command('install-deps', help='Install requirements for all extensions.')
+def handle_install_deps():
+    for ext in list_extensions():
+        ok = install_extension_requirements(ext, EXTENSIONS_LOCATION)
+        click.echo(f"{ext}: {'ok' if ok else 'FAILED'}")

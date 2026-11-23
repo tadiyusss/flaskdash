@@ -16,6 +16,7 @@ class Config:
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME", "")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD", "")
     MAIL_DEFAULT_SENDER = os.environ.get("MAIL_DEFAULT_SENDER", "")
+    AUTO_INSTALL_EXTENSION_DEPS = os.environ.get("AUTO_INSTALL_EXTENSION_DEPS", "true").lower() in ("true", "1", "t")
     LOGGING = {
         'version': 1,
         'formatters': {'default': {

@@ -10,6 +10,7 @@ from flask import g
 from werkzeug.utils import secure_filename
 from core.utils.decorators import role_required
 from core.route import core
+from core.defaults import MEDIA_FOLDER
 
 @core.route('/users/create', methods=['GET', 'POST'])
 @role_required('Administrator')
@@ -55,7 +56,7 @@ def create_user():
 @role_required('Administrator')
 @login_required
 def users():
-    users = User.query.all()
+    users = User.query.filter(User.uid != current_user.uid).all()
     return render_template('dashboard/users.html', user=current_user, users = users)
     
 @core.route('/users/manage/<string:user_uid>/delete')
@@ -111,9 +112,13 @@ def manage_user(user_uid):
         image_file = edit_profile_form.profile_image.data
         ext = os.path.splitext(secure_filename(image_file.filename))[1]
         unique_filename = f"{uuid.uuid4().hex}{ext}"
-        save_path = os.path.join(core.static_folder, 'images', 'profiles', unique_filename)
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+        profiles_folder = os.path.join(MEDIA_FOLDER, 'profiles')
+        os.makedirs(profiles_folder, exist_ok=True)
+        save_path = os.path.join(profiles_folder, unique_filename)
         image_file.save(save_path)
+        if not os.path.isfile(save_path):
+            flash('Profile image could not be saved.', 'global-error')
+            return redirect(url_for('core.manage_user', user_uid=user_uid))
         selected_user.profile_image = unique_filename
         db.session.commit()
         flash('Profile image updated successfully.', 'global-success')
