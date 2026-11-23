@@ -13,13 +13,13 @@
 			<div class="fd-header-end">
 				<a href="{{ url_for('core.users') }}" class="fd-btn fd-btn-outline fd-btn-sm">Back</a>
 				<a href="{{ url_for('core.delete_user', user_uid=selected_user.uid) }}"
-				   class="fd-btn fd-btn-danger fd-btn-sm">Delete user</a>
+					class="fd-btn fd-btn-danger fd-btn-sm">Delete user</a>
 			</div>
 		</div>
 
 		<div class="fd-card-body">
 			<form method="POST" enctype="multipart/form-data" x-data="{
-					profile_image_preview: `{% if selected_user.profile_image == 'default-avatar.jpg' %}{{ url_for('static', filename='images/profiles/default-avatar.jpg') }}{% else %}{{ url_for('media.serve_media', filename='profiles/' + selected_user.profile_image) }}{% endif %}`,
+					profile_image_preview: `{{ url_for('static', filename='images/profiles/' + selected_user.profile_image) }}`,
 					imagePreview() {
 						const file = document.getElementById('profile_image').files[0];
 						if (file) {
@@ -35,10 +35,13 @@
 					<div class="fd-change-profile-image-group">
 						<div class="fd-change-profile-image-wrapper">
 							<label for="{{ edit_profile_form.profile_image.id }}" class="fd-change-profile-image-label">
-								<img class="fd-change-profile-image-preview" :src="profile_image_preview" id="profile_image_preview" alt="Profile photo">
+								<img class="fd-change-profile-image-preview" :src="profile_image_preview"
+									id="profile_image_preview" alt="Profile photo">
 								<div class="fd-change-profile-image-overlay">
-									<svg class="fd-change-profile-image-upload-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-										<path stroke-linecap="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+									<svg class="fd-change-profile-image-upload-icon" fill="none" stroke="currentColor"
+										stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+										<path stroke-linecap="round"
+											d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
 										<circle cx="12" cy="13" r="3" />
 									</svg>
 								</div>
@@ -57,7 +60,8 @@
 					</div>
 
 					<div>
-						{{ edit_profile_form.profile_image(id="profile_image", **{"@change": "imagePreview()", "class": "fd-file-input"}) }}
+						{{ edit_profile_form.profile_image(id="profile_image", **{"@change": "imagePreview()", "class":
+						"fd-file-input"}) }}
 					</div>
 				</div>
 

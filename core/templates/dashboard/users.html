@@ -9,10 +9,12 @@
         <div class="fd-card-header fd-card-header-w-btn">
             <div>
                 <h2 class="fd-card-title">All users</h2>
-                <p class="fd-card-subtitle">{{ users|length }} account{{ '' if users|length == 1 else 's' }} in this workspace.</p>
+                <p class="fd-card-subtitle">{{ users|length }} account{{ '' if users|length == 1 else 's' }} in this
+                    workspace.</p>
             </div>
             <a href="{{ url_for('core.create_user') }}" class="fd-btn fd-btn-primary fd-btn-sm fd-btn-w-icon">
-                <svg class="fd-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <svg class="fd-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"
+                    aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
                 Create user
@@ -37,9 +39,8 @@
                     <tr class="fd-table-row">
                         <td class="fd-table-col-md fd-table-col-primary">
                             <div class="fd-table-user-profile">
-                                <img src="{% if user.profile_image == 'default-avatar.jpg' %}{{ url_for('static', filename='images/profiles/default-avatar.jpg') }}{% else %}{{ url_for('media.serve_media', filename='profiles/' + user.profile_image) }}{% endif %}"
-                                     class="fd-table-user-image"
-                                     alt="">
+                                <img src="{{ url_for('static', filename='images/profiles/' + user.profile_image) }}"
+                                    class="fd-table-user-image" alt="">
                                 <span class="fd-table-user-name">{{ user.username }}</span>
                             </div>
                         </td>
@@ -52,10 +53,11 @@
                         <td class="fd-table-col-md">
                             <div class="fd-table-actions">
                                 <a href="{{ url_for('core.manage_user', user_uid=user.uid) }}"
-                                   class="fd-table-action-link"
-                                   aria-label="Manage {{ user.username }}">
-                                    <svg class="fd-table-action-btn" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    class="fd-table-action-link" aria-label="Manage {{ user.username }}">
+                                    <svg class="fd-table-action-btn" fill="none" stroke="currentColor"
+                                        stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
                                 </a>
                             </div>
@@ -63,7 +65,8 @@
                     </tr>
                     {% else %}
                     <tr>
-                        <td class="fd-table-no-data" colspan="{% if g.settings['allow_first_name_last_name'] == '1' %}4{% else %}3{% endif %}">
+                        <td class="fd-table-no-data"
+                            colspan="{% if g.settings['allow_first_name_last_name'] == '1' %}4{% else %}3{% endif %}">
                             No other users yet. Create one to get started.
                         </td>
                     </tr>
