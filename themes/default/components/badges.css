@@ -1,23 +1,78 @@
-.fd-badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ;
-}
+@layer components {
+    .fd-badge {
+        @apply inline-flex h-[21px] items-center gap-1.5 whitespace-nowrap rounded-fd-sm px-[7px] text-[11.5px] font-medium leading-none;
+    }
 
-.fd-badge-primary {
-    @apply bg-blue-100 text-blue-800;
-}
+    .fd-badge-primary {
+        @apply bg-fd-accent-soft text-fd-accent;
+    }
 
-.fd-badge-secondary {
-    @apply bg-gray-100 text-gray-800;
-}
+    .fd-badge-secondary {
+        @apply bg-fd-surface text-fd-ink-2;
+    }
 
-.fd-badge-success {
-    @apply bg-green-100 text-green-800;
-}
+    .fd-badge-success {
+        @apply bg-fd-success-soft text-fd-success;
+    }
 
-.fd-badge-danger {
-    @apply bg-red-100 text-red-800;
-}
+    .fd-badge-danger {
+        @apply bg-fd-danger-soft text-fd-danger;
+    }
 
-.fd-badge-warning {
-    @apply bg-yellow-100 text-yellow-800;
+    .fd-badge-warning {
+        @apply bg-fd-warning-soft text-fd-warning;
+    }
+
+    .fd-badge-dot::before {
+        @apply size-[5px] rounded-full bg-current;
+        content: "";
+    }
+
+    .fd-toast {
+        @apply flex min-w-[260px] max-w-[400px] items-start justify-between gap-3 rounded-fd-sm border border-fd-line-2 border-l-2 border-l-fd-ink-2 bg-fd-bg py-2.5 pl-3.5 pr-3 text-[13px] leading-snug text-fd-ink shadow-fd-overlay;
+    }
+
+    .fd-toast-success {
+        @apply border-l-fd-success;
+    }
+
+    .fd-toast-error {
+        @apply border-l-fd-danger;
+    }
+
+    .fd-toast-warning {
+        @apply border-l-fd-warning;
+    }
+
+    .fd-toast-message {
+        @apply min-w-0 flex-1;
+    }
+
+    .fd-toast-close {
+        @apply -mr-0.5 -mt-0.5 inline-flex size-[22px] shrink-0 cursor-pointer items-center justify-center rounded-fd-sm border-0 bg-transparent text-fd-faint hover:bg-fd-surface hover:text-fd-ink;
+    }
+
+    .fd-icon {
+        @apply size-[15px] text-fd-muted;
+    }
+
+    .fd-icon-xs {
+        @apply size-[13px];
+    }
+
+    .fd-icon-sm {
+        @apply size-4;
+    }
+
+    .fd-icon-md {
+        @apply size-5;
+    }
+
+    .fd-icon-lg {
+        @apply size-[26px];
+    }
+
+    .fd-icon-xl {
+        @apply size-[34px];
+    }
 }

@@ -1,93 +1,205 @@
-.fd-form-label{
-    @apply block text-sm font-medium text-gray-700;
-}
+@layer components {
+    .fd-form-label,
+    .fd-settings-title {
+        @apply mb-1.5 block text-xs font-medium text-fd-ink-2;
+    }
 
-.fd-input-group-field {
-    @apply w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-gray-800 text-sm placeholder:text-gray-400 bg-white transition;
-}
+    .fd-input,
+    .fd-input-group-field,
+    .fd-settings-row input[type="text"],
+    .fd-settings-row input[type="email"],
+    .fd-settings-row input[type="password"],
+    .fd-settings-row textarea,
+    .fd-settings-row select {
+        @apply h-[38px] w-full appearance-none rounded-fd-sm border border-fd-line-2 bg-fd-bg px-2.5 font-text text-[13.5px] leading-snug text-fd-ink transition-colors;
+    }
 
-.fd-input-group-field:focus {
-    @apply focus:ring-2 focus:outline-none focus:ring-gray-600/10;
-}
+    .fd-settings-row textarea {
+        @apply h-auto min-h-[76px] resize-y py-2;
+    }
 
-.fd-input-group {
-    @apply relative;
-}
+    .fd-input::placeholder,
+    .fd-input-group-field::placeholder {
+        @apply text-fd-faint;
+    }
 
-.fd-password-toggle {
-    @apply absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition;
-}
+    .fd-input:hover,
+    .fd-input-group-field:hover,
+    .fd-settings-row input:hover,
+    .fd-settings-row textarea:hover,
+    .fd-settings-row select:hover {
+        @apply border-fd-ink-2;
+    }
 
-.fd-password-strength-track {
-    @apply h-1.5 bg-blue-100 rounded-full overflow-hidden mt-1.5;
-}
+    .fd-input:focus,
+    .fd-input-group-field:focus,
+    .fd-settings-row input:focus,
+    .fd-settings-row textarea:focus,
+    .fd-settings-row select:focus {
+        @apply border-fd-accent outline-none ring-[3px] ring-fd-accent-soft;
+    }
 
-.fd-password-strength-bar {
-    @apply h-full rounded-full transition-all duration-300;
-}
+    .fd-input:disabled,
+    .fd-input-group-field:disabled {
+        @apply cursor-not-allowed bg-fd-surface text-fd-muted;
+    }
 
-.fd-password-strength-text {
-    @apply text-xs mt-1 font-medium;
-}
+    .fd-settings-row select {
+        @apply cursor-pointer pr-[30px];
+    }
 
-.fd-input-icon {
-    @apply absolute left-3 top-1/2 -translate-y-1/2 text-gray-800/30;
-}
+    .fd-input-group-field {
+        @apply pl-9;
+    }
 
-.fd-input:focus{
-    @apply focus:ring-2 focus:outline-none focus:ring-gray-600/10;
-}
+    .fd-input-group,
+    .fd-auth-input-group {
+        @apply relative;
+    }
 
-.fd-input {
-    @apply w-full px-3 py-2.5 border border-gray-300 rounded-lg text-gray-800 text-sm placeholder:text-gray-400 bg-white transition disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed;
-}
+    .fd-input-icon,
+    .fd-auth-input-icon {
+        @apply pointer-events-none absolute left-2.5 top-1/2 flex -translate-y-1/2 items-center text-fd-faint;
+    }
 
-.fd-input-description {
-    @apply text-xs text-gray-500 mt-1;
-}
+    .fd-auth-icon {
+        @apply block size-[15px];
+    }
 
-.fd-file-input {
-    @apply w-full file:border-r file:border-gray-300 file:bg-gray-200 file:p-2 file:rounded-l-lg file:cursor-pointer file:hover:bg-gray-300 transition rounded-lg text-xs border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600/10;
-}
+    .fd-password-toggle,
+    .fd-auth-password-toggle {
+        @apply absolute right-1.5 top-1/2 inline-flex size-7 -translate-y-1/2 cursor-pointer items-center justify-center rounded-fd-sm border-0 bg-transparent text-fd-faint hover:bg-fd-surface hover:text-fd-ink;
+    }
 
-.fd-checkbox-input {
-    @apply w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-600/10 transition cursor-pointer accent-gray-600 focus:outline-none focus:ring-2;
-}
+    .fd-form-stack {
+        @apply flex flex-col gap-4;
+    }
 
-.fd-form-stack {
-    @apply space-y-4;
-}
+    .fd-form-grid,
+    .fd-manage-user-form-grid {
+        @apply grid grid-cols-1 gap-4 sm:grid-cols-2;
+    }
 
-.fd-form-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
-}
+    .fd-create-user-form-grid {
+        @apply flex flex-col gap-4;
+    }
 
-.fd-change-profile-image-container {
-    @apply flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5;
-}
+    .fd-form-field {
+        @apply min-w-0;
+    }
 
-.fd-change-profile-image-group {
-    @apply flex items-center gap-4;
-}
+    .fd-form-header {
+        @apply mb-1.5 flex items-baseline justify-between gap-3;
+    }
 
-.fd-change-profile-image-wrapper {
-    @apply relative;
-}
+    .fd-form-header .fd-form-label {
+        @apply mb-0;
+    }
 
-.fd-change-profile-image-label {
-    @apply cursor-pointer block;
-}
+    .fd-input-description {
+        @apply mt-1 text-xs leading-snug text-fd-muted;
+    }
 
-.fd-change-profile-image-preview {
-    @apply w-16 h-16 rounded-full object-cover transition group-hover:opacity-80;
-    border: 3px solid #fff; 
-    box-shadow: 0 0 0 2px rgba(37,99,235,0.25), 0 4px 12px rgba(30,64,175,0.12);
-}
+    .fd-file-input,
+    .fd-files-file-input {
+        @apply w-full cursor-pointer rounded-fd-sm border border-fd-line-2 bg-fd-bg text-xs text-fd-muted transition-colors file:mr-2.5 file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-fd-line-2 file:bg-fd-surface file:px-3 file:py-2 file:font-text file:text-xs file:font-medium file:text-fd-ink file:transition-colors hover:file:bg-fd-surface-2;
+    }
 
-.fd-change-profile-image-overlay {
-    @apply absolute inset-0 rounded-full bg-blue-800/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center;
-}
+    .fd-checkbox-input,
+    .fd-settings-row input[type="checkbox"],
+    .fd-role-checkbox-input {
+        @apply size-4 shrink-0 cursor-pointer rounded-sm border border-fd-line-2 accent-fd-accent;
+    }
 
-.fd-change-profile-image-upload-icon {
-    @apply w-5 h-5;
+    .fd-auth-form-error,
+    .fd-settings-error,
+    .fd-error-message {
+        @apply mt-1 list-none text-xs leading-snug text-fd-danger;
+    }
+
+    .fd-auth-form-errors ul,
+    .fd-settings-row ul {
+        @apply m-0 list-none p-0;
+    }
+
+    .fd-password-strength-track,
+    .fd-auth-password-strength-bars {
+        @apply mt-2 h-[3px] overflow-hidden rounded-full bg-fd-line;
+    }
+
+    .fd-password-strength-bar,
+    .fd-auth-password-strength-bar {
+        @apply h-full rounded-full transition-all duration-200;
+    }
+
+    .fd-password-strength-text,
+    .fd-auth-password-strength-label {
+        @apply mt-1.5 text-xs text-fd-muted;
+    }
+
+    .fd-change-profile-image-container,
+    .fd-profile-form {
+        @apply flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between;
+    }
+
+    .fd-change-profile-image-group {
+        @apply flex items-center gap-3.5;
+    }
+
+    .fd-change-profile-image-wrapper {
+        @apply relative shrink-0;
+    }
+
+    .fd-change-profile-image-label {
+        @apply block cursor-pointer;
+    }
+
+    .fd-change-profile-image-preview {
+        @apply size-14 rounded-full bg-fd-surface object-cover ring-1 ring-fd-line-2;
+    }
+
+    .fd-change-profile-image-overlay {
+        @apply pointer-events-none absolute inset-0 flex items-center justify-center rounded-full bg-fd-ink/55 text-white opacity-0 transition-opacity duration-150;
+    }
+
+    .fd-change-profile-image-label:hover .fd-change-profile-image-overlay,
+    .fd-change-profile-image-group:hover .fd-change-profile-image-overlay {
+        @apply opacity-100;
+    }
+
+    .fd-change-profile-image-upload-icon {
+        @apply size-[18px];
+    }
+
+    .fd-change-profile-image-name-placeholder {
+        @apply text-sm font-medium text-fd-ink;
+    }
+
+    .fd-change-profile-image-email-placeholder {
+        @apply mt-px text-xs text-fd-muted;
+    }
+
+    .fd-change-profile-image-upload-button {
+        @apply mt-2 inline-flex cursor-pointer items-center gap-1.5 text-xs font-medium text-fd-accent hover:underline;
+    }
+
+    .fd-role-checkbox-grid {
+        @apply flex flex-col gap-2;
+    }
+
+    .fd-role-checkbox-label {
+        @apply flex cursor-pointer items-start gap-2.5 rounded-fd-sm border border-fd-line px-3 py-2.5 transition-colors hover:border-fd-line-2 hover:bg-fd-surface-2 has-checked:border-fd-accent has-checked:bg-fd-accent-soft;
+    }
+
+    .fd-role-checkbox-header {
+        @apply flex items-center gap-2;
+    }
+
+    .fd-role-checkbox-title {
+        @apply text-[13px] font-medium text-fd-ink;
+    }
+
+    .fd-role-checkbox-description {
+        @apply mt-0.5 text-xs leading-snug text-fd-muted;
+    }
 }

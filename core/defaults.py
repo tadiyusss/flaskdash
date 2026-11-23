@@ -11,6 +11,7 @@ from pathlib import Path
 
 THEMES_DIR = Path(__file__).parent.parent / 'themes'
 THEMES_OUTPUT_DIR = Path(__file__).parent / 'static' / 'css' / 'themes'
+MEDIA_FOLDER = Path(__file__).parent.parent / 'media'
 
 from core.utils.registry.themes import get_all_themes
 

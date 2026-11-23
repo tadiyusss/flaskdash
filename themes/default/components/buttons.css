@@ -1,54 +1,68 @@
-/* Buttons */
+@layer components {
+    .fd-btn {
+        @apply inline-flex h-9 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-fd-sm border border-transparent px-3.5 text-[13.5px] font-medium leading-none no-underline transition-colors;
+    }
 
-.fd-btn{
-    @apply inline-flex items-center justify-center font-medium transition duration-100 py-2 px-4 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
-}
+    .fd-btn:disabled,
+    .fd-btn[disabled] {
+        @apply pointer-events-none cursor-not-allowed opacity-45;
+    }
 
-.fd-btn-primary{
-    @apply bg-blue-800 text-white rounded hover:bg-blue-900 transition duration-100;
-}
+    .fd-btn-primary {
+        @apply border-fd-accent bg-fd-accent text-white hover:border-fd-accent-hover hover:bg-fd-accent-hover active:border-fd-accent-press active:bg-fd-accent-press;
+    }
 
-.fd-btn-secondary{
-    @apply bg-gray-600 text-white rounded hover:bg-gray-700 transition duration-100;
-}
+    .fd-btn-secondary {
+        @apply border-fd-line-2 bg-fd-bg text-fd-ink hover:border-fd-ink hover:bg-fd-surface;
+    }
 
-.fd-btn-danger {
-    @apply bg-rose-800 text-white rounded hover:bg-rose-900 transition duration-100;
-}
+    .fd-btn-danger {
+        @apply border-fd-line-2 bg-fd-bg text-fd-danger hover:border-fd-danger hover:bg-fd-danger-soft;
+    }
 
-.fd-btn-outline{
-    @apply bg-transparent border border-gray-200 text-gray-600 rounded hover:bg-gray-200 transition duration-100;
-}
+    .fd-btn-outline {
+        @apply border-fd-line bg-transparent text-fd-ink-2 hover:border-fd-line-2 hover:bg-fd-surface hover:text-fd-ink;
+    }
 
-.fd-btn-w-icon{
-    @apply flex items-center gap-2;
-}
+    .fd-btn-ghost {
+        @apply border-transparent bg-transparent px-2 text-fd-ink-2 hover:bg-fd-surface hover:text-fd-ink;
+    }
 
-.fd-btn-icon{
-    @apply w-3.5 h-3.5;
-}
+    .fd-btn-w-icon {
+        @apply gap-1.5;
+    }
 
-/* Button Sizes */
-.fd-btn-xs{
-    @apply text-xs py-1 px-2;
-}
+    .fd-btn-icon {
+        @apply size-3.5 shrink-0;
+    }
 
-.fd-btn-sm{
-    @apply text-sm py-1 px-2;
-}
+    .fd-btn-xs {
+        @apply h-7 px-2.5 text-xs;
+    }
 
-.fd-btn-md{
-    @apply text-base py-2 px-4;
-}
+    .fd-btn-sm {
+        @apply h-8 px-3 text-[13px];
+    }
 
-.fd-btn-lg{
-    @apply text-lg py-3 px-6;
-}
+    .fd-btn-md {
+        @apply h-9;
+    }
 
-.fd-btn-block{
-    @apply w-full;
-}
+    .fd-btn-lg {
+        @apply h-11 px-5 text-[15px];
+    }
 
-.fd-btn-close {
-    @apply w-4 h-4 text-zinc-500;
+    .fd-btn-block,
+    .fd-btn-full {
+        @apply w-full;
+    }
+
+    .fd-btn-square,
+    .fd-btn-close {
+        @apply size-9 p-0;
+    }
+
+    .fd-link {
+        @apply border-b border-transparent text-fd-accent no-underline hover:border-current;
+    }
 }

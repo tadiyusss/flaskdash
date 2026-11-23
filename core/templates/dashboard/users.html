@@ -1,33 +1,35 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Users{% endblock %}
+{% block page_title %}Users{% endblock %}
 {% block main %}
 
-<div class="fd-dashboard-page-sm">
+<div class="fd-dashboard-page-lg">
     <div class="fd-card">
 
         <div class="fd-card-header fd-card-header-w-btn">
             <div>
-                <h3 class="fd-card-title">Manage Users</h3>
-                <p class="fd-card-subtitle">Add, create, and manage user information.</p>
+                <h2 class="fd-card-title">All users</h2>
+                <p class="fd-card-subtitle">{{ users|length }} account{{ '' if users|length == 1 else 's' }} in this workspace.</p>
             </div>
-            <a href="{{ url_for('core.create_user') }}" class="fd-btn fd-btn-secondary fd-btn-sm fd-btn-w-icon">
-                <svg class="fd-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+            <a href="{{ url_for('core.create_user') }}" class="fd-btn fd-btn-primary fd-btn-sm fd-btn-w-icon">
+                <svg class="fd-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
-                Create User
+                Create user
             </a>
         </div>
 
         <div class="fd-table-container">
             <table class="fd-table">
+                <caption class="fd-visually-hidden">Accounts in this workspace</caption>
                 <thead>
                     <tr class="fd-table-header-row">
-                        <th>Username</th>
+                        <th scope="col">User</th>
                         {% if g.settings['allow_first_name_last_name'] == "1" %}
-                        <th>Name</th>
+                        <th scope="col">Name</th>
                         {% endif %}
-                        <th>Email</th>
-                        <th>Actions</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="fd-table-body">
@@ -35,8 +37,10 @@
                     <tr class="fd-table-row">
                         <td class="fd-table-col-md fd-table-col-primary">
                             <div class="fd-table-user-profile">
-                                <img src="{{ url_for('static', filename='images/profiles/' + user.profile_image) }}" class="fd-table-user-image" alt="User Avatar"/>
-                                <span>{{ user.username }}</span>
+                                <img src="{% if user.profile_image == 'default-avatar.jpg' %}{{ url_for('static', filename='images/profiles/default-avatar.jpg') }}{% else %}{{ url_for('media.serve_media', filename='profiles/' + user.profile_image) }}{% endif %}"
+                                     class="fd-table-user-image"
+                                     alt="">
+                                <span class="fd-table-user-name">{{ user.username }}</span>
                             </div>
                         </td>
                         {% if g.settings['allow_first_name_last_name'] == "1" %}
@@ -45,12 +49,22 @@
                         </td>
                         {% endif %}
                         <td class="fd-table-col-md fd-table-col">{{ user.email }}</td>
-                        <td class="fd-table-col-md fd-table-col">
-                            <a href="{{ url_for('core.manage_user', user_uid=user.uid) }}">
-                                <svg class="fd-table-action-btn" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                </svg>
-                            </a>
+                        <td class="fd-table-col-md">
+                            <div class="fd-table-actions">
+                                <a href="{{ url_for('core.manage_user', user_uid=user.uid) }}"
+                                   class="fd-table-action-link"
+                                   aria-label="Manage {{ user.username }}">
+                                    <svg class="fd-table-action-btn" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td class="fd-table-no-data" colspan="{% if g.settings['allow_first_name_last_name'] == '1' %}4{% else %}3{% endif %}">
+                            No other users yet. Create one to get started.
                         </td>
                     </tr>
                     {% endfor %}
@@ -59,7 +73,6 @@
         </div>
 
     </div>
-
 </div>
 
 {% endblock %}

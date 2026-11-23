@@ -1,90 +1,87 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Home{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
 {% block main %}
-<main class="fd-dashboard-page">
+<div class="fd-dashboard-page">
+
     {% for grid in analytics_items %}
-    <section class="fd-analytics-section">
+    <section class="fd-analytics-section" aria-labelledby="fd-grid-{{ loop.index }}">
         <header class="fd-analytics-section-header">
-            <div class="fd-analytics-section-accent"></div>
-            <h2 class="fd-analytics-section-title">
-                {{ grid.title }}
-            </h2>
+            <h2 class="fd-analytics-section-title" id="fd-grid-{{ loop.index }}">{{ grid.title }}</h2>
         </header>
-        <div
-            class="fd-analytics-grid">
+
+        <div class="fd-analytics-grid">
             {% for item in grid.contents %}
-                {% if item.__class__.__name__ == "SmallAnalyticsCardData" %}
-                <article class="fd-analytics-card-sm">
+
+            {% if item.__class__.__name__ == "SmallAnalyticsCardData" %}
+            <article class="fd-analytics-card-sm">
+                {% if item.icon %}
+                <div class="fd-analytics-card-icon">{{ item.icon|safe }}</div>
+                {% endif %}
+                <div class="fd-analytics-card-content">
+                    <p class="fd-analytics-card-title">{{ item.title }}</p>
+                    <p class="fd-analytics-card-value">{{ item.value_function() }}</p>
+                </div>
+            </article>
+
+            {% elif item.__class__.__name__ == "MediumAnalyticsCardData" %}
+            <article class="fd-analytics-card-md">
+                <header class="fd-analytics-card-header">
+                    <p class="fd-analytics-card-title">{{ item.title }}</p>
                     {% if item.icon %}
-                    <div class="fd-analytics-card-icon">
-                        {{ item.icon|safe }}
-                    </div>
+                    <div class="fd-analytics-card-icon">{{ item.icon|safe }}</div>
                     {% endif %}
-                    <div class="fd-analytics-card-content">
-                        <p class="fd-analytics-card-value">
-                            {{ item.value_function() }}
-                        </p>
-                        <p class="fd-analytics-card-title">
-                            {{ item.title }}
-                        </p>
-                    </div>
-                </article>
-                {% elif item.__class__.__name__ == "MediumAnalyticsCardData" %}
-                <article class="fd-analytics-card-md">
-                    <header class="fd-analytics-card-header">
-                        {% if item.icon %}
-                        <div
-                            class="fd-analytics-card-icon">
-                            {{ item.icon|safe }}
-                        </div>
+                </header>
+                <p class="fd-analytics-card-value">{{ item.value_function() }}</p>
+                {% if item.subtitle %}
+                <p class="fd-analytics-card-subtitle">{{ item.subtitle }}</p>
+                {% endif %}
+            </article>
+
+            {% elif item.__class__.__name__ == "LargeAnalyticsCardData" %}
+            <article class="fd-analytics-card-lg">
+                <header class="fd-analytics-card-header">
+                    <p class="fd-analytics-card-title">{{ item.title }}</p>
+                    {% if item.increase is not none %}
+                    <span class="fd-analytics-card-badge">
+                        {% if item.increase > 0 %}
+                        <svg class="fd-analytics-card-badge-increase" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                        </svg>
+                        {% else %}
+                        <svg class="fd-analytics-card-badge-decrease" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
                         {% endif %}
-                    </header>
-                    <p class="fd-analytics-card-value">
-                        {{ item.value_function() }}
-                    </p>
-                    <p class="fd-analytics-card-title">
-                        {{ item.title }}
-                    </p>
-                    <p class="fd-analytics-card-subtitle">
-                        {{ item.subtitle }}
-                    </p>
-                </article>
-                {% elif item.__class__.__name__ == "LargeAnalyticsCardData" %}
-                <article class="fd-analytics-card-lg">
-                    <header class="fd-analytics-card-header">
-                        {% if item.icon %}
-                        <div class="fd-analytics-card-icon">
-                            {{ item.icon|safe }}
-                        </div>
-                        {% endif %}
-                        <span class="fd-analytics-card-badge">
-                            {% if item.increase > 0 %}
-                            <svg class="fd-analytics-card-badge-increase" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" d="M5 15l7-7 7 7" />
-                            </svg>
-                            {% else %}
-                            <svg class="fd-analytics-card-badge-decrease" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" d="M19 9l-7 7-7-7" />
-                            </svg>
-                            {% endif %}
-                            {{ item.increase }}%
-                        </span>
-                    </header>
-                    <p class="fd-analytics-card-value">
-                        {{ item.value_function() }}
-                    </p>
-                    <p class="fd-analytics-card-title">
-                        {{ item.title }}
-                    </p>
-                    <p class="fd-analytics-card-subtitle">{{ item.subtitle }}</p>
-                    <div class="fd-analytics-card-progress">
-                        <div class="fd-analytics-card-progress-fill" style="width: {{ item.progress }}%"></div>
-                    </div>
-                </article> 
-                {% endif %} 
+                        {{ item.increase }}%
+                    </span>
+                    {% endif %}
+                </header>
+                <p class="fd-analytics-card-value">{{ item.value_function() }}</p>
+                {% if item.subtitle %}
+                <p class="fd-analytics-card-subtitle">{{ item.subtitle }}</p>
+                {% endif %}
+                {% if item.progress is not none %}
+                <div class="fd-analytics-card-progress"
+                     role="progressbar"
+                     aria-valuenow="{{ item.progress }}"
+                     aria-valuemin="0"
+                     aria-valuemax="100"
+                     aria-label="{{ item.title }}">
+                    <div class="fd-analytics-card-progress-fill" style="width: {{ item.progress }}%"></div>
+                </div>
+                {% endif %}
+            </article>
+            {% endif %}
+
             {% endfor %}
         </div>
-    </section> 
+    </section>
+    {% else %}
+    <div class="fd-card">
+        <div class="fd-table-no-data">No analytics are available for your role.</div>
+    </div>
     {% endfor %}
-</main> 
+
+</div>
 {% endblock %}

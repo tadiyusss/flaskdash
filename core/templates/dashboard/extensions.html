@@ -1,54 +1,61 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Extensions{% endblock %}
+{% block page_title %}Extensions{% endblock %}
 {% block main %}
 <div class="fd-dashboard-page-md">
 	<div class="fd-card">
 		<div class="fd-card-header">
-			<h3 class="fd-card-title">Manage Extensions</h3>
-			<p class="fd-card-subtitle">Customize and enhance system extensions to improve functionality.</p>
+			<div>
+				<h2 class="fd-card-title">Extensions</h2>
+				<p class="fd-card-subtitle">{{ extensions|length }} extension{{ '' if extensions|length == 1 else 's' }} loaded into the app.</p>
+			</div>
 		</div>
+
 		<div class="fd-table-container">
 			<table class="fd-table">
+				<caption class="fd-visually-hidden">Loaded extensions</caption>
 				<thead>
 					<tr class="fd-table-header-row">
-						<th>Name</th>
-						<th>Description</th>
-						<th>Actions</th>
+						<th scope="col">Extension</th>
+						<th scope="col">Description</th>
+						<th scope="col">Actions</th>
 					</tr>
 				</thead>
-				<tbody class="fd-table-body"> 
-                    {% if extensions %} 
-                        {% for extension in extensions %} 
-                        <tr class="fd-table-row">
-                            <td class="fd-table-col-md fd-table-col-primary">
-                                <div class="fd-table-col-flex">
-                                    <div class="fd-table-icon-container">
-                                        <svg class="fd-table-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M14 2h6m0 0v6m0-6L10 14" />
-                                        </svg>
-                                    </div>
-                                    <span>{{ extension['name'] }}</span>
-                                </div>
-                            </td>
-                            <td class="fd-table-col-md">
-                                <p class="fd-table-cut-text">{{ extension['description'] }}</p>
-                            </td>
-                            <td class="fd-table-col-md">
-                                <a href="{{ url_for('core.manage_extensions', slug=extension['slug']) }}">
-                                    <svg class="fd-table-action-btn" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                        <circle cx="12" cy="12" r="3" />
-                                    </svg> 
-                                </a>
-                            </td>
-                        </tr> 
-                        {% endfor %} 
-                    {% else %} 
-                        <tr>
-                            <td colspan="3" class="fd-table-no-data">No extensions found.</td>
-                        </tr> 
-                    {% endif %} 
-                </tbody>
+				<tbody class="fd-table-body">
+					{% for extension in extensions %}
+					<tr class="fd-table-row">
+						<td class="fd-table-col-md fd-table-col-primary">
+							<div class="fd-table-col-flex">
+								<div class="fd-table-icon-container">
+									<svg class="fd-table-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+										<path stroke-linecap="round" d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M14 2h6m0 0v6m0-6L10 14" />
+									</svg>
+								</div>
+								<span class="fd-table-user-name">{{ extension['name'] }}</span>
+							</div>
+						</td>
+						<td class="fd-table-col-md fd-table-col">
+							<p class="fd-table-cut-text">{{ extension['description'] }}</p>
+						</td>
+						<td class="fd-table-col-md">
+							<div class="fd-table-actions">
+								<a href="{{ url_for('core.manage_extensions', slug=extension['slug']) }}"
+								   class="fd-table-action-link"
+								   aria-label="Manage extension {{ extension['name'] }}">
+									<svg class="fd-table-action-btn" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+										<path stroke-linecap="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+										<circle cx="12" cy="12" r="3" />
+									</svg>
+								</a>
+							</div>
+						</td>
+					</tr>
+					{% else %}
+					<tr>
+						<td colspan="3" class="fd-table-no-data">No extensions loaded.</td>
+					</tr>
+					{% endfor %}
+				</tbody>
 			</table>
 		</div>
 	</div>

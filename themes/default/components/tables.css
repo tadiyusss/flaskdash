@@ -1,87 +1,127 @@
-.fd-table-container {
-    @apply overflow-x-auto;
-}
+@layer components {
+    .fd-table-container {
+        @apply w-full overflow-x-auto;
+    }
 
-.fd-table {
-    @apply w-full text-xs;
-}
+    .fd-table {
+        @apply w-full border-collapse text-left text-[13px];
+    }
 
-.fd-table-header-row {
-    @apply border-b border-gray-200 bg-gray-100;
-}
+    .fd-table-header-row th {
+        @apply whitespace-nowrap border-b border-fd-line bg-fd-surface-2 px-5 py-2.5 text-[11.5px] font-medium text-fd-muted last:text-right;
+    }
 
-.fd-table-header-row th {
-    @apply text-left px-6 py-3 text-gray-500 font-medium;
-}
+    .fd-table-body tr,
+    .fd-table-row {
+        @apply border-b border-fd-line transition-colors last:border-b-0 hover:bg-fd-surface-2;
+    }
 
-.fd-table-body {
-    @apply divide-y divide-gray-100;
-}
+    .fd-table-col-md {
+        @apply px-5 py-2.5 align-middle;
+    }
 
-.fd-table-row {
-    @apply hover:bg-gray-50 transition-colors duration-100
-}
+    .fd-table-col-sm {
+        @apply px-5 py-2 align-middle;
+    }
 
-.fd-table-col-primary {
-    @apply font-semibold text-gray-800
-}
+    .fd-table-col-xs {
+        @apply px-5 py-1 align-middle;
+    }
 
-.fd-table-col {
-    @apply text-gray-600 text-xs;
-}
+    .fd-table-col-lg {
+        @apply px-5 py-3.5 align-middle;
+    }
 
-.fd-table-cut-text{
-    @apply line-clamp-2;
-}
+    .fd-table-col-primary {
+        @apply font-medium text-fd-ink;
+    }
 
-.fd-table-col-xs {
-    @apply px-6 py-1;
-}
+    .fd-table-col {
+        @apply text-fd-muted;
+    }
 
-.fd-table-col-sm {
-    @apply px-6 py-2;
-}
+    .fd-table-col-value {
+        @apply text-xs text-fd-ink-2;
+    }
 
-.fd-table-col-md {
-    @apply px-6 py-3.5;
-}
+    .fd-table-col:last-child,
+    .fd-table-col-md:last-child {
+        @apply text-right;
+    }
 
-.fd-table-col-lg {
-    @apply px-6 py-4;
-}
+    .fd-table-cut-text {
+        @apply line-clamp-2;
+    }
 
-.fd-table-action-btn {
-    @apply w-4 h-4 text-zinc-700 hover:text-zinc-800 transition-colors duration-100;
-}
+    .fd-table-user-profile {
+        @apply flex min-w-0 items-center gap-2.5;
+    }
 
-.fd-table-action-btn-danger {
-    @apply text-red-700 hover:text-red-900 transition-colors duration-100;
-}
+    .fd-table-user-image {
+        @apply size-7 shrink-0 rounded-full bg-fd-surface object-cover ring-1 ring-fd-line-2;
+    }
 
-.fd-table-no-data {
-    @apply text-gray-500 text-sm py-4 text-center;
-}
+    .fd-table-user-text {
+        @apply flex min-w-0 flex-col;
+    }
 
-.fd-table-icon-container {
-    @apply w-7 h-7 rounded-lg bg-gray-50 border border-gray-600/15 flex items-center justify-center shrink-0
-}
+    .fd-table-user-name {
+        @apply truncate font-medium text-fd-ink;
+    }
 
-.fd-table-icon {
-    @apply w-3.5 h-3.5 text-gray-600;
-}
+    .fd-table-user-meta {
+        @apply truncate text-[11.5px] text-fd-faint;
+    }
 
-.fd-table-col-flex {
-    @apply flex items-center space-x-2.5
-}
+    .fd-table-icon-container {
+        @apply flex size-7 shrink-0 items-center justify-center rounded-fd-sm border border-fd-line bg-fd-surface-2;
+    }
 
-.fd-table-copy-wrapper {
-    @apply relative w-20 h-6;
-}
+    .fd-table-icon {
+        @apply size-[13px] text-fd-muted;
+    }
 
-.fd-table-copy-button {
-    @apply absolute inset-0 flex items-center justify-center;
-}
+    .fd-table-col-flex {
+        @apply flex min-w-0 items-center gap-2.5;
+    }
 
-.fd-table-copy-success {
-    @apply absolute inset-0 flex items-center justify-center text-gray-700 text-xs font-medium;
+    .fd-table-action-btn {
+        @apply block size-[15px] text-fd-faint transition-colors;
+    }
+
+    a:hover .fd-table-action-btn {
+        @apply text-fd-accent;
+    }
+
+    .fd-table-action-btn-danger {
+        @apply text-fd-faint;
+    }
+
+    a:hover .fd-table-action-btn-danger {
+        @apply text-fd-danger;
+    }
+
+    .fd-table-actions {
+        @apply flex w-full items-center justify-end gap-1;
+    }
+
+    .fd-table-action-link {
+        @apply inline-flex size-7 items-center justify-center rounded-fd-sm transition-colors hover:bg-fd-surface;
+    }
+
+    .fd-table-copy-wrapper {
+        @apply relative inline-flex size-7 items-center justify-center;
+    }
+
+    .fd-table-copy-button {
+        @apply absolute inset-0 inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-fd-sm border border-fd-line-2 bg-fd-bg px-1.5 text-[11.5px] font-medium text-fd-ink-2 transition-colors hover:border-fd-ink-2 hover:bg-fd-surface;
+    }
+
+    .fd-table-copy-success {
+        @apply absolute inset-0 inline-flex items-center justify-center gap-1 text-[11.5px] font-medium text-fd-success;
+    }
+
+    .fd-table-no-data {
+        @apply px-5 py-10 text-center text-[13px] text-fd-muted;
+    }
 }

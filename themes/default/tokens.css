@@ -1,0 +1,92 @@
+@theme {
+    --color-fd-bg: #ffffff;
+    --color-fd-surface: #f4f4f4;
+    --color-fd-surface-2: #fafafa;
+
+    --color-fd-ink: #111111;
+    --color-fd-ink-2: #3f3f3f;
+    --color-fd-muted: #626262;
+    --color-fd-faint: #757575;
+
+    --color-fd-line: rgba(17, 17, 17, 0.1);
+    --color-fd-line-2: rgba(17, 17, 17, 0.16);
+
+    --color-fd-accent: #1a4be0;
+    --color-fd-accent-hover: #1540c4;
+    --color-fd-accent-press: #1034a3;
+    --color-fd-accent-soft: #eef2fe;
+
+    --color-fd-danger: #b42318;
+    --color-fd-danger-soft: #fef3f2;
+    --color-fd-success: #067647;
+    --color-fd-success-soft: #ecfdf3;
+    --color-fd-warning: #b54708;
+    --color-fd-warning-soft: #fffaeb;
+
+    --color-fd-nav: #111111;
+    --color-fd-nav-ink: #ededed;
+    --color-fd-nav-2: #b8b8b8;
+    --color-fd-nav-muted: #8f8f8f;
+
+    --font-display: "Red Hat Display", ui-sans-serif, system-ui, sans-serif;
+    --font-text: "Red Hat Text", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --radius-fd-sm: 6px;
+    --radius-fd-md: 8px;
+    --radius-fd-lg: 10px;
+
+    --shadow-fd-overlay: 0 12px 32px -8px rgba(17, 17, 17, 0.18),
+        0 2px 8px -2px rgba(17, 17, 17, 0.08);
+
+    --spacing-fd-nav: 60px;
+    --spacing-fd-sidebar: 236px;
+}
+
+@layer base {
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body.fd-body {
+        @apply m-0 bg-fd-bg font-text text-sm leading-normal text-fd-ink antialiased;
+    }
+
+    :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+        @apply rounded-fd-sm outline-none ring-2 ring-fd-accent/45 ring-offset-2 ring-offset-fd-bg;
+    }
+
+    .fd-visually-hidden {
+        @apply absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0;
+        clip: rect(0, 0, 0, 0);
+    }
+
+    [x-cloak] {
+        @apply hidden;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            @apply animate-none scroll-auto transition-none;
+        }
+    }
+}
+
+@layer components {
+    .fd-skip-link {
+        @apply absolute left-3 top-[-56px] z-100 rounded-fd-sm bg-fd-ink px-4 py-2.5 text-[13px] font-medium text-white transition-[top] duration-150;
+    }
+
+    .fd-skip-link:focus {
+        @apply top-3;
+    }
+
+    .fd-mono,
+    .fd-table-col-value,
+    .fd-analytics-card-value,
+    .fd-stat-value {
+        @apply font-mono tabular-nums;
+    }
+}

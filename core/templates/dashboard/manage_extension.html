@@ -1,50 +1,53 @@
 {% extends "dashboard/base.html" %}
-{% block title %}{{ g.settings['site_title'] }} - Manage Extension{% endblock %}
+{% block title %}{{ g.settings['site_title'] }} - {{ extension.name }}{% endblock %}
+{% block page_title %}Extension{% endblock %}
 {% block main %}
 <div class="fd-dashboard-page-md">
 	<div class="fd-card">
 		<div class="fd-card-header">
 			<div>
-                <h3 class="fd-card-title">{{ extension.name }}</h3>
-                <p class="fd-card-subtitle">{{ extension.description }}</p>
+				<h2 class="fd-card-title">{{ extension.name }}</h2>
+				<p class="fd-card-subtitle">{{ extension.description }}</p>
 			</div>
+			<a href="{{ url_for('core.extensions') }}" class="fd-btn fd-btn-outline fd-btn-sm">Back to extensions</a>
 		</div>
-		<div class="fd-card-body">
 
-			<div class="fd-list-group-item">
-				<p class="fd-list-group-item-header">Name</p>
-				<p class="fd-list-group-item-value">{{ extension.name }}</p>
-			</div>
-			<div class="fd-list-group-item">
-				<p class="fd-list-group-item-header">Description</p>
-				<p class="fd-list-group-item-value">{{ extension.description }}</p>
-			</div>
-			<div class="fd-list-group-item">
-				<p class="fd-list-group-item-header">Version</p>
-				<p class="fd-list-group-item-value">{{ extension.version }}</p>
-			</div>
-			<div class="fd-list-group-item">
-				<p class="fd-list-group-item-header">Author</p>
-				<p class="fd-list-group-item-value">{{ extension.author }}</p>
-			</div>
-			<div class="fd-list-group-item">
-				<p class="fd-list-group-item-header">Dependencies</p>
-				<p class="fd-list-group-item-value">{{ extension.dependencies | join(', ') if extension.dependencies else 'None' }}</p>
-			</div>
-			<div class="fd-list-group-item">
-				<p class="fd-list-group-item-header">URL Prefix</p>
-				<p class="fd-list-group-item-value">{{ extension.url_prefix if extension.url_prefix else '/' }}</p>
-			</div>
-			<div class="fd-list-group-item">
-				<p class="fd-list-group-item-header">Static Folder</p>
-				<p class="fd-list-group-item-value">{{ extension.static_folder }}</p>
-			</div>
-			<div class="fd-list-group-item">
-				<p class="fd-list-group-item-header">Template Folder</p>
-				<p class="fd-list-group-item-value">{{ extension.template_folder }}</p>
-			</div>
+		<div class="fd-card-body">
+			<dl class="fd-meta-list">
+				<div class="fd-meta-row">
+					<dt class="fd-meta-key">Name</dt>
+					<dd class="fd-meta-value">{{ extension.name }}</dd>
+				</div>
+				<div class="fd-meta-row">
+					<dt class="fd-meta-key">Description</dt>
+					<dd class="fd-meta-value">{{ extension.description }}</dd>
+				</div>
+				<div class="fd-meta-row">
+					<dt class="fd-meta-key">Version</dt>
+					<dd class="fd-meta-value">{{ extension.version }}</dd>
+				</div>
+				<div class="fd-meta-row">
+					<dt class="fd-meta-key">Author</dt>
+					<dd class="fd-meta-value">{{ extension.author }}</dd>
+				</div>
+				<div class="fd-meta-row">
+					<dt class="fd-meta-key">Dependencies</dt>
+					<dd class="fd-meta-value">{{ extension.dependencies | join(', ') if extension.dependencies else 'None' }}</dd>
+				</div>
+				<div class="fd-meta-row">
+					<dt class="fd-meta-key">URL prefix</dt>
+					<dd class="fd-meta-value">{{ extension.url_prefix if extension.url_prefix else '/' }}</dd>
+				</div>
+				<div class="fd-meta-row">
+					<dt class="fd-meta-key">Static folder</dt>
+					<dd class="fd-meta-value">{{ extension.static_folder }}</dd>
+				</div>
+				<div class="fd-meta-row">
+					<dt class="fd-meta-key">Template folder</dt>
+					<dd class="fd-meta-value">{{ extension.template_folder }}</dd>
+				</div>
+			</dl>
 		</div>
 	</div>
-	
 </div>
 {% endblock %}

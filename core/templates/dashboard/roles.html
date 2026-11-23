@@ -1,88 +1,103 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Roles{% endblock %}
+{% block page_title %}Roles{% endblock %}
 {% block main %}
-<div class="fd-dashboard-page-sm" x-data="{modal_open: false}">
+<div class="fd-dashboard-page-sm" x-data="{ modal_open: false }">
+
 	<div class="fd-card">
 		<div class="fd-card-header fd-card-header-w-btn">
 			<div>
-				<h3 class="fd-card-title">Manage Roles</h3>
-				<p class="fd-card-subtitle">Add, create, and manage roles.</p>
+				<h2 class="fd-card-title">Roles</h2>
+				<p class="fd-card-subtitle">{{ roles|length }} role{{ '' if roles|length == 1 else 's' }} define what an account can reach.</p>
 			</div>
-			<button @click="modal_open = true" class="fd-btn fd-btn-secondary fd-btn-sm fd-btn-w-icon">
-				<svg class="fd-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+			<button @click="modal_open = true" class="fd-btn fd-btn-primary fd-btn-sm fd-btn-w-icon">
+				<svg class="fd-btn-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
 					<path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-				</svg> Create Role 
+				</svg>
+				Create role
 			</button>
 		</div>
+
 		<div class="fd-table-container">
 			<table class="fd-table">
+				<caption class="fd-visually-hidden">Roles in this workspace</caption>
 				<thead>
 					<tr class="fd-table-header-row">
-						<th>Name</th>
-						<th>Description</th>
-						<th>Actions</th>
+						<th scope="col">Role</th>
+						<th scope="col">Description</th>
+						<th scope="col">Actions</th>
 					</tr>
 				</thead>
-				<tbody class="fd-table-body"> 
-					{% for role in roles %} 
+				<tbody class="fd-table-body">
+					{% for role in roles %}
 					<tr class="fd-table-row">
 						<td class="fd-table-col-md fd-table-col-primary">
-							<span class="fd-badge fd-badge-secondary">
+							<span class="fd-badge {% if role.name == 'Administrator' %}fd-badge-primary{% else %}fd-badge-secondary{% endif %}">
 								{{ role.name }}
 							</span>
 						</td>
 						<td class="fd-table-col-md fd-table-col">{{ role.description }}</td>
-						<td class="fd-table-col-md fd-table-col">
-                            {% if role.name in default_roles %}
-                            <p class="">You are not allowed to delete default roles.</p>
-                            {% else %}
-                            <a href="{{ url_for('core.delete_role', role_uid=role.uid) }}">
-								<svg class="fd-table-action-btn fd-table-action-btn-danger" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-									<path stroke-linecap="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-								</svg>
-                            </a>
-                            {% endif %}
+						<td class="fd-table-col-md">
+							<div class="fd-table-actions">
+								{% if role.name in default_roles %}
+								<span class="fd-table-user-meta">Default role</span>
+								{% else %}
+								<a href="{{ url_for('core.delete_role', role_uid=role.uid) }}"
+								   class="fd-table-action-link"
+								   aria-label="Delete role {{ role.name }}">
+									<svg class="fd-table-action-btn fd-table-action-btn-danger" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+										<path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+									</svg>
+								</a>
+								{% endif %}
+							</div>
 						</td>
-					</tr> 
-					{% else %} 
+					</tr>
+					{% else %}
 					<tr>
 						<td colspan="3" class="fd-table-no-data">No roles found.</td>
-					</tr> 
-					{% endfor %} 
+					</tr>
+					{% endfor %}
 				</tbody>
 			</table>
 		</div>
 	</div>
-	<form method="POST" x-show="modal_open" x-transition class="fd-modal-container">
+
+	<form method="POST" x-show="modal_open" x-cloak class="fd-modal-container" @keydown.escape.window="modal_open = false">
 		<div @click="modal_open = false" class="fd-modal-backdrop"></div>
 		<div @click.stop class="fd-modal">
-			<div class="fd-modal-header ">
+			<div class="fd-modal-header">
 				<div>
-					<h3 class="fd-modal-title">Create Role</h3>
-					<p class="fd-modal-subtitle">Define a new role and its description.</p>
+					<h2 class="fd-modal-title">Create role</h2>
+					<p class="fd-modal-subtitle">Name the role and say what it grants.</p>
 				</div>
-				<button type="button" @click="modal_open = false" class="fd-btn-close">
-					<svg class="fd-icon-sm" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+				<button type="button" @click="modal_open = false" class="fd-btn fd-btn-ghost fd-btn-square" aria-label="Close">
+					<svg class="fd-icon-sm" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
 					</svg>
 				</button>
 			</div>
+
 			<div class="fd-modal-body">
-				{{ form.hidden_tag() }}
-				<div>
-					{{ form.name.label(class="fd-form-label") }}
-					{{ form.name(placeholder="e.g. editor") }}
-				</div>
-				<div>
-					{{ form.description.label(class="fd-form-label") }}
-					{{ form.description(placeholder="What can this role do?") }}
+				<div class="fd-form-stack">
+					{{ form.hidden_tag() }}
+					<div class="fd-form-field">
+						{{ form.name.label(class="fd-form-label") }}
+						{{ form.name(placeholder="e.g. Auditor") }}
+					</div>
+					<div class="fd-form-field">
+						{{ form.description.label(class="fd-form-label") }}
+						{{ form.description(placeholder="What can this role do?") }}
+					</div>
 				</div>
 			</div>
+
 			<div class="fd-modal-footer">
-				{{ form.submit(class="fd-btn fd-btn-secondary fd-btn-sm") }}
-				<button type="button" @click="modal_open = false" class="fd-btn fd-btn-outline fd-btn-sm">Cancel</button>
+				<button type="button" @click="modal_open = false" class="fd-btn fd-btn-secondary fd-btn-sm">Cancel</button>
+				{{ form.submit(class="fd-btn fd-btn-primary fd-btn-sm") }}
 			</div>
 		</div>
 	</form>
-</div>    
+
+</div>
 {% endblock %}

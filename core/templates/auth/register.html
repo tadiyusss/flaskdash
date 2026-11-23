@@ -1,8 +1,8 @@
-{% extends "base.html" %} 
-{% block title %}{{ g.settings['site_title'] }} - Register{% endblock %} 
-{% block content %} 
+{% extends "base.html" %}
+{% block title %}{{ g.settings['site_title'] }} - Register{% endblock %}
+{% block content %}
 <div class="fd-auth-layout">
-	<div class="fd-auth-container" x-data="{
+    <div class="fd-auth-container" x-data="{
             password: '',
             confirm: '',
             show: false,
@@ -16,137 +16,184 @@
                 return s;
             },
             get strengthLabel() {
-                return ['','Weak Password','Fair Password','Good Password','Strong Password'][this.strength];
+                return ['','Weak','Fair','Good','Strong'][this.strength];
             },
             get strengthColor() {
-                return ['','#ef4444','#f59e0b','#3b82f6','#22c55e'][this.strength];
+                return ['','#b42318','#b54708','#1a4be0','#067647'][this.strength];
             }
          }">
-		<header class="fd-auth-header">
-			{% if g.settings['website_logo'] %}
-			<img src="{{ url_for('media.serve_media', filename=g.settings['website_logo']) }}" class="fd-auth-website-logo" alt="" srcset="">
-			{% else %}
-			<img src="{{ url_for('static', filename='images/default-logo.png') }}" class="fd-auth-website-logo" alt="" srcset="">
-			{% endif %}
-			<div class="">
-				<h1 class="fd-auth-title">{{ g.settings['site_title'] }}</h1>
-				<p class="fd-auth-description">{{ g.settings['site_description'] }}</p>
-			</div>
-		</header>
-		<section class="fd-auth-card fd-card">
-			<div class="fd-auth-card-header fd-card-header">
-				<h2 class="fd-auth-card-title fd-card-header-heading"> Create your account </h2>
-				<p class="fd-auth-card-description fd-card-header-description"> Create your account and get started. </p>
-			</div>
-			<div class="fd-auth-card-body">
-				<form method="POST" class="fd-auth-form">
-					{{ form.hidden_tag() }}
-					<div class="fd-auth-form-grid"> 
-						{% if g.settings['allow_first_name_last_name'] == "1" %} 
-						<div class="fd-auth-form-field">
-							{{ form.firstname.label(class="fd-form-label") }}
-							{{ form.firstname }} 
 
-							{% if form.errors.firstname %} 
-							<p class="fd-auth-form-error">{{ form.errors.firstname[0] }}</p> 
-							{% endif %}
-						</div>
-						<div class="fd-auth-form-field">
-							{{ form.lastname.label(class="fd-form-label") }}
-							{{ form.lastname }} 
-							{% if form.errors.lastname %} 
-							<p class="fd-auth-form-error">{{ form.errors.lastname[0] }}</p> 
-							{% endif %}
-						</div> 
-						{% endif %} 
-						<div class="fd-auth-form-field">
-							{{ form.username.label(class="fd-form-label") }}
-							{{ form.username }} 
-							{% if form.errors.username %} 
-							<p class="fd-auth-form-error">{{ form.errors.username[0] }}</p> 
-							{% endif %}
-						</div>
-					</div>
-					<div class="fd-auth-form-group">
-						{{ form.email.label(class="fd-form-label") }}
-						<div class="fd-auth-input-group">
-							<span class="fd-auth-input-icon">
-								<svg class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-									<path stroke-linecap="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-								</svg>
-							</span>
-							{{ form.email }}
-						</div> 
-						{% if form.errors.email %} 
-						<p class="fd-auth-form-error">{{ form.errors.email[0] }}</p> 
-						{% endif %}
-					</div>
-					<div class="fd-auth-form-group">
-						{{ form.password.label(class="fd-form-label") }}
-						<div class="fd-auth-input-group">
-							<span class="fd-auth-input-icon">
-								<svg class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-									<rect x="3" y="11" width="18" height="11" rx="2" />
-									<path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4" />
-								</svg>
-							</span>
-							{{ form.password }}
-							<button type="button" @click="show = !show" class="fd-auth-password-toggle">
-								<svg x-show="!showC" class="fd-icon-xs" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-									<path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-									<path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-								</svg>
-								<svg x-show="showC" class="fd-icon-xs" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-									<path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m2.46-2.286A9.96 9.96 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18" />
-								</svg>
-							</button>
-						</div>
-						<div x-show="password.length > 0" class="fd-auth-password-strength">
-							<div class="fd-auth-password-strength-bars">
-								<template x-for="i in 4">
-									<div class="fd-auth-password-strength-bar">
-										<div class="fd-auth-password-strength-fill" :style="`width:${i<=strength?100:0}%;background:${strengthColor}`">
-										</div>
-									</div>
-								</template>
-							</div>
-							<p class="fd-auth-password-strength-label" :style="`color:${strengthColor}`" x-text="strengthLabel"></p>
-						</div>
-					</div>
-					<div class="fd-auth-form-group">
-						{{ form.retype_password.label(class="fd-form-label") }}
-						<div class="fd-auth-input-group">
-							<span class="fd-auth-input-icon">
-								<svg class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-									<path stroke-linecap="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-								</svg>
-							</span>
-							{{ form.retype_password }}
-							<button type="button" @click="showC = !showC" class="fd-auth-password-toggle">
-								<svg x-show="!showC" class="fd-icon-xs" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-									<path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-									<path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-								</svg>
-								<svg x-show="showC" class="fd-icon-xs" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-									<path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m2.46-2.286A9.96 9.96 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18" />
-								</svg>
-							</button>
-						</div> 
-						{% if form.errors.retype_password %} 
-						<p class="fd-auth-form-error">
-							{{ form.errors.retype_password[0] }}
-						</p> 
-						{% endif %}
-					</div>
-					<button type="submit" class="fd-btn fd-btn-secondary fd-btn-block">
-						<span>Create account</span>
-					</button>
-				</form>
-			</div>
-		</section>
-		<footer class="fd-auth-footer">
-			<p class="fd-auth-footer-text"> Already have an account? <a href="{{ url_for('core.login') }}" class="fd-auth-footer-link"> Sign in </a></p>
-			<p class="fd-auth-copyright"> © 2026 {{ g.settings['site_title'] }}</p>
-		</footer>
-	</div>
-</div> {% endblock %}
+        <header class="fd-auth-header">
+            {% if g.settings['website_logo'] %}
+            <img src="{{ url_for('media.serve_media', filename=g.settings['website_logo']) }}" class="fd-auth-website-logo" alt="{{ g.settings['site_title'] }}">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/default-logo.png') }}" class="fd-auth-website-logo" alt="{{ g.settings['site_title'] }}">
+            {% endif %}
+            <div>
+                <h1 class="fd-auth-title">{{ g.settings['site_title'] }}</h1>
+                <p class="fd-auth-description">{{ g.settings['site_description'] }}</p>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="fd-auth-flash-messages">
+            {% for category, message in messages %}
+            <div class="fd-toast {% if category == 'success' %}fd-toast-success{% elif category == 'error' %}fd-toast-error{% else %}fd-toast-warning{% endif %}" role="status">
+                <span class="fd-auth-flash-message">{{ message }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <section class="fd-auth-card">
+            <div class="fd-auth-card-header">
+                <h2 class="fd-auth-card-title">Create your account</h2>
+                <p class="fd-auth-card-description">It takes a moment and you're in.</p>
+            </div>
+
+            <div class="fd-auth-card-body">
+                <form method="POST" class="fd-auth-form" novalidate>
+                    {{ form.hidden_tag() }}
+
+                    {% if form.errors %}
+                    <div class="fd-auth-form-errors" role="alert">
+                        <p class="fd-auth-form-errors-title">Check the following:</p>
+                        {% for field, errors in form.errors.items() %}
+                        {% for error in errors %}
+                        <div class="fd-auth-error">
+                            <svg class="fd-auth-error-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10" />
+                                <path stroke-linecap="round" d="M12 8v4m0 4h.01" />
+                            </svg>
+                            <span class="fd-auth-error-message">{{ error }}</span>
+                        </div>
+                        {% endfor %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    {% if g.settings['allow_first_name_last_name'] == "1" %}
+                    <div class="fd-auth-form-grid">
+                        <div class="fd-auth-form-field">
+                            {{ form.firstname.label(class="fd-form-label") }}
+                            {{ form.firstname }}
+                            {% if form.errors.firstname %}
+                            <p class="fd-auth-form-error">{{ form.errors.firstname[0] }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="fd-auth-form-field">
+                            {{ form.lastname.label(class="fd-form-label") }}
+                            {{ form.lastname }}
+                            {% if form.errors.lastname %}
+                            <p class="fd-auth-form-error">{{ form.errors.lastname[0] }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="fd-auth-form-group">
+                        {{ form.username.label(class="fd-form-label") }}
+                        <div class="fd-auth-input-group">
+                            <span class="fd-auth-input-icon">
+                                <svg class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                            </span>
+                            {{ form.username }}
+                        </div>
+                        {% if form.errors.username %}
+                        <p class="fd-auth-form-error">{{ form.errors.username[0] }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="fd-auth-form-group">
+                        {{ form.email.label(class="fd-form-label") }}
+                        <div class="fd-auth-input-group">
+                            <span class="fd-auth-input-icon">
+                                <svg class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </span>
+                            {{ form.email }}
+                        </div>
+                        {% if form.errors.email %}
+                        <p class="fd-auth-form-error">{{ form.errors.email[0] }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="fd-auth-form-group">
+                        {{ form.password.label(class="fd-form-label") }}
+                        <div class="fd-auth-input-group">
+                            <span class="fd-auth-input-icon">
+                                <svg class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                                    <path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4" />
+                                </svg>
+                            </span>
+                            {{ form.password }}
+                            <button type="button" @click="show = !show" class="fd-auth-password-toggle"
+                                    :aria-label="show ? 'Hide password' : 'Show password'">
+                                <svg x-show="!show" class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <svg x-show="show" x-cloak class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m2.46-2.286A9.96 9.96 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18" />
+                                </svg>
+                            </button>
+                        </div>
+                        {% if form.errors.password %}
+                        <p class="fd-auth-form-error">{{ form.errors.password[0] }}</p>
+                        {% endif %}
+                        <div x-show="password.length > 0" x-cloak>
+                            <div class="fd-password-strength-track">
+                                <div class="fd-password-strength-bar"
+                                     :style="`width:${strength * 25}%; background:${strengthColor}`"></div>
+                            </div>
+                            <p class="fd-password-strength-text" :style="`color:${strengthColor}`" x-text="strengthLabel + ' password'"></p>
+                        </div>
+                    </div>
+
+                    <div class="fd-auth-form-group">
+                        {{ form.retype_password.label(class="fd-form-label") }}
+                        <div class="fd-auth-input-group">
+                            <span class="fd-auth-input-icon">
+                                <svg class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </span>
+                            {{ form.retype_password }}
+                            <button type="button" @click="showC = !showC" class="fd-auth-password-toggle"
+                                    :aria-label="showC ? 'Hide password' : 'Show password'">
+                                <svg x-show="!showC" class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <svg x-show="showC" x-cloak class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m2.46-2.286A9.96 9.96 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M3 3l18 18" />
+                                </svg>
+                            </button>
+                        </div>
+                        {% if form.errors.retype_password %}
+                        <p class="fd-auth-form-error">{{ form.errors.retype_password[0] }}</p>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="fd-btn fd-btn-primary fd-btn-block fd-btn-lg">
+                        Create account
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <footer class="fd-auth-footer">
+            <p class="fd-auth-footer-text">Already have an account? <a href="{{ url_for('core.login') }}" class="fd-auth-footer-link">Sign in</a></p>
+            <p class="fd-auth-copyright">&copy; {{ g.settings['site_title'] }}</p>
+        </footer>
+
+    </div>
+</div>
+{% endblock %}

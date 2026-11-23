@@ -1,19 +1,24 @@
 <!doctype html>
-<html lang='en'>
+<html lang="en">
     <head>
-        <meta charset='utf-8'>
-        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}{% endblock %}</title>
-        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600;700&family=Red+Hat+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+            rel="stylesheet">
+
         <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/themes/' + g.settings['site_theme'] + '.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
         {% if g.settings['favicon_icon'] %}
-		<link rel="icon" href="/favicon.ico" type="image/x-icon">
-		{% endif %}
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        {% endif %}
         {% block head %}{% endblock %}
     </head>
-    <body class="fd-body">  
+    <body class="fd-body">
         {% block content %}{% endblock %}
         {% block javascript %}{% endblock %}
     </body>

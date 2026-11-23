@@ -1,6 +1,6 @@
-{% extends "base.html" %} 
-{% block title %}{{ g.settings['site_title'] }} Dashboard{% endblock %} 
-{% block content %} 
+{% extends "base.html" %}
+{% block title %}{{ g.settings['site_title'] }} Dashboard{% endblock %}
+{% block content %}
 <div class="fd-layout" x-data="{
         sidebarOpen: window.innerWidth >= 768,
         init() {
@@ -10,81 +10,86 @@
             window.addEventListener('resize', this.handleResize);
         }
     }">
-	<div x-show="sidebarOpen" x-cloak @click="sidebarOpen = false" class="fd-sidebar-overlay"></div>
-	<aside class="fd-sidebar" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
-		<a href="{{ url_for('core.dashboard') }}" class="fd-brand"> 
-            {% if g.settings['website_logo'] %} 
-            <img src="{{ url_for('media.serve_media', filename=g.settings['website_logo']) }}" alt="Website Logo" class="fd-brand-logo"> 
-            {% else %} 
-            <img src="{{ url_for('static', filename='images/default-logo.png') }}" alt="Website Logo" class="fd-brand-logo"> 
-            {% endif %} 
-            <span class="fd-brand-title">
-				{{ g.settings['site_title'] }}
-			</span>
-			<button @click="sidebarOpen = false" class="fd-sidebar-close-btn">
-				<svg class="fd-sidebar-close-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-					<path stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
-				</svg>
-			</button>
-		</a>
-		<!-- Sidebar Navigation --> 
-        {% for category in get_sidebar() %} 
+
+    <div x-show="sidebarOpen" x-cloak @click="sidebarOpen = false" class="fd-sidebar-overlay"></div>
+    <aside class="fd-sidebar" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+        <a href="{{ url_for('core.dashboard') }}" class="fd-brand">
+            {% if g.settings['website_logo'] %}
+            <img src="{{ url_for('media.serve_media', filename=g.settings['website_logo']) }}" alt="{{ g.settings['site_title'] }}" class="fd-brand-logo">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/default-logo.png') }}" alt="{{ g.settings['site_title'] }}" class="fd-brand-logo">
+            {% endif %}
+            <span class="fd-brand-title">{{ g.settings['site_title'] }}</span>
+            <button @click.prevent="sidebarOpen = false" class="fd-sidebar-close-btn" aria-label="Close navigation">
+                <svg class="fd-sidebar-close-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </a>
+
+        {% for category in get_sidebar() %}
         <section class="fd-sidebar-section">
-			<div class="fd-sidebar-section-title">
-				{{ category.name }}
-			</div>
-			<nav class="fd-sidebar-nav"> 
-                {% for item in category.items %} 
-                <a href="{{ url_for(item.route) }}" class="fd-sidebar-link">
-					{{ item.icon|safe }}
-					{{ item.name }}
-				</a> 
-                {% endfor %} 
+            <div class="fd-sidebar-section-title">{{ category.name }}</div>
+            <nav class="fd-sidebar-nav" aria-label="{{ category.name }}">
+                {% for item in category.items %}
+                {% set endpoint_url = url_for(item.route) %}
+                <a href="{{ endpoint_url }}"
+                   class="fd-sidebar-link"
+                   {% if request.path == endpoint_url %}aria-current="page"{% endif %}>
+                    {{ item.icon|safe }}
+                    <span>{{ item.name }}</span>
+                </a>
+                {% endfor %}
             </nav>
-		</section> 
+        </section>
         {% endfor %}
-	</aside>
-	<!-- Main Content -->
-	<main class="fd-main-content" :class="sidebarOpen ? 'md:ml-[240px]' : 'ml-0'">
-		<!-- Header -->
-		<header class="fd-header">
-			<div class="fd-header-start">
-				<button @click="sidebarOpen = !sidebarOpen" class="fd-btn-close">
-					<svg class="fd-icon-sm" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-						<path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
-					</svg>
-				</button>
-				<div class="fd-page-heading">
-					<h1 class="fd-page-title">{% block page_title %}{% endblock %}</h1>
-				</div>
-			</div>
-			<div class="fd-header-end"> 
-                {% block header %}{% endblock %} 
+    </aside>
+
+    <main class="fd-main-content">
+        <a class="fd-skip-link" href="#fd-main-content">Skip to content</a>
+
+        <header class="fd-header">
+            <div class="fd-header-start">
+                <button @click="sidebarOpen = !sidebarOpen"
+                        class="fd-btn-close"
+                        aria-label="Toggle navigation"
+                        :aria-expanded="sidebarOpen.toString()">
+                    <svg class="fd-icon-sm" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <div class="fd-page-heading">
+                    <h1 class="fd-page-title">{% block page_title %}{% endblock %}</h1>
+                </div>
             </div>
-		</header>
-		<!-- Dashboard Content -->
-		<div class="fd-content">
-			<div class="fd-page"> 
-                {% block main %}{% endblock %} 
+            <div class="fd-header-end">
+                {% block header %}{% endblock %}
             </div>
-		</div>
-	</main>
+        </header>
+
+        <div class="fd-content">
+            <div class="fd-page" id="fd-main-content">
+                {% block main %}{% endblock %}
+            </div>
+        </div>
+    </main>
 </div>
 
-<div class="fd-toast-notification-container"> 
-	{% with messages = get_flashed_messages(with_categories=true) %} 
-        {% if messages %} 
-            {% for category, message in messages %} 
-            <div class="fd-toast">
-		        <span class="fd-toast-message">{{ message }}</span>
-		        <button onclick="this.parentElement.remove()" class="fd-toast-close">
-		        	<svg class="fd-icon-xs" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-		        		<path stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
-		        	</svg>
-		        </button>
-	        </div> 
-            {% endfor %} 
-        {% endif %} 
-    {% endwith %} 
-</div> 
+<div class="fd-toast-notification-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="fd-toast {% if category in ['success', 'global-success'] %}fd-toast-success{% elif category in ['error', 'global-error'] %}fd-toast-error{% else %}fd-toast-warning{% endif %}"
+         role="status">
+        <span class="fd-toast-message">{{ message }}</span>
+        <button onclick="this.parentElement.remove()" class="fd-toast-close" aria-label="Dismiss">
+            <svg class="fd-icon-xs" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
 {% endblock %}

@@ -1,0 +1,322 @@
+@layer components {
+    .fd-analytics-section {
+        @apply flex flex-col gap-3;
+    }
+
+    .fd-analytics-section-header {
+        @apply flex items-baseline gap-2.5 pb-0.5;
+    }
+
+    .fd-analytics-section-accent {
+        @apply hidden;
+    }
+
+    .fd-analytics-section-title {
+        @apply m-0 font-display text-[15px] font-medium tracking-tight text-fd-ink;
+    }
+
+    .fd-analytics-grid {
+        @apply grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3;
+    }
+
+    .fd-analytics-card-sm,
+    .fd-analytics-card-md,
+    .fd-analytics-card-lg {
+        @apply flex flex-col rounded-fd-md border border-fd-line bg-fd-bg px-[18px] py-4 transition-colors hover:border-fd-line-2;
+    }
+
+    .fd-analytics-card-sm {
+        @apply flex-row items-center gap-3.5;
+    }
+
+    .fd-analytics-card-header {
+        @apply mb-3.5 flex items-start justify-between gap-3;
+    }
+
+    .fd-analytics-card-icon {
+        @apply flex size-8 shrink-0 items-center justify-center text-fd-muted [&>svg]:size-[18px];
+    }
+
+    .fd-analytics-card-content {
+        @apply flex min-w-0 flex-col gap-0.5;
+    }
+
+    .fd-analytics-card-value {
+        @apply m-0 font-mono text-[27px] font-medium leading-none tracking-tighter text-fd-ink tabular-nums;
+    }
+
+    .fd-analytics-card-title {
+        @apply m-0 text-xs font-medium text-fd-muted;
+    }
+
+    .fd-analytics-card-subtitle {
+        @apply m-0 mt-2 text-[13px] leading-normal text-fd-muted;
+    }
+
+    .fd-analytics-card-badge {
+        @apply inline-flex items-center gap-1 text-xs font-medium tabular-nums;
+    }
+
+    .fd-analytics-card-badge-increase {
+        @apply size-3 text-fd-success;
+    }
+
+    .fd-analytics-card-badge-decrease {
+        @apply size-3 text-fd-danger;
+    }
+
+    .fd-analytics-card-progress {
+        @apply mt-3.5 h-[3px] overflow-hidden rounded-full bg-fd-line;
+    }
+
+    .fd-analytics-card-progress-fill {
+        @apply h-full rounded-full bg-fd-accent transition-[width] duration-700;
+    }
+
+    .fd-auth-layout {
+        @apply flex min-h-screen items-start justify-center bg-fd-surface-2 px-5 py-12;
+    }
+
+    .fd-auth-container {
+        @apply m-auto flex w-full max-w-[388px] flex-col gap-5;
+    }
+
+    .fd-auth-header {
+        @apply flex flex-col items-start gap-3.5;
+    }
+
+    .fd-auth-website-logo {
+        @apply size-[34px] rounded-fd-sm bg-fd-ink object-cover;
+    }
+
+    .fd-auth-title {
+        @apply m-0 font-display text-[21px] font-medium leading-tight tracking-tight text-fd-ink;
+    }
+
+    .fd-auth-description {
+        @apply m-0 mt-1 text-[13.5px] leading-normal text-fd-muted;
+    }
+
+    .fd-auth-card {
+        @apply block rounded-fd-md border border-fd-line bg-fd-bg p-6;
+    }
+
+    .fd-auth-card-header {
+        @apply mb-5;
+    }
+
+    .fd-auth-card-title {
+        @apply m-0 font-display text-base font-medium tracking-tight text-fd-ink;
+    }
+
+    .fd-auth-card-description {
+        @apply m-0 mt-1 text-[13px] text-fd-muted;
+    }
+
+    .fd-auth-card-body {
+        @apply block;
+    }
+
+    .fd-auth-form {
+        @apply flex flex-col gap-4;
+    }
+
+    .fd-auth-form-group,
+    .fd-auth-form-field {
+        @apply min-w-0;
+    }
+
+    .fd-auth-form-grid {
+        @apply grid grid-cols-1 gap-4 sm:grid-cols-2;
+    }
+
+    .fd-auth-form-header {
+        @apply mb-1.5 flex items-baseline justify-between gap-3;
+    }
+
+    .fd-auth-form-header .fd-form-label {
+        @apply mb-0;
+    }
+
+    .fd-auth-forgot-password-link {
+        @apply text-xs text-fd-muted no-underline transition-colors hover:text-fd-accent hover:underline;
+    }
+
+    .fd-auth-form-errors {
+        @apply flex flex-col gap-[7px] rounded-fd-sm border border-fd-line-2 border-l-2 border-l-fd-danger bg-fd-danger-soft px-3 py-2.5;
+    }
+
+    .fd-auth-form-errors-title {
+        @apply m-0 text-xs font-medium text-fd-danger;
+    }
+
+    .fd-auth-error {
+        @apply flex items-start gap-1.5;
+    }
+
+    .fd-auth-error-icon {
+        @apply mt-0.5 size-[13px] shrink-0 text-fd-danger;
+    }
+
+    .fd-auth-error-message {
+        @apply text-xs leading-snug text-fd-danger;
+    }
+
+    .fd-auth-flash-messages {
+        @apply flex flex-col gap-2;
+    }
+
+    .fd-auth-flash-message {
+        @apply block;
+    }
+
+    .fd-auth-footer {
+        @apply flex flex-col gap-1.5 text-left;
+    }
+
+    .fd-auth-register-text,
+    .fd-auth-footer-text {
+        @apply m-0 text-[13px] text-fd-muted;
+    }
+
+    .fd-auth-register-link,
+    .fd-auth-footer-link {
+        @apply font-medium text-fd-ink underline decoration-fd-line-2 underline-offset-2 transition-colors hover:decoration-fd-ink;
+    }
+
+    .fd-auth-copyright {
+        @apply m-0 text-xs text-fd-faint;
+    }
+
+    .fd-settings-row {
+        @apply grid grid-cols-1 gap-2.5 border-b border-fd-line py-4 last-of-type:border-b-0 last-of-type:pb-1 sm:grid-cols-[minmax(0,1fr)_260px] sm:items-center sm:gap-6;
+    }
+
+    .fd-settings-title {
+        @apply mb-0.5 text-[13px] font-medium text-fd-ink;
+    }
+
+    .fd-settings-description {
+        @apply m-0 text-xs leading-normal text-fd-muted;
+    }
+
+    .fd-settings-file-preview {
+        @apply mt-1.5 inline-flex items-center gap-1 text-xs font-medium text-fd-accent no-underline hover:underline;
+    }
+
+    .fd-files-upload-form {
+        @apply flex flex-wrap items-center gap-2;
+    }
+
+    .fd-files-upload-input-wrapper {
+        @apply min-w-0 flex-1 basis-[200px];
+    }
+
+    .fd-theme-grid {
+        @apply grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3;
+    }
+
+    .fd-theme-card {
+        @apply flex flex-col gap-2.5 rounded-fd-md border border-fd-line bg-fd-bg p-4 transition-colors hover:border-fd-line-2;
+    }
+
+    .fd-theme-swatch {
+        @apply h-14 rounded-fd-sm border border-fd-line;
+    }
+
+    .fd-theme-name {
+        @apply font-display text-sm font-medium text-fd-ink;
+    }
+
+    .fd-meta-list {
+        @apply m-0 flex flex-col;
+    }
+
+    .fd-meta-row {
+        @apply flex items-baseline justify-between gap-4 border-b border-fd-line py-2.5 last:border-b-0;
+    }
+
+    .fd-meta-key {
+        @apply text-xs text-fd-muted;
+    }
+
+    .fd-meta-value {
+        @apply break-words text-right text-xs font-medium text-fd-ink;
+    }
+
+    .fd-list-group-item {
+        @apply flex flex-col gap-0.5 border-b border-fd-line px-5 py-3.5 last:border-b-0;
+    }
+
+    .fd-list-group-item-header {
+        @apply text-[13px] font-medium capitalize text-fd-ink;
+    }
+
+    .fd-list-group-item-value {
+        @apply text-xs text-fd-muted;
+    }
+
+    .fd-modal-container {
+        @apply fixed inset-0 z-70 flex items-center justify-center p-5;
+    }
+
+    .fd-modal-backdrop {
+        @apply absolute inset-0 bg-fd-ink/40;
+    }
+
+    .fd-modal {
+        @apply relative w-full max-w-[420px] overflow-hidden rounded-fd-md bg-fd-bg shadow-fd-overlay;
+    }
+
+    .fd-modal-header {
+        @apply flex items-start justify-between gap-3 border-b border-fd-line px-5 pb-3.5 pt-4;
+    }
+
+    .fd-modal-title {
+        @apply m-0 font-display text-[14.5px] font-medium text-fd-ink;
+    }
+
+    .fd-modal-subtitle {
+        @apply m-0 mt-0.5 text-xs text-fd-muted;
+    }
+
+    .fd-modal-body {
+        @apply p-5;
+    }
+
+    .fd-modal-footer {
+        @apply flex items-center justify-end gap-2 border-t border-fd-line bg-fd-surface-2 px-5 py-3.5;
+    }
+
+    .fd-pagination {
+        @apply flex items-center justify-between gap-4 px-1 py-3;
+    }
+
+    .fd-pagination-info {
+        @apply text-xs text-fd-muted;
+    }
+
+    .fd-pagination-nav {
+        @apply flex items-center gap-1;
+    }
+
+    .fd-pagination-link {
+        @apply inline-flex size-[30px] items-center justify-center rounded-fd-sm border border-transparent text-fd-ink-2 no-underline transition-colors hover:border-fd-line hover:bg-fd-surface;
+    }
+
+    .fd-pagination-current {
+        @apply border-fd-ink bg-fd-ink text-white hover:border-fd-ink hover:bg-fd-ink;
+    }
+
+    .fd-pagination-icon {
+        @apply size-[13px];
+    }
+
+    .fd-pagination-disabled {
+        @apply pointer-events-none opacity-35;
+    }
+
+    .fd-pagination-ellipsis {
+        @apply flex size-[30px] items-center justify-center text-xs text-fd-faint;
+    }
+}

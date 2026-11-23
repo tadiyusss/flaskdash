@@ -1,0 +1,144 @@
+@layer components {
+    .fd-layout {
+        @apply flex min-h-screen bg-fd-bg;
+    }
+
+    .fd-main-content {
+        @apply flex min-h-screen min-w-0 flex-1 flex-col overflow-x-hidden bg-fd-bg md:ml-fd-sidebar;
+    }
+
+    .fd-sidebar {
+        @apply fixed inset-y-0 left-0 z-40 flex w-fd-sidebar flex-col overflow-y-auto overscroll-contain bg-fd-nav px-3 py-4 text-fd-nav-ink transition-transform duration-200;
+    }
+
+    .fd-sidebar-overlay {
+        @apply fixed inset-0 z-30 bg-fd-ink/45 md:hidden;
+    }
+
+    .fd-sidebar::-webkit-scrollbar {
+        @apply w-1.5;
+    }
+
+    .fd-sidebar::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+
+    .fd-sidebar::-webkit-scrollbar-thumb {
+        @apply rounded-full bg-white/15;
+    }
+
+    .fd-brand {
+        @apply mb-1 flex items-center gap-2.5 px-2 pb-3.5 pt-1.5 text-fd-nav-ink no-underline;
+    }
+
+    .fd-brand-logo {
+        @apply size-7 shrink-0 rounded-fd-sm bg-white/10 object-cover;
+    }
+
+    .fd-brand-title {
+        @apply truncate font-display text-sm font-medium tracking-tight text-white;
+    }
+
+    .fd-sidebar-close-btn {
+        @apply ml-auto hidden cursor-pointer rounded-fd-sm border border-white/10 bg-transparent p-1.5 text-fd-nav-2 transition-colors hover:bg-white/[0.07] hover:text-white max-md:inline-flex max-md:items-center max-md:justify-center;
+    }
+
+    .fd-sidebar-close-icon {
+        @apply block size-3.5;
+    }
+
+    .fd-sidebar-section {
+        @apply block;
+    }
+
+    .fd-sidebar-section-title {
+        @apply px-2 pb-1.5 pt-3.5 text-[11px] font-medium tracking-wide text-fd-nav-muted;
+    }
+
+    .fd-sidebar-nav {
+        @apply flex flex-col gap-px;
+    }
+
+    .fd-sidebar-link {
+        @apply relative flex items-center gap-2.5 rounded-fd-sm px-2.5 py-2 text-[13.5px] font-normal text-fd-nav-2 no-underline transition-colors hover:bg-white/[0.07] hover:text-white;
+    }
+
+    .fd-sidebar-link[aria-current="page"] {
+        @apply bg-white/[0.07] font-medium text-white;
+    }
+
+    .fd-sidebar-link[aria-current="page"]::before {
+        @apply absolute left-0 top-1/2 h-4 w-0.5 -translate-y-1/2 rounded-full bg-fd-accent;
+        content: "";
+    }
+
+    .fd-sidebar-item {
+        @apply size-4 shrink-0 opacity-75;
+    }
+
+    .fd-sidebar-link:hover .fd-sidebar-item,
+    .fd-sidebar-link[aria-current="page"] .fd-sidebar-item {
+        @apply opacity-100;
+    }
+
+    .fd-header {
+        @apply sticky top-0 z-20 flex h-fd-nav items-center justify-between gap-4 border-b border-fd-line bg-fd-bg px-6 max-md:px-4;
+    }
+
+    .fd-header-start {
+        @apply flex min-w-0 items-center gap-3;
+    }
+
+    .fd-header-end {
+        @apply flex items-center gap-2;
+    }
+
+    .fd-page-title {
+        @apply m-0 truncate font-display text-[15px] font-medium tracking-tight text-fd-ink;
+    }
+
+    .fd-btn-close {
+        @apply hidden size-[34px] cursor-pointer items-center justify-center rounded-fd-sm border border-fd-line bg-fd-bg p-0 text-fd-ink-2 transition-colors hover:border-fd-line-2 hover:bg-fd-surface max-md:inline-flex;
+    }
+
+    .fd-content {
+        @apply min-w-0 flex-1 bg-fd-surface-2 p-6 max-md:p-4;
+    }
+
+    .fd-page-heading {
+        @apply min-w-0;
+    }
+
+    .fd-dashboard-page,
+    .fd-dashboard-page-xl {
+        @apply mx-auto flex w-full max-w-[1180px] flex-col gap-6 max-md:gap-4;
+    }
+
+    .fd-dashboard-page-lg {
+        @apply mx-auto flex w-full max-w-[1040px] flex-col gap-6 max-md:gap-4;
+    }
+
+    .fd-dashboard-page-md {
+        @apply mx-auto flex w-full max-w-[860px] flex-col gap-6 max-md:gap-4;
+    }
+
+    .fd-dashboard-page-sm {
+        @apply mx-auto flex w-full max-w-[720px] flex-col gap-6 max-md:gap-4;
+    }
+
+    .fd-dashboard-page-xs {
+        @apply mx-auto flex w-full max-w-[620px] flex-col gap-6 max-md:gap-4;
+    }
+
+    .fd-dashboard-page-full {
+        @apply mx-auto flex w-full flex-col gap-6 max-md:gap-4;
+    }
+
+    .fd-error-message {
+        @apply mt-1 text-xs text-fd-danger;
+    }
+
+    .fd-toast-notification-container {
+        @apply pointer-events-none fixed bottom-5 right-5 z-90 flex flex-col gap-2 [&>*]:pointer-events-auto;
+    }
+}

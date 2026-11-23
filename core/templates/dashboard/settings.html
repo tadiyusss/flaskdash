@@ -1,38 +1,50 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ g.settings['site_title'] }} - Settings{% endblock %}
+{% block page_title %}Settings{% endblock %}
 {% block main %}
-<div class="fd-dashboard-page-xs">
+<div class="fd-dashboard-page-sm">
 	{% for category in categories %}
 	<div class="fd-card">
 		<div class="fd-card-header">
-			<h3 class="fd-card-title">{{ category.nice_name }}</h3>
-			<p class="fd-card-subtitle">{{ category.description }}</p>
+			<div>
+				<h2 class="fd-card-title">{{ category.nice_name }}</h2>
+				<p class="fd-card-subtitle">{{ category.description }}</p>
+			</div>
 		</div>
-		
-		<form method="POST" class="fd-card-body" enctype="multipart/form-data">
-            {% for field in forms[loop.index0] %} 
-                {% if field.name == "csrf_token" %} 
-					{{ field(class="hidden") }}
+
+		<form method="POST" enctype="multipart/form-data">
+			<div class="fd-card-body">
+				{% for field in forms[loop.index0] %}
+				{% if field.name == "csrf_token" %}
+				{{ field }}
 				{% elif field.type != "SubmitField" %}
-					<div class="fd-settings-row">
-						<div>
-							<label for="{{ field.id }}" class="fd-settings-title">{{ field.label.text }}</label>
-							<p class="fd-settings-description">{{ field.description }}</p>
-							<ul>
-								{% for error in field.errors %}
-								<li class="fd-settings-error">{{ error }}</li>
-								{% endfor %}
-							</ul>
-						</div>
-						<div>
-							{{ field }}
-						</div>
-					</div> 
-                {% endif %} 
-            {% endfor %} 
-            <div class="fd-card-buttons">
-				{{ forms[loop.index0].submit }}
-				<button type="reset" class="fd-btn fd-btn-outline fd-btn-sm">Reset</button>
+				<div class="fd-settings-row">
+					<div>
+						<label for="{{ field.id }}" class="fd-settings-title">{{ field.label.text }}</label>
+						{% if field.description %}
+						<p class="fd-settings-description">{{ field.description }}</p>
+						{% endif %}
+						{% if field.type == "FileField" and field.data %}
+						<a href="{{ url_for('media.serve_media', filename=field.data) }}" class="fd-settings-file-preview" target="_blank" rel="noopener noreferrer">Preview current file</a>
+						{% endif %}
+						{% if field.errors %}
+						<ul>
+							{% for error in field.errors %}
+							<li class="fd-settings-error">{{ error }}</li>
+							{% endfor %}
+						</ul>
+						{% endif %}
+					</div>
+					<div>
+						{{ field }}
+					</div>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+
+			<div class="fd-card-footer">
+				{{ forms[loop.index0].submit(class="fd-btn fd-btn-primary fd-btn-sm") }}
 			</div>
 		</form>
 	</div>

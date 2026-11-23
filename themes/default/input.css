@@ -1,25 +1,14 @@
 @import "tailwindcss";
 @config "../../tailwind.config.js";
 
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import './tokens.css';
 
 @import './components/buttons.css';
-@import './components/toast.css';
 @import './components/card.css';
 @import './components/form.css';
 @import './components/tables.css';
 @import './components/badges.css';
-@import './components/icons.css';
-@import './components/modal.css';
-@import './components/list-group.css';
-@import './components/pagination.css';
 
-@import './global/dashboard.css';
+@import './global/shell.css';
 
-@import './pages/analytics.css';
-@import './pages/authentication.css';
-@import './pages/settings.css';
-@import './pages/profile.css';
-@import './pages/users.css';
-@import './pages/files.css';
-@import './pages/base.css';
+@import './pages/app.css';
