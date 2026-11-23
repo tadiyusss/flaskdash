@@ -1,10 +1,22 @@
 from flask_mail import Message
 from core.extensions import mail
-from flask import url_for
-from .tokens import generate_reset_token
+from pathlib import Path
+from flask import render_template
 
-def send_password_reset_email(user):
-    token = generate_reset_token(user)
-    message = Message("Password Reset Instructions", recipients=[user.email])
-    message.body = f"Hello {user.firstname},\n\nTo reset your password, please click the following link:\n\n{url_for('core.reset_password', token=token, _external=True)}\n\nIf you did not request a password reset, please ignore this email.\n\nBest regards,\nFlaskDash Team"
-    mail.send(message)  
+
+DEFAULT_TEMPLATE_FOLDER_PATH = Path(__file__).parent.parent / "templates"
+
+def send_email_template(template_name: str, subject: str, recipients: list[str], template_folder_path: Path = DEFAULT_TEMPLATE_FOLDER_PATH, **kwargs):
+    if not template_folder_path.exists():
+        raise FileNotFoundError(f"Template folder path '{template_folder_path}' does not exist.")
+
+    context = kwargs
+    template_content = render_template(template_name, **context)
+    message = Message(subject, recipients=recipients)
+    message.html = template_content
+
+    text_template = str(Path(template_name).with_suffix(".txt"))
+    if (template_folder_path / text_template).is_file():
+        message.body = render_template(text_template, **context)
+
+    mail.send(message)

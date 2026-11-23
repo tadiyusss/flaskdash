@@ -1,0 +1,53 @@
+{% macro email_button(url, label) -%}
+<table role="presentation" class="fd-email-btn" cellpadding="0" cellspacing="0" border="0" style="margin:0;">
+  <tr>
+    <td align="center" bgcolor="#1a4be0" style="background-color:#1a4be0; border-radius:6px; mso-padding-alt:14px 24px;">
+      <a href="{{ url }}" target="_blank" rel="noopener"
+         style="display:block; padding:14px 24px; font-family:'Red Hat Text',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; font-weight:500; line-height:20px; color:#ffffff; text-decoration:none; border-radius:6px;">
+        {{ label }}
+      </a>
+    </td>
+  </tr>
+</table>
+{%- endmacro %}
+
+
+{% macro email_link_box(url) -%}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; margin:0;">
+  <tr>
+    <td style="background-color:#fafafa; border:1px solid rgba(17,17,17,0.10); border-radius:6px; padding:12px 14px;">
+      <a href="{{ url }}" target="_blank" rel="noopener"
+         style="font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; line-height:18px; color:#3f3f3f; text-decoration:none; word-break:break-all;">
+        {{ url }}
+      </a>
+    </td>
+  </tr>
+</table>
+{%- endmacro %}
+
+
+{% macro email_meta_rows(rows) -%}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; margin:0;">
+  {% for label, value in rows %}
+  <tr>
+    <td style="border-top:1px solid rgba(17,17,17,0.10); padding:10px 0; font-family:'Red Hat Text',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; line-height:18px; color:#626262; vertical-align:top; width:42%;">
+      {{ label }}
+    </td>
+    <td style="border-top:1px solid rgba(17,17,17,0.10); padding:10px 0; font-family:'Red Hat Text',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; line-height:18px; font-weight:500; color:#111111; text-align:right; vertical-align:top; word-break:break-word;">
+      {{ value }}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{%- endmacro %}
+
+
+{% macro email_note(text) -%}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; margin:0;">
+  <tr>
+    <td style="border-left:2px solid rgba(17,17,17,0.16); padding:2px 0 2px 12px; font-family:'Red Hat Text',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:13px; line-height:20px; color:#626262;">
+      {{ text }}
+    </td>
+  </tr>
+</table>
+{%- endmacro %}

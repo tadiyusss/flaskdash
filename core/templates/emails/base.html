@@ -1,0 +1,124 @@
+{% from "emails/_components.html" import email_button, email_link_box, email_meta_rows, email_note %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title>{% block title %}{{ g.settings['site_title'] }}{% endblock %}</title>
+  <!--[if mso]>
+  <xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml>
+  <![endif]-->
+  <style>
+    /* Progressive enhancement only — nothing critical lives in here. */
+    @import url("https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;600&family=Red+Hat+Text:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap");
+
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    a { text-decoration: none; }
+
+    @media screen and (max-width: 620px) {
+      .fd-email-shell { padding: 20px 16px !important; }
+      .fd-email-card { width: 100% !important; }
+      .fd-email-pad { padding-left: 24px !important; padding-right: 24px !important; }
+      .fd-email-title { font-size: 22px !important; line-height: 28px !important; }
+      .fd-email-btn { width: 100% !important; }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; width:100%; background-color:#f4f4f4;">
+
+  {# Inbox preview line: shown in the list, hidden in the body. #}
+  <div style="display:none; font-size:1px; color:#f4f4f4; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all;">
+    {% block preheader %}{{ g.settings['site_description'] }}{% endblock %}
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f4f4;">
+    <tr>
+      <td class="fd-email-shell" align="center" style="padding:36px 20px;">
+
+        <!--[if mso]>
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"><tr><td width="600">
+        <![endif]-->
+        <table role="presentation" class="fd-email-card" width="100%" cellpadding="0" cellspacing="0" border="0"
+               style="width:100%; max-width:600px; background-color:#ffffff; border:1px solid rgba(17,17,17,0.10); border-radius:10px; overflow:hidden;">
+
+          <tr>
+            <td class="fd-email-pad" style="padding:24px 32px; border-bottom:1px solid rgba(17,17,17,0.10);">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td align="left" valign="middle" style="font-family:'Red Hat Display',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; letter-spacing:-0.01em; color:#111111;">
+                    {% if g.settings['website_logo'] %}
+                    <img src="{{ url_for('media.serve_media', filename=g.settings['website_logo'], _external=True) }}"
+                         alt="{{ g.settings['site_title'] }}" width="24" height="24"
+                         style="width:24px; height:24px; border-radius:6px; object-fit:cover; vertical-align:middle; margin-right:9px;">
+                    {% endif %}
+                    <span style="vertical-align:middle;">{{ g.settings['site_title'] }}</span>
+                  </td>
+                  <td align="right" valign="middle" style="font-family:'Red Hat Text',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; line-height:18px; color:#626262;">
+                    {% block brand_meta %}{% endblock %}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="fd-email-pad" style="padding:32px 32px 0 32px;">
+              <h1 class="fd-email-title" style="margin:0; font-family:'Red Hat Display',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:24px; line-height:30px; font-weight:600; letter-spacing:-0.02em; color:#111111;">
+                {% block heading %}{% endblock %}
+              </h1>
+              {% block intro %}{% endblock %}
+            </td>
+          </tr>
+
+          <tr>
+            <td class="fd-email-pad" style="padding:0 32px 32px 32px;">
+              {% block content %}{% endblock %}
+            </td>
+          </tr>
+
+          <tr>
+            <td class="fd-email-pad" style="padding:0 32px 32px 32px;">
+              {% block footnote %}{% endblock %}
+            </td>
+          </tr>
+
+          <tr>
+            <td class="fd-email-pad" style="padding:20px 32px; background-color:#fafafa; border-top:1px solid rgba(17,17,17,0.10);">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td class="fd-email-foot" align="left" style="font-family:'Red Hat Text',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; line-height:18px; color:#626262; word-break:break-word;">
+                    {% block footer %}{{ g.settings['site_title'] }}{% endblock %}
+                  </td>
+                  <td class="fd-email-foot" align="right" style="font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11px; line-height:18px; color:#626262;">
+                    {% block footer_meta %}Automated message{% endblock %}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+        <!--[if mso]>
+        </td></tr></table>
+        <![endif]-->
+        <!-- /Card -->
+
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:600px;">
+          <tr>
+            <td align="center" style="padding:16px 4px 0 4px; font-family:'Red Hat Text',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif; font-size:11.5px; line-height:17px; color:#626262;">
+              {{ g.settings['site_description'] }}
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

@@ -97,7 +97,14 @@ def test_no_static_inline_styles(template):
     A style attribute is allowed only when its whole value is a dynamic value
     the server must compute (e.g. a progress-bar width); static declarations
     belong in the theme files.
+
+    ``emails/`` is exempt: mail clients strip ``<style>`` blocks and have no
+    access to the theme stylesheet, so inline declarations are the only way an
+    email can be styled at all.
     """
+    if template.relative_to(TEMPLATES_DIR).parts[0] == "emails":
+        pytest.skip("email templates must inline their CSS; mail clients ignore stylesheets")
+
     source = template.read_text(encoding="utf-8")
     offenders = []
     for number, line in enumerate(source.splitlines(), 1):
@@ -167,7 +174,9 @@ class TestLayoutInheritance:
 
     def test_every_page_sets_a_title_block(self):
         for path in template_files():
-            if path.name == "base.html":
+            if path.name == "base.html" or path.name.startswith("_"):
+                # Layout bases supply the default title; ``_`` files are
+                # partials (macros only) that never render a document.
                 continue
             assert "{% block title %}" in path.read_text(encoding="utf-8"), relative(path)
 
