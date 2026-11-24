@@ -6,7 +6,8 @@ from core.extensions import db
 from core.models.users import User, UserRole, Role
 from flask import g
 from core.models.users import LoginHistory
-from core.utils.email import send_password_reset_email
+from core.utils.email import send_email_template
+from ..utils.tokens import generate_reset_token
 from core.utils.tokens import verify_reset_token
 import logging
 
@@ -92,9 +93,10 @@ def forgot_password():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             try:
-                send_password_reset_email(user)
-            except Exception:
-                flash('Failed to send email. Please try again later.', 'error')
+                reset_url = url_for('core.reset_password', token=generate_reset_token(user), _external=True)
+                send_email_template('emails/password_reset.html', 'Password Reset Instructions', [user.email], user=user, reset_url=reset_url)
+            except Exception as e:
+                flash(f'Failed to send email. Please try again later: {e}', 'error')
                 return redirect(url_for('core.forgot_password'))            
         flash('Password reset instructions have been sent to your email.', 'success')        
     return render_template('auth/forgot-password.html', form=form)
