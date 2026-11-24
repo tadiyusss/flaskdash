@@ -58,11 +58,6 @@
                     <div class="fd-auth-form-group">
                         {{ form.email.label(class="fd-form-label") }}
                         <div class="fd-auth-input-group">
-                            <span class="fd-auth-input-icon">
-                                <svg class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                            </span>
                             {{ form.email }}
                         </div>
                         {% if form.errors.email %}
@@ -76,12 +71,6 @@
                             <a href="{{ url_for('core.forgot_password') }}" class="fd-auth-forgot-password-link">Forgot password?</a>
                         </div>
                         <div class="fd-auth-input-group">
-                            <span class="fd-auth-input-icon">
-                                <svg class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
-                                    <rect x="3" y="11" width="18" height="11" rx="2" />
-                                    <path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4" />
-                                </svg>
-                            </span>
                             {{ form.password }}
                             <button type="button" @click="show = !show" class="fd-auth-password-toggle" :aria-label="show ? 'Hide password' : 'Show password'">
                                 <svg x-show="!show" class="fd-auth-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
