@@ -10,7 +10,6 @@ from flask import g
 from werkzeug.utils import secure_filename
 from core.utils.decorators import role_required
 from core.route import core
-from core.defaults import MEDIA_FOLDER
 
 @core.route('/users/create', methods=['GET', 'POST'])
 @role_required('Administrator')
@@ -88,7 +87,7 @@ def manage_user(user_uid):
         
     selected_user = User.query.filter_by(uid=user_uid).first_or_404()
     password_form = ManageUserPasswordForm()
-    name_form = ManageNameForm()
+    name_form = ManageNameForm(obj=selected_user)
     role_form = build_manage_user_role_form(selected_user)
     edit_profile_form = EditProfileForm()
 
@@ -112,7 +111,7 @@ def manage_user(user_uid):
         image_file = edit_profile_form.profile_image.data
         ext = os.path.splitext(secure_filename(image_file.filename))[1]
         unique_filename = f"{uuid.uuid4().hex}{ext}"
-        profiles_folder = os.path.join(MEDIA_FOLDER, 'profiles')
+        profiles_folder = os.path.join(core.static_folder, 'images', 'profiles')
         os.makedirs(profiles_folder, exist_ok=True)
         save_path = os.path.join(profiles_folder, unique_filename)
         image_file.save(save_path)
